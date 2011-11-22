@@ -37,13 +37,17 @@ public class SignupUserSteps {
     private Wiser wiser = new Wiser();
 
     @BeforeScenario
-    public void beforeSecenario(){
-        wiser.start();
+    public void beforeSecenario(){ 
+        try{
+            wiser.start();
+        }catch(Exception e){}
     }
     
     @AfterScenario
     public void afterSecenario(){
-        wiser.stop();
+        try{
+            wiser.stop();
+        }catch(Exception e){}
     }
     
     @Given("Form SignUp")
