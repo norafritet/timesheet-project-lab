@@ -7,12 +7,16 @@ package com.aprisma.opensource.timesheet.model;
 import java.io.Serializable;
 import java.sql.Date;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import org.appfuse.model.User;
 
 /**
@@ -21,18 +25,23 @@ import org.appfuse.model.User;
  */
 @Entity
 @Inheritance(strategy= InheritanceType.SINGLE_TABLE)
-public class CheckRoll implements Serializable {
+@DiscriminatorColumn(name="CHECK_TYPE")
+@Table(name="T_CHECK_ROLL")
+public abstract class CheckRoll implements Serializable {
     private static final long serialVersionUID = 1L;
     
     @Id
+    @Column(name="ID")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(name="CHECK_DT")
     private Date checkDate;
     
-    @Column(nullable = false)
-    private String userId;
+    
+    @ManyToOne
+    @JoinColumn(name="USER_ID")
+    private User checkUser;
     
     public Long getId() {
         return id;
@@ -50,13 +59,16 @@ public class CheckRoll implements Serializable {
         this.checkDate = checkDate;
     }
 
-    public String getUserId() {
-        return userId;
+    public User getCheckUser() {
+        return checkUser;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setCheckUser(User checkUser) {
+        this.checkUser = checkUser;
     }
+
+ 
+
 
     @Override
     public int hashCode() {

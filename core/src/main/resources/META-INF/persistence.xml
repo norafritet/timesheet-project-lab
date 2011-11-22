@@ -27,5 +27,6 @@
     <class>com.aprisma.opensource.timesheet.model.CheckRoll</class>
     <class>com.aprisma.opensource.timesheet.model.Attendance</class>
     <class>com.aprisma.opensource.timesheet.model.Absent</class>
+    <class>com.aprisma.opensource.timesheet.model.Activity</class>
   </persistence-unit>
 </persistence>
