@@ -6,6 +6,8 @@ package com.aprisma.opensource.timesheet.model;
 
 import java.io.Serializable;
 import java.sql.Time;
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,12 +16,15 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 
-@Entity 
+@Entity
+@DiscriminatorValue("ATT")
 public class Attendance extends CheckRoll implements Serializable {
     private static final long serialVersionUID = 1L;
-
+    
+    @Column(name="CHECK_IN")
     private Time checkIn;
     
+    @Column(name="CHECK_OUT")
     private Time checkOut;
 
     public Time getCheckIn() {

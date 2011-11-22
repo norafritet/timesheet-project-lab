@@ -56,7 +56,22 @@
                         <artifactId>appfuse-${dao.framework}</artifactId>
                         <version>${appfuse.version}</version>
                     </dependency>
- 
+                    <dependency>
+                        <groupId>${project.parent.groupId}</groupId>
+                        <artifactId>timesheet-core</artifactId>
+                        <version>${project.parent.version}</version>
+                        <type>jar</type>
+                        <exclusions>
+                            <exclusion>
+                                <groupId>net.sf.jasperreports</groupId>
+                                <artifactId>jasperreports</artifactId>
+                            </exclusion>
+                            <exclusion>
+                                <groupId>org.appfuse</groupId>
+                                <artifactId>appfuse-service</artifactId>
+                            </exclusion>
+                        </exclusions>
+                    </dependency>
                 </dependencies>
             </plugin>
             <plugin>
@@ -317,6 +332,7 @@
             <version>1.6.1</version>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>${project.parent.groupId}</groupId>
             <artifactId>timesheet-web-jsf</artifactId>
