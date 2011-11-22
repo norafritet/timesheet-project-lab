@@ -1,0 +1,23 @@
+Template untuk story
+
+Meta:
+@category advanced
+@color red
+
+Narrative: 
+
+Narasi tentang  story
+
+Scenario: Scenario 1
+
+Given Given1
+When When1
+And Andsssss
+Then there are search results
+
+Scenario: Scenario 2
+
+Given ddddd
+When wwwwwww
+And wwwww
+Then cccccc
