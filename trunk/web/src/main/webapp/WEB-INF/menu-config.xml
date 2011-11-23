@@ -6,8 +6,8 @@
     <Menus>
         <Menu name="MainMenu" title="mainMenu.title" page="/mainMenu" roles="ROLE_ADMIN,ROLE_USER">
             <!-- Added by M //-->
-            <Item name="CheckRoll" title="mainMenu.chekcRoll" page="/admin/checkroll"/>
-            <Item name="Activity" title="mainMenu.activeUsers" page="/admin/activity"/>
+            <Item name="CheckRoll" title="mainMenu.chekcRoll" page="/checkRoll"/>
+            <Item name="Activity" title="mainMenu.activeUsers" page="/activity"/>
             <!-- End Added //-->
         </Menu>
         <Menu name="UserMenu" title="menu.user" description="User Menu" page="/editProfile" roles="ROLE_ADMIN,ROLE_USER"/>

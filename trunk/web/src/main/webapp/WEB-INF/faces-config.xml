@@ -26,6 +26,7 @@
         <message-bundle>ApplicationResources</message-bundle>
     </application>
 
+
     <navigation-rule>
         <from-view-id>/mainMenu.xhtml</from-view-id>
         <navigation-case>
@@ -69,14 +70,14 @@
             <redirect/>
         </navigation-case>
     </navigation-rule>
+
     <navigation-rule>
         <from-view-id>/selectFile.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>success</from-outcome>
             <to-view-id>/showFile.xhtml</to-view-id>
         </navigation-case>
-    </navigation-rule>
-    <navigation-rule>
+    </navigation-rule><navigation-rule>
         <from-view-id>/signup.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>cancel</from-outcome>
@@ -109,6 +110,19 @@
         </navigation-case>
     </navigation-rule>
     <!-- Add additional rules here -->
+
+    <!-- Added by M -->
+    <navigation-rule>
+        <from-view-id>/mainMenu.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>checkRoll</from-outcome>
+            <to-view-id>/checkRoll.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+   <!-- End Added -->
+
+
 
     <managed-bean>
         <managed-bean-name>basePage</managed-bean-name>
