@@ -2,6 +2,7 @@ package com.aprisma.opensource.timesheet.jbehave.steps;
 
 import com.aprisma.opensource.timesheet.jbehave.pages.CheckRoll;
 import com.aprisma.opensource.timesheet.jbehave.pages.Generic;
+import java.net.MalformedURLException;
 import org.jbehave.core.annotations.AfterStories;
 import com.aprisma.opensource.timesheet.jbehave.spring.Steps;
 import org.jbehave.core.annotations.BeforeStories;
@@ -10,6 +11,7 @@ import com.aprisma.opensource.timesheet.jbehave.pages.Login;
 import org.jbehave.core.annotations.Pending;
 import com.aprisma.opensource.timesheet.jbehave.pages.Signup;
 
+import java.net.URL;
 import java.util.Date;
 import org.hamcrest.Matchers;
 import org.jbehave.core.annotations.Alias;
@@ -53,8 +55,9 @@ public class TimeSheetSteps {
     }
 
     @Then("show Check Roll form")
-    public void thenShowCheckRollForm() {
-        assertThat(generic.getCurrentUrl(), Matchers.endsWith("/checkroll"));
+    public void thenShowCheckRollForm() throws MalformedURLException {
+        URL url = new URL(generic.getCurrentUrl());
+        assertThat(url.getPath(), Matchers.containsString("/checkRoll"));
     }
 
     @When("fill in data to Check Roll Date value $checkRollDate , Check In Time value $checkInTime , Check Out Time value $checkOutTime , click Save button")
