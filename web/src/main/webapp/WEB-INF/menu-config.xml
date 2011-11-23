@@ -5,10 +5,9 @@
     </Displayers>
     <Menus>
         <Menu name="MainMenu" title="mainMenu.title" page="/mainMenu" roles="ROLE_ADMIN,ROLE_USER">
-            <!-- Added by M //-->
             <Item name="CheckRoll" title="mainMenu.chekcRoll" page="/checkRoll"/>
-            <Item name="Activity" title="mainMenu.activeUsers" page="/activity"/>
-            <!-- End Added //-->
+            <Item name="Activity" title="mainMenu.activity" page="/activity"/>
+            <Item name="AbsentOneDay" title="mainMenu.absentOneDay" page="/absentOneDay"/>
         </Menu>
         <Menu name="UserMenu" title="menu.user" description="User Menu" page="/editProfile" roles="ROLE_ADMIN,ROLE_USER"/>
         <Menu name="AdminMenu" title="menu.admin" description="Admin Menu" roles="ROLE_ADMIN" width="120" page="/admin/users">
