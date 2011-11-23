@@ -5,17 +5,14 @@
     </Displayers>
     <Menus>
         <Menu name="MainMenu" title="mainMenu.title" page="/mainMenu" roles="ROLE_ADMIN,ROLE_USER"/>
-            <!-- Added by M //-->
-            <Item name="CheckRoll" title="menu.admin.users" page="/admin/checkroll"/>
-            <Item name="Activity" title="mainMenu.activeUsers" page="/admin/activity"/>
-            <!-- End Added //-->
+
         <Menu name="UserMenu" title="menu.user" description="User Menu" page="/editProfile" roles="ROLE_ADMIN,ROLE_USER"/>
         <Menu name="AdminMenu" title="menu.admin" description="Admin Menu" roles="ROLE_ADMIN" width="120" page="/admin/users">
             <Item name="ViewUsers" title="menu.admin.users" page="/admin/users"/>
             <Item name="ActiveUsers" title="mainMenu.activeUsers" page="/admin/activeUsers"/>
             <Item name="ReloadContext" title="menu.admin.reload" page="/admin/reload"/>
             <Item name="FileUpload" title="menu.selectFile" page="/selectFile"/>
-            <Item name="ViewUsers" title="menu.admin.users" page="/admin/users"/>
+            <Item name="ViewUsers2" title="menu.admin.users" page="/admin/users"/>
 
         </Menu>
         <Menu name="Logout" title="user.logout" page="/logout" roles="ROLE_ADMIN,ROLE_USER"/>
