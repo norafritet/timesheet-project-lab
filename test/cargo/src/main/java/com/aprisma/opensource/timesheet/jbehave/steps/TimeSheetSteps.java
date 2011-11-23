@@ -1,6 +1,6 @@
 package com.aprisma.opensource.timesheet.jbehave.steps;
 
-
+import com.aprisma.opensource.timesheet.jbehave.pages.CheckRoll;
 import com.aprisma.opensource.timesheet.jbehave.pages.Generic;
 import org.jbehave.core.annotations.AfterStories;
 import com.aprisma.opensource.timesheet.jbehave.spring.Steps;
@@ -10,6 +10,7 @@ import com.aprisma.opensource.timesheet.jbehave.pages.Login;
 import org.jbehave.core.annotations.Pending;
 import com.aprisma.opensource.timesheet.jbehave.pages.Signup;
 
+import java.util.Date;
 import org.hamcrest.Matchers;
 import org.jbehave.core.annotations.Alias;
 import org.jbehave.core.annotations.Composite;
@@ -38,42 +39,33 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.subethamail.wiser.Wiser;
 
 @Steps
-public class LoginSteps {
+public class TimeSheetSteps {
 
-    @Autowired 
+    @Autowired
     private Generic generic;
     
     @Autowired
-    private Login login;
+    private CheckRoll checkRoll;
     
-
-    @Given("I am on Login Form TimeSheet")
-    public void givenIAmOnLoginFormTimeSheet() {
-        login.go();
+    @When("click menu Check Roll menu")
+    public void whenClickMenuCheckRollMenu() {
+        checkRoll.clickMenuCheckRollMenu();
     }
 
-    @When("do login $userName $password")
-    public void whenDoLogin(String userName, String password) {
-        login.loginUsingUserNameAndPassword(userName, password);
+    @Then("show Check Roll form")
+    public void thenShowCheckRollForm() {
+        assertThat(generic.getCurrentUrl(), Matchers.endsWith("/checkroll"));
     }
 
-    @Then("authenticated")
-    public void thenAuthenticated() {
-        assertThat(generic.getCurrentUrl(), Matchers.endsWith("/TimeSheet/mainMenu"));
+    @When("fill in data to Check Roll Date value $checkRollDate , Check In Time value $checkInTime , Check Out Time value $checkOutTime , click Save button")
+    public void whenFillInDataToCheckRollDateValueCheckInTimeValueCheckOutTimeValueClickSaveButton(String checkRollDate, String checkInTime, String checkOutTime) {
+        checkRoll.fillData(checkRollDate,checkInTime,checkOutTime);
+        checkRoll.clickButtonSave();
     }
 
-    @Then("login fail")
-    public void thenLoginFail() {
-        assertThat(generic.getCurrentUrl(), Matchers.endsWith("/TimeSheet/login?error=true"));
-    }
-
-    @When("logout")
-    public void whenLogout() {
-        login.logout();
-    }
-
-    @Then("login form")
-    public void thenLoginForm() {
-        assertThat(generic.getCurrentUrl(), Matchers.endsWith("/TimeSheet/login"));
+    @Then("show message data Check Roll has been saved")
+    @Pending
+    public void thenShowMessageDataCheckRollHasBeenSaved() {
+        // PENDING
     }
 }

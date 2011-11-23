@@ -1,5 +1,6 @@
 package com.aprisma.opensource.timesheet.jbehave.steps;
 
+import com.aprisma.opensource.timesheet.jbehave.pages.Generic;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.jbehave.core.annotations.AfterStories;
@@ -30,7 +31,9 @@ import org.subethamail.wiser.Wiser;
 
 @Steps
 public class SignupUserSteps {
-
+    @Autowired
+    private Generic generic;
+    
     @Autowired
     private Signup signUp;
 
