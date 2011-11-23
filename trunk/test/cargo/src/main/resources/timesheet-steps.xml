@@ -9,7 +9,10 @@
   <bean class="org.jbehave.web.selenium.PerStoryWebDriverSteps" >
     <constructor-arg ref="driverProvider" /> 
   </bean>
-
+  <bean class="org.jbehave.web.selenium.WebDriverScreenshotOnFailure" >
+    <constructor-arg ref="driverProvider" /> 
+  </bean>
+  
   <context:component-scan base-package="com.aprisma.opensource.timesheet.jbehave.pages.fluent"/>
   <context:component-scan base-package="com.aprisma.opensource.timesheet.jbehave.steps"/>
   
