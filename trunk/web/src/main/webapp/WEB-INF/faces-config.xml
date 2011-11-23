@@ -239,7 +239,13 @@
         <managed-bean-class>com.aprisma.opensource.timesheet.webapp.action.ActiveUserList</managed-bean-class>
     
         <managed-bean-scope>request</managed-bean-scope></managed-bean>
-
+        
+    <managed-bean>
+        <description>Absent Ond Day</description>
+        <managed-bean-name>absentOneDayForm</managed-bean-name>
+        <managed-bean-class>com.aprisma.opensource.timesheet.webapp.action.AbsentOneDayForm</managed-bean-class>
+    
+        <managed-bean-scope>request</managed-bean-scope></managed-bean>
     <!-- Add additional beans here -->
 
     <render-kit>
