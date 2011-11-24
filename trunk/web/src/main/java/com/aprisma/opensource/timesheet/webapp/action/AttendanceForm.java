@@ -3,7 +3,7 @@ package com.aprisma.opensource.timesheet.webapp.action;
 import com.aprisma.opensource.timesheet.model.Attendance;
 import org.appfuse.model.User;
 import org.appfuse.service.GenericManager;
-
+import java.io.Serializable;
 /**
  * Created by IntelliJ IDEA.
  * User: max
@@ -11,7 +11,7 @@ import org.appfuse.service.GenericManager;
  * Time: 3:17 AM
  * To change this template use File | Settings | File Templates.
  */
-public class AttendanceForm extends BasePage {
+public class AttendanceForm extends BasePage implements Serializable {
 
     private Attendance attendance = new Attendance();
     private GenericManager<Attendance, Long> attendanceManager;
@@ -22,7 +22,7 @@ public class AttendanceForm extends BasePage {
         User user = userManager.getUserByUsername(username);
         attendance.setCheckUser(user);
         attendance = attendanceManager.save(attendance);
-        addMessage("absent_one_day.added");
+        //addMessage("absent_one_day.added");
 
         return "mainMenu";
     }

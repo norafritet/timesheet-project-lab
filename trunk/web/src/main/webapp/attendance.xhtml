@@ -8,38 +8,36 @@
         <head>
             <title>#{text['absent_one_day.title']}</title>
             <meta name="menu" content="MainMenu"/>
-            <meta name="heading" content="#{text['absent_one_day.heading']}"/>
+            <meta name="heading" content="#{text['attendance.heading']}"/>
         </head>
 
-        <h:form id="absentOneDayForm" onsubmit="return validateAbsentOneDayForm(this)">
+        <h:form id="attendanceForm">
 
             <h:panelGrid columns="3">
 
-                <h:panelGroup styleClass="info"><h:outputText value="#{text['absent_one_day.message']}"/></h:panelGroup>
+                <h:panelGroup styleClass="info"><h:outputText value="#{text['attendance.message']}"/></h:panelGroup>
                 <h:outputText/><h:outputText/>
 
-                <h:outputLabel styleClass="desc" for="checkDate" value="#{text['absent_one_day.checkDate']} #{text['date.format']}"/>
-                <t:message for="checkDate" styleClass="fieldError"/>
-                <h:inputText value="#{absentOneDayForm.checkDate}" id="checkDate" required="true" styleClass="text medium">
-                    <f:convertDateTime for="checkDate" pattern="#{text['date.format']}" type="date"  />
-                    <v:commonsValidator client="true" type="required" arg="#{text['absent_one_day.checkDate']}"/>
+                <h:outputLabel styleClass="desc" for="checkInTime" value="#{text['attendance.checkInTime']} #{text['time.format']}"/>
+                <t:message for="checkInTime" styleClass="fieldError"/>
+                <h:inputText value="#{attendanceForm.checkDate}" id="checkInTime" required="true" styleClass="text medium">
+                    <f:convertTime for="checkInTime" pattern="#{text['time.format']}" type="time"  />
+                    <v:commonsValidator client="true" type="required" arg="#{text['attendance.checkInTime']}"/>
                 </h:inputText>
 
-                <h:outputLabel styleClass="desc" for="absentType" value="#{text['absent_one_day.type']}"/>
-                <t:message for="absentType" styleClass="fieldError"/>
-                <h:selectOneMenu value="#{absentOneDayForm.absent.type}" id="absentType" required="true" styleClass="select">
-                    <f:selectItems value="#{absentOneDayForm.types}"/>
-                    <v:commonsValidator client="true" type="required" arg="#{text['absent_one_day.type']}"/>
-                </h:selectOneMenu>
-
-                <h:outputLabel styleClass="desc" for="reason" value="#{text['absent_one_day.reason']}"/>
-                <t:message for="reason" styleClass="fieldError"/>
-                <h:inputText value="#{absentOneDayForm.absent.remark}" id="reason" required="true" styleClass="text medium">
-                    <v:commonsValidator client="true" type="required" arg="#{text['absent_one_day.reason']}"/>
+                <h:outputLabel styleClass="desc" for="checkOutTime" value="#{text['attendance.checkOutTime']} #{text['time.format']}"/>
+                <t:message for="checkOutTime" styleClass="fieldError"/>
+                <h:inputText value="#{attendanceForm.checkOutTime}" id="checkOutTime" required="true" styleClass="text medium">
+                    <f:convertTime for="checkOutTime" pattern="#{text['time.format']}" type="time"  />
+                    <v:commonsValidator client="true" type="required" arg="#{text['attendance.checkInTime']}"/>
                 </h:inputText>
+
+
+
+
                 
                 <h:panelGroup styleClass="buttonBar bottom">
-                    <h:commandButton value="#{text['button.save']}" action="#{absentOneDayForm.save}" id="save" styleClass="button"/>
+                    <h:commandButton value="#{text['button.save']}" action="#{attendanceForm.save}" id="save" styleClass="button"/>
                     <h:commandButton value="#{text['button.cancel']}" action="mainMenu" immediate="true"
                                      id="cancel" styleClass="button" onclick="bCancel=true"/>
                 </h:panelGroup>
