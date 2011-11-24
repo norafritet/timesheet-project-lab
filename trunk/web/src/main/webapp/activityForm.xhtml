@@ -1,0 +1,106 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://java.sun.com/jstl/core" 
+      xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" 
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:t="http://myfaces.apache.org/tomahawk"
+      xmlns:v="http://shale.apache.org/validator">
+
+<f:view>
+<f:loadBundle var="text" basename="#{activityForm.bundleName}"/>
+<head>
+    <title>#{text['activity.title']}</title>
+    <meta name="heading" content="#{text['activity.heading']}"/>
+</head>
+<body id="activity">
+
+<div class="separator"></div>
+
+<h:form id="activityForm" onsubmit="return validateActivityForm(this)">
+
+<h:panelGrid columns="3">
+    <h:panelGroup styleClass="info">
+        <h:outputText value="#{text['activity.message']}"/>
+    </h:panelGroup>
+    
+   
+    <h:outputText/><h:outputText/>
+    
+    <h:outputLabel for="activityDate" styleClass="desc" value="#{text['activity.activityDate']}"/>
+    <t:message for="activityDate" styleClass="fieldError"/>
+    <h:inputText value="#{activityForm.activityDate}" id="activityDate" styleClass="text large">
+        <f:convertDateTime for="activityDate" pattern="#{text['date.format']}" type="date"/>
+    </h:inputText>
+    
+    <h:outputLabel for="timeFrom" styleClass="desc" value="#{text['activity.timeFrom']}"/>
+    <t:message for="timeFrom" styleClass="fieldError"/>
+    <h:inputText value="#{activityForm.timeFrom}" id="timeFrom" styleClass="text large">
+        <f:convertDateTime for="timeFrom" pattern="#{text['time.format']}" type="time" timeZone="UTC"/>
+    </h:inputText>
+    
+    <h:outputLabel for="timeTo" styleClass="desc" value="#{text['activity.timeTo']}"/>
+    <t:message for="timeTo" styleClass="fieldError"/>
+    <h:inputText value="#{activityForm.timeTo}" id="timeTo" styleClass="text large">
+        <f:convertDateTime for="timeTo" pattern="#{text['time.format']}" type="time" timeZone="UTC"/>
+    </h:inputText>
+    
+    <h:outputLabel for="type" styleClass="desc" value="#{text['activity.type']}"/>
+    <t:message for="type" styleClass="fieldError"/>
+    
+    <h:selectOneMenu styleClass="tbflat" id="type" value="#{activityForm.activity.type}">
+        <f:selectItems value="#{activityForm.types}"/>
+        <v:commonsValidator client="true" type="required" arg="#{text['activity.type']}"/>
+    </h:selectOneMenu>
+    
+    <h:outputLabel for="name" styleClass="desc" value="#{text['activity.name']}"/>
+    <t:message for="name" styleClass="fieldError"/>
+    <h:inputText value="#{activityForm.activity.name}" id="name" required="true" styleClass="text large">
+        <v:commonsValidator client="true" type="required" arg="#{text['activity.name']}"/>
+    </h:inputText>
+    
+    <h:outputLabel for="activityCase" styleClass="desc" value="#{text['activity.activityCase']}"/>
+    <t:message for="activityCase" styleClass="fieldError"/>
+    <h:inputText value="#{activityForm.activity.activityCase}" id="activityCase" required="true" styleClass="text large">
+        <v:commonsValidator client="true" type="required" arg="#{text['activity.activityCase']}"/>
+    </h:inputText>
+    
+    <h:outputLabel for="icenterNo" styleClass="desc" value="#{text['activity.icenterNo']}"/>
+    <t:message for="icenterNo" styleClass="fieldError"/>
+    <h:inputText value="#{activityForm.activity.icenterNo}" id="icenterNo" required="true" styleClass="text large">
+        <v:commonsValidator client="true" type="required" arg="#{text['activity.icenterNo']}"/>
+    </h:inputText>
+    
+    <h:outputLabel for="location" styleClass="desc" value="#{text['activity.location']}"/>
+    <t:message for="location" styleClass="fieldError"/>
+    <h:inputText value="#{activityForm.activity.location}" id="location" required="true" styleClass="text large">
+        <v:commonsValidator client="true" type="required" arg="#{text['activity.location']}"/>
+    </h:inputText>
+    
+    <h:outputLabel for="activityStatus" styleClass="desc" value="#{text['activity.activityStatus']}"/>
+    <t:message for="activityStatus" styleClass="fieldError"/>
+    <h:inputText value="#{activityForm.activity.activityStatus}" id="activityStatus" required="true" styleClass="text large">
+        <v:commonsValidator client="true" type="required" arg="#{text['activity.activityStatus']}"/>
+    </h:inputText>
+    
+    <h:outputLabel for="remark" styleClass="desc" value="#{text['activity.remark']}"/>
+    <t:message for="remark" styleClass="fieldError"/>
+    <h:inputText value="#{activityForm.activity.remark}" id="remark" required="true" styleClass="text large">
+        <v:commonsValidator client="true" type="required" arg="#{text['activity.remark']}"/>
+    </h:inputText>
+    
+    <h:outputText></h:outputText>
+    
+    
+    <h:panelGroup styleClass="buttonBar bottom">
+        <h:commandButton value="#{text['button.save']}" action="#{activityForm.save}" id="save" styleClass="button"/>
+        <h:commandButton value="#{text['button.cancel']}" action="cancel" immediate="true" id="cancel" styleClass="button" onclick="bCancel=true"/>
+    </h:panelGroup>
+    <h:outputText/><h:outputText/>
+</h:panelGrid>
+</h:form>
+
+<v:validatorScript functionName="validateActivityForm"/>
+
+<script type="text/javascript">
+    Form.focusFirstElement($('activityForm'));
+</script>
+</body>
+</f:view>
+</html>
