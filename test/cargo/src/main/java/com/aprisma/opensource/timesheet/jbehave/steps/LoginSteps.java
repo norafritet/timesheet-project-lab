@@ -12,6 +12,7 @@ import org.hamcrest.Matchers;
 import org.jbehave.core.annotations.AfterScenario;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import org.jbehave.core.annotations.AfterScenario.Outcome;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Steps
@@ -20,7 +21,7 @@ public class LoginSteps {
     @Autowired
     private Login login;
     
-    @AfterScenario
+    @AfterScenario(uponOutcome = Outcome.SUCCESS)
     public void logout(){
         login.goToPath("logout");
     }
