@@ -16,6 +16,8 @@ public class AttendanceForm extends BasePage implements Serializable {
     private Attendance attendance = new Attendance();
     private GenericManager<Attendance, Long> attendanceManager;
 
+
+
     public GenericManager<Attendance, Long> getAttendanceManager() {
         return attendanceManager;
     }
@@ -31,7 +33,12 @@ public class AttendanceForm extends BasePage implements Serializable {
         String username = getRequest().getRemoteUser();
         User user = userManager.getUserByUsername(username);
         attendance.setCheckUser(user);
-        attendance = attendanceManager.save(attendance);
+        System.out.println("--->" + user.getFirstName());
+        //attendance.setId(new Long(0));
+        attendance.setCheckIn(new java.sql.Time(new java.util.Date().getTime()));
+        attendance.setCheckOut(new java.sql.Time(new java.util.Date().getTime()));
+        attendance.setCheckDate(new java.sql.Date(new java.util.Date().getTime()));
+        attendanceManager.save(attendance);
         //addMessage("absent_one_day.added");
 
         return "mainMenu";
