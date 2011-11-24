@@ -17,22 +17,24 @@
 
                 <h:panelGroup styleClass="info"><h:outputText value="#{text['attendance.message']}"/></h:panelGroup>
                 <h:outputText/><h:outputText/>
-
-                <h:outputLabel styleClass="desc" for="checkInTime" value="#{text['attendance.checkInTime']} #{text['time.format']}"/>
-                <t:message for="checkInTime" styleClass="fieldError"/>
+                      <!--
+                <h:outputLabel styleClass="desc" for="checkIn" value="#{text['attendance.checkInTime']} #{text['time.format']}"/>
+                <t:message for="checkIn" styleClass="fieldError"/>
                 <h:inputText value="#{attendanceForm.checkDate}" id="checkInTime" required="true" styleClass="text medium">
-                    <f:convertTime for="checkInTime" pattern="#{text['time.format']}" type="time"  />
+
+                    <f:convertDateTime for="checkIn" pattern="#{text['time.format']}" type="time"  />
                     <v:commonsValidator client="true" type="required" arg="#{text['attendance.checkInTime']}"/>
                 </h:inputText>
-
+                      //-->
+                <!--
                 <h:outputLabel styleClass="desc" for="checkOutTime" value="#{text['attendance.checkOutTime']} #{text['time.format']}"/>
                 <t:message for="checkOutTime" styleClass="fieldError"/>
                 <h:inputText value="#{attendanceForm.checkOutTime}" id="checkOutTime" required="true" styleClass="text medium">
-                    <f:convertTime for="checkOutTime" pattern="#{text['time.format']}" type="time"  />
+                    <f:convertDateTime for="checkOutTime" pattern="#{text['time.format']}" type="time"  />
                     <v:commonsValidator client="true" type="required" arg="#{text['attendance.checkInTime']}"/>
                 </h:inputText>
 
-
+                //-->
 
 
                 
