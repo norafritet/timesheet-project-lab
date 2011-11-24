@@ -114,10 +114,10 @@
 
     <!-- Added by M -->
     <navigation-rule>
-        <from-view-id>/mainMenu.xhtml</from-view-id>
+        <from-view-id>/attendanceForm.xhtml</from-view-id>
         <navigation-case>
-            <from-outcome>checkRoll</from-outcome>
-            <to-view-id>/checkRoll.xhtml</to-view-id>
+            <from-outcome>cancel</from-outcome>
+            <to-view-id>/mainMenu.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
     </navigation-rule>
@@ -289,6 +289,24 @@
             <value>#{absentManager}</value>
         </managed-property>
     </managed-bean>
+
+    <managed-bean>
+        <description>Attendance</description>
+        <managed-bean-name>attendanceForm</managed-bean-name>
+        <managed-bean-class>com.aprisma.opensource.timesheet.webapp.action.AttendanceForm</managed-bean-class>
+
+        <managed-bean-scope>request</managed-bean-scope>
+
+        <managed-property>
+            <property-name>userManager</property-name>
+            <value>#{userManager}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>absentManager</property-name>
+            <value>#{absentManager}</value>
+        </managed-property>
+    </managed-bean>
+
     <!-- Add additional beans here -->
 
     <render-kit>
