@@ -35,4 +35,5 @@
     <bean id="absentManager" class="org.appfuse.service.impl.GenericManagerImpl">     
         <constructor-arg ref="absentDao"/> 
     </bean>
+
 </beans>
