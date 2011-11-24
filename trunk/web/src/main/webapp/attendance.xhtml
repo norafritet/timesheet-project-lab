@@ -20,16 +20,16 @@
 
                 <h:outputLabel styleClass="desc" for="checkIn" value="#{text['attendance.checkInTime']} #{text['time.format']}"/>
                 <t:message for="checkIn" styleClass="fieldError"/>
-                <h:inputText value="" id="checkIn" required="true" styleClass="text medium">
+                <h:inputText value="#{attendanceForm.checkIn}" id="checkIn" required="true" styleClass="text medium">
 
-                    <f:convertDateTime for="checkIn" pattern="#{text['time.format']}" type="time"  />
+                    <f:convertDateTime for="checkIn" pattern="#{text['time.format']}" type="time" timeZone="#{text['timezone.format']}" />
                     <v:commonsValidator client="true" type="required" arg="#{text['attendance.checkInTime']}"/>
                 </h:inputText>
 
                 <h:outputLabel styleClass="desc" for="checkOutTime" value="#{text['attendance.checkOutTime']} #{text['time.format']}"/>
                 <t:message for="checkOutTime" styleClass="fieldError"/>
-                <h:inputText value="" id="checkOutTime" required="true" styleClass="text medium">
-                    <f:convertDateTime for="checkOutTime" pattern="#{text['time.format']}" type="time"  />
+                <h:inputText value="#{attendanceForm.checkOut}" id="checkOutTime" required="true" styleClass="text medium">
+                    <f:convertDateTime for="checkOutTime" pattern="#{text['time.format']}" type="time" timeZone="#{text['timezone.format']}"  />
                     <v:commonsValidator client="true" type="required" arg="#{text['attendance.checkInTime']}"/>
                 </h:inputText>
                 
