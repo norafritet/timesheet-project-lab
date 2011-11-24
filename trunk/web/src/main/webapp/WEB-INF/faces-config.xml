@@ -302,8 +302,8 @@
             <value>#{userManager}</value>
         </managed-property>
         <managed-property>
-            <property-name>absentManager</property-name>
-            <value>#{absentManager}</value>
+            <property-name>attendanceManager</property-name>
+            <value>#{attendanceManager}</value>
         </managed-property>
     </managed-bean>
 

@@ -16,6 +16,16 @@ public class AttendanceForm extends BasePage implements Serializable {
     private Attendance attendance = new Attendance();
     private GenericManager<Attendance, Long> attendanceManager;
 
+    public GenericManager<Attendance, Long> getAttendanceManager() {
+        return attendanceManager;
+    }
+
+    public void setAttendanceManager(GenericManager<Attendance, Long> attendanceManager) {
+        this.attendanceManager = attendanceManager;
+    }
+
+
+
     public String save() {
 
         String username = getRequest().getRemoteUser();
