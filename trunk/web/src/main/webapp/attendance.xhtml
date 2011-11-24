@@ -17,24 +17,7 @@
 
                 <h:panelGroup styleClass="info"><h:outputText value="#{text['attendance.message']}"/></h:panelGroup>
                 <h:outputText/><h:outputText/>
-                      <!--
-                <h:outputLabel styleClass="desc" for="checkIn" value="#{text['attendance.checkInTime']} #{text['time.format']}"/>
-                <t:message for="checkIn" styleClass="fieldError"/>
-                <h:inputText value="#{attendanceForm.checkDate}" id="checkInTime" required="true" styleClass="text medium">
 
-                    <f:convertDateTime for="checkIn" pattern="#{text['time.format']}" type="time"  />
-                    <v:commonsValidator client="true" type="required" arg="#{text['attendance.checkInTime']}"/>
-                </h:inputText>
-                      //-->
-                <!--
-                <h:outputLabel styleClass="desc" for="checkOutTime" value="#{text['attendance.checkOutTime']} #{text['time.format']}"/>
-                <t:message for="checkOutTime" styleClass="fieldError"/>
-                <h:inputText value="#{attendanceForm.checkOutTime}" id="checkOutTime" required="true" styleClass="text medium">
-                    <f:convertDateTime for="checkOutTime" pattern="#{text['time.format']}" type="time"  />
-                    <v:commonsValidator client="true" type="required" arg="#{text['attendance.checkInTime']}"/>
-                </h:inputText>
-
-                //-->
 
 
                 
@@ -46,12 +29,14 @@
             </h:panelGrid>
         </h:form>
 
+        <!--
         <v:validatorScript functionName="validateAbsentOneDayForm"/>
 
         <script type="text/javascript">
             Form.focusFirstElement($('absentOneDayForm'));
             highlightFormElements();
         </script>
+        //-->
 
     </f:view>
 </html>
