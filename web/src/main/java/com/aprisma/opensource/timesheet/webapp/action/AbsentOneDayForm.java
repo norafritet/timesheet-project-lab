@@ -2,6 +2,8 @@ package com.aprisma.opensource.timesheet.webapp.action;
 
 import com.aprisma.opensource.timesheet.model.Absent;
 import java.util.Date;
+import org.appfuse.model.User;
+import org.appfuse.service.GenericManager;
 
 /**
  *
@@ -14,7 +16,11 @@ public class AbsentOneDayForm extends BasePage {
 
     private String[] types=new String[]{"cuti","unpaid cuti","sakit","bolos"};
     
+    private GenericManager<Absent, Long> absentManager;
     
+    public void setAbsentManager(GenericManager<Absent, Long> absentManager) {
+        this.absentManager =absentManager; 
+    }
     public Absent getAbsent() {
         return absent;
     }
@@ -29,7 +35,10 @@ public class AbsentOneDayForm extends BasePage {
     }
 
     public void setCheckDate(Date checkDate) {
-
+        if(checkDate!=null)
+            absent.setCheckDate(new java.sql.Date(checkDate.getTime()));
+        else 
+            absent.setCheckDate(null);
     }
 
     public String[] getTypes() {
@@ -42,8 +51,14 @@ public class AbsentOneDayForm extends BasePage {
 
     public String save() {
         
+        String username = getRequest().getRemoteUser();
+        User user = userManager.getUserByUsername(username);
+        absent.setCheckUser(user);
+        absent = absentManager.save(absent);
         addMessage("absent_one_day.added");
         
         return "mainMenu";
     }
+
+
 }

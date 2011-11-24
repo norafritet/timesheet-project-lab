@@ -28,6 +28,11 @@
     <bean id="compassPostProcessor" class="com.aprisma.opensource.timesheet.webapp.search.CompassConfigurationPostProcessor"/>
 
     <!-- Add new DAOs here -->
-
+    <bean id="absentDao" class="org.appfuse.dao.jpa.GenericDaoJpa">
+        <constructor-arg value="com.aprisma.opensource.timesheet.model.Absent"/> 
+    </bean> 
     <!-- Add new Managers here -->
+    <bean id="absentManager" class="org.appfuse.service.impl.GenericManagerImpl">     
+        <constructor-arg ref="absentDao"/> 
+    </bean>
 </beans>

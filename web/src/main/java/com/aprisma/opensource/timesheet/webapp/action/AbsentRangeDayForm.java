@@ -1,7 +1,10 @@
 package com.aprisma.opensource.timesheet.webapp.action;
 
 import com.aprisma.opensource.timesheet.model.Absent;
+import java.util.Calendar;
 import java.util.Date;
+import org.appfuse.model.User;
+import org.appfuse.service.GenericManager;
 
 /**
  *
@@ -9,22 +12,15 @@ import java.util.Date;
  */
 public class AbsentRangeDayForm extends BasePage {
 
-    
-    private Absent absent = new Absent();
-
     private Date fromDate;
-    private Date toDate  ;
-    private String type  ;
+    private Date toDate;
+    private String type;
     private String remark;
-    
-    private String[] types=new String[]{"cuti","unpaid cuti","sakit","bolos"};
+    private String[] types = new String[]{"cuti", "unpaid cuti", "sakit", "bolos"};
+    private GenericManager<Absent, Long> absentManager;
 
-    public Absent getAbsent() {
-        return absent;
-    }
-
-    public void setAbsent(Absent absent) {
-        this.absent = absent;
+    public void setAbsentManager(GenericManager<Absent, Long> absentManager) {
+        this.absentManager = absentManager;
     }
 
     public Date getFromDate() {
@@ -58,8 +54,6 @@ public class AbsentRangeDayForm extends BasePage {
     public void setType(String type) {
         this.type = type;
     }
-    
-    
 
     public String[] getTypes() {
         return types;
@@ -70,9 +64,24 @@ public class AbsentRangeDayForm extends BasePage {
     }
 
     public String save() {
-        
-        addMessage("absent_range_day.added"); 
-        
+
+        String username = getRequest().getRemoteUser();
+
+        User user = userManager.getUserByUsername(username);
+        Absent absent;
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(fromDate);
+        while (calendar.getTimeInMillis() <= toDate.getTime()) {
+            absent = new Absent();
+            absent.setCheckUser(user);
+            absent.setCheckDate(new java.sql.Date(calendar.getTimeInMillis()));
+            absent.setRemark(remark);
+            absent.setType(type);
+            absentManager.save(absent);
+            calendar.add(Calendar.DATE, 1);
+        }
+        addMessage("absent_range_day.added");
+
         return "mainMenu";
     }
 }
