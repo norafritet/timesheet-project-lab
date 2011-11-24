@@ -114,7 +114,7 @@
 
     <!-- Added by M -->
     <navigation-rule>
-        <from-view-id>/attendanceForm.xhtml</from-view-id>
+        <from-view-id>/attendance.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>cancel</from-outcome>
             <to-view-id>/mainMenu.xhtml</to-view-id>
