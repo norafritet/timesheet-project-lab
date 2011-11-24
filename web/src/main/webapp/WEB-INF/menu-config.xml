@@ -5,7 +5,7 @@
     </Displayers>
     <Menus>
         <Menu name="MainMenu" title="mainMenu.title" page="/mainMenu" roles="ROLE_ADMIN,ROLE_USER">
-            <Item name="CheckRoll" title="mainMenu.attendanceForm" page="/attendanceForm"/>
+            <Item name="CheckRoll" title="mainMenu.attendance" page="/attendanceForm"/>
             <Item name="Activity" title="mainMenu.insertActivity" page="/activityForm"/>
             <Item name="AbsentOneDay" title="mainMenu.absentOneDay" page="/absentOneDay"/>
             <Item name="AbsentRangeDay" title="mainMenu.absentRangeDay" page="/absentRangeDay"/>
