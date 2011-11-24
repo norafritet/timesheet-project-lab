@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <MenuConfig>
     <Displayers>
-        <Displayer name="Velocity" type="net.sf.navigator.displayer.VelocityMenuDisplayer"/>
+        <Displayer name="Velocity" type="net.sf.navigator.displayer.VelocityMenuDisplayer"/>   
     </Displayers>
     <Menus>
         <Menu name="MainMenu" title="mainMenu.title" page="/mainMenu" roles="ROLE_ADMIN,ROLE_USER">
             <Item name="CheckRoll" title="mainMenu.chekcRoll" page="/checkRoll"/>
             <Item name="Activity" title="mainMenu.activity" page="/activity"/>
             <Item name="AbsentOneDay" title="mainMenu.absentOneDay" page="/absentOneDay"/>
+            <Item name="AbsentRangeDay" title="mainMenu.absentRangeDay" page="/absentRangeDay"/>
         </Menu>
         <Menu name="UserMenu" title="menu.user" description="User Menu" page="/editProfile" roles="ROLE_ADMIN,ROLE_USER"/>
         <Menu name="AdminMenu" title="menu.admin" description="Admin Menu" roles="ROLE_ADMIN" width="120" page="/admin/users">

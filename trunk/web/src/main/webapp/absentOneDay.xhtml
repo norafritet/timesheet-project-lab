@@ -11,7 +11,7 @@
             <meta name="heading" content="#{text['absent_one_day.heading']}"/>
         </head>
 
-        <h:form id="absentOneDayForm"  onsubmit="return validateAbsentOneDayForm(this)">
+        <h:form id="absentOneDayForm" onsubmit="return validateAbsentOneDayForm(this)">
 
             <h:panelGrid columns="3">
 
@@ -39,7 +39,7 @@
                 </h:inputText>
                 
                 <h:panelGroup styleClass="buttonBar bottom">
-                    <h:commandButton value="#{text['button.save']}" action="#{absentOneDayForm.save}" styleClass="button"/>
+                    <h:commandButton value="#{text['button.save']}" action="#{absentOneDayForm.save}" id="save" styleClass="button"/>
                     <h:commandButton value="#{text['button.cancel']}" action="mainMenu" immediate="true"
                                      id="cancel" styleClass="button" onclick="bCancel=true"/>
                 </h:panelGroup>
