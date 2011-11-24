@@ -122,8 +122,17 @@
         </navigation-case>
     </navigation-rule>
    <!-- End Added -->
-    
-    <managed-bean>
+   <!-- Added by Ardian -->
+   <navigation-rule>
+        <from-view-id>/activityForm.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>cancel</from-outcome>
+            <to-view-id>/mainMenu.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+    <!-- End Added -->
+     <managed-bean>
         <managed-bean-name>basePage</managed-bean-name>
         <managed-bean-class>com.aprisma.opensource.timesheet.webapp.action.BasePage</managed-bean-class>
     

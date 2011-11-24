@@ -183,7 +183,4 @@ public class Activity implements Serializable {
         hash = 97 * hash + (this.activityDate != null ? this.activityDate.hashCode() : 0);
         return hash;
     }
-    
-
-    
 }
