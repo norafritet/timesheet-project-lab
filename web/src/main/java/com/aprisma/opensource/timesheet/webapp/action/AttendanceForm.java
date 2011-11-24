@@ -14,14 +14,14 @@ import org.appfuse.service.GenericManager;
 public class AttendanceForm extends BasePage {
 
     private Attendance attendance = new Attendance();
-    private GenericManager<Attendance, Long> checkManager;
+    private GenericManager<Attendance, Long> attendanceManager;
 
     public String save() {
 
         String username = getRequest().getRemoteUser();
         User user = userManager.getUserByUsername(username);
         attendance.setCheckUser(user);
-        attendance = checkManager.save(attendance);
+        attendance = attendanceManager.save(attendance);
         addMessage("absent_one_day.added");
 
         return "mainMenu";
