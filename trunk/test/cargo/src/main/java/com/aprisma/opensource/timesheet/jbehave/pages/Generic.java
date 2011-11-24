@@ -3,10 +3,12 @@ package com.aprisma.opensource.timesheet.jbehave.pages;
 
 public interface Generic {
 
-    public String getCurrentUrl() ;
+    String getCurrentUrl() ;
 
-    public String getTitle();
+    String getTitle();
     
-    public String getSuccessMessages();
+    String getSuccessMessages();
+    
+    void goToPath(String path);
     
 }

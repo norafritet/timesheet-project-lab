@@ -28,18 +28,20 @@ public class StoryTest {
     //Embedder embedder = timeSheetStories.configuredEmbedder();
     
     @Test 
-    
+    @Ignore
     public void testRun_SignupUser() throws Throwable{
-//        List<String> list = asList("**/signup_user.story");
-//        String file = codeLocationFromClass(timeSheetStories.getClass()).getFile();
-//        embedder.runStoriesAsPaths(new StoryFinder().findPaths(file,list , null));
         System.setProperty("storyFilter", "signup_user");
         timeSheetStories.run();
     }
-    
     @Test 
+    @Ignore
     public void testRun_CheckRoll() throws Throwable{
         System.setProperty("storyFilter", "check_roll");
+        timeSheetStories.run();
+    }
+    @Test 
+    public void testRun_Absent() throws Throwable{
+        System.setProperty("storyFilter", "absent");
         timeSheetStories.run();
     }
 }

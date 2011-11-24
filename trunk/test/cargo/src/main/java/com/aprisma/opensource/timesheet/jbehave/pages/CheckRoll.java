@@ -8,11 +8,9 @@ package com.aprisma.opensource.timesheet.jbehave.pages;
  *
  * @author devxpbox
  */
-public interface CheckRoll {
+public interface CheckRoll extends Generic{
 
     public void clickMenuCheckRollMenu();
-
-    public String getCurrentUrl();
 
     public void fillData(String checkRollDate, String checkInTime, String checkOutTime);
 

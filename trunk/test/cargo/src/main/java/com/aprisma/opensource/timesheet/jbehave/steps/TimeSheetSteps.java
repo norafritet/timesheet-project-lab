@@ -1,54 +1,32 @@
 package com.aprisma.opensource.timesheet.jbehave.steps;
 
+import com.aprisma.opensource.timesheet.jbehave.pages.Absent;
+import com.aprisma.opensource.timesheet.jbehave.pages.Activity;
 import com.aprisma.opensource.timesheet.jbehave.pages.CheckRoll;
-import com.aprisma.opensource.timesheet.jbehave.pages.Generic;
 import java.net.MalformedURLException;
-import org.jbehave.core.annotations.AfterStories;
 import com.aprisma.opensource.timesheet.jbehave.spring.Steps;
-import org.jbehave.core.annotations.BeforeStories;
-import org.jbehave.core.annotations.AfterScenario;
-import com.aprisma.opensource.timesheet.jbehave.pages.Login;
 import org.jbehave.core.annotations.Pending;
-import com.aprisma.opensource.timesheet.jbehave.pages.Signup;
 
 import java.net.URL;
-import java.util.Date;
-import org.hamcrest.Matchers;
-import org.jbehave.core.annotations.Alias;
-import org.jbehave.core.annotations.Composite;
-import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
-/*
-import org.jbehave.tutorials.etsy.pages.AdvancedSearch;
-import org.jbehave.tutorials.etsy.pages.Buy;
-import org.jbehave.tutorials.etsy.pages.CartContents;
-import org.jbehave.tutorials.etsy.pages.Home;
-import org.jbehave.tutorials.etsy.pages.PageFactory;
-import org.jbehave.tutorials.etsy.pages.SearchResults;
-import org.jbehave.tutorials.etsy.pages.Site;
-import org.jbehave.tutorials.etsy.pages.Treasury;
- */
+
 import org.hamcrest.Matchers;
-import org.jbehave.core.annotations.BeforeScenario;
-import org.jbehave.web.selenium.PerStoryWebDriverSteps;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import static org.hamcrest.Matchers.equalTo;
-import org.jbehave.web.selenium.PerScenarioWebDriverSteps;
-import org.jbehave.web.selenium.WebDriverProvider;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.subethamail.wiser.Wiser;
 
 @Steps
 public class TimeSheetSteps {
 
     @Autowired
-    private Generic generic;
-    
-    @Autowired
     private CheckRoll checkRoll;
     
+    @Autowired
+    private Activity activity;
+    @Autowired
+    private Absent absent;
+
     @When("click menu Check Roll menu")
     public void whenClickMenuCheckRollMenu() {
         checkRoll.clickMenuCheckRollMenu();
@@ -56,13 +34,13 @@ public class TimeSheetSteps {
 
     @Then("show Check Roll form")
     public void thenShowCheckRollForm() throws MalformedURLException {
-        URL url = new URL(generic.getCurrentUrl());
+        URL url = new URL(checkRoll.getCurrentUrl());
         assertThat(url.getPath(), Matchers.containsString("/checkRoll"));
     }
 
     @When("fill in data to Check Roll Date value $checkRollDate , Check In Time value $checkInTime , Check Out Time value $checkOutTime , click Save button")
     public void whenFillInDataToCheckRollDateValueCheckInTimeValueCheckOutTimeValueClickSaveButton(String checkRollDate, String checkInTime, String checkOutTime) {
-        checkRoll.fillData(checkRollDate,checkInTime,checkOutTime);
+        checkRoll.fillData(checkRollDate, checkInTime, checkOutTime);
         checkRoll.clickButtonSave();
     }
 
@@ -70,5 +48,77 @@ public class TimeSheetSteps {
     @Pending
     public void thenShowMessageDataCheckRollHasBeenSaved() {
         // PENDING
+    }
+
+    // activity step
+    @When("click menu Activity menu")
+    public void whenClickMenuActivityMenu() {
+        activity.clickMenuActivityMenu(); 
+    }
+
+    @Then("show Activity form")
+    @Pending
+    public void thenShowActivityForm() {
+        // PENDING
+    }
+
+    @Then("default activity date is today")
+    @Pending
+    public void thenDefaultActivityDateIsToday() {
+        // PENDING
+    }
+
+    @When("fill in data to Activity Form Date value $activityDate , Time from value $timeFrom , Time to value $timeTo , click Save button")
+    @Pending
+    public void whenFillInDataToActivityFormDateValueTimeFromValueTimeToValueClickSaveButton(String $activityDate, String timeFrom, String timeTo) {
+        // PENDING
+    }
+
+    @Then("show message data Activity has been saved")
+    @Pending
+    public void thenShowMessageDataActivityHasBeenSaved() {
+        // PENDING
+    }
+
+    @When("click menu One Day Absent menu")
+    public void whenClickMenuOneDayAbsentMenu() {
+        absent.clickMenuOneDayAbsentMenu();
+    }
+
+    @Then("show One Day Absent form")
+    public void thenShowOneDayAbsentForm() {
+        // PENDING
+    }
+
+    @When("fill in data to absent Form Date value $absentDate , Select value $type for type, reason value no $reason , click Save button")
+    public void whenFillInDataToAbsentFormDateValueSelectValueTypeReasonValueNoReasonClickSaveButton(String absentDate, String type, String reason) {
+        absent.fillInData(absentDate, type, reason);
+        absent.clickButtonSave();
+    }
+
+    @Then("show message data One Day Absent has been saved")
+    public void thenShowMessageDataOneDayAbsentHasBeenSaved() {
+        assertThat(absent.getSuccessMessages(), Matchers.containsString("Your Absent has been submit successfully."));
+    }
+
+    @When("click menu Range Day Absent menu")
+    public void whenClickMenuRangeDayAbsentMenu() {
+        absent.clickMenuRangeDayAbsentMenu();
+    }
+
+    @Then("show Range Day Absent form")
+    public void thenShowRangeDayAbsentForm() {
+        // PENDING
+    }
+
+    @When("fill in data to Range Day Absent Form From Date value $fromDate , To Date value $toDate ,  Select value $type for type, reason value $reason , click Save button")
+    public void whenFillInDataToAbsentFormDateValueSelectValueTypeReasonValueNoReasonClickSaveButton(String fromDate, String toDate, String type, String reason) {
+        absent.fillInRangeAbsent(fromDate, toDate, type, reason);
+        absent.clickRangeButtonSave();
+    }
+
+    @Then("show message data Range Day Absent has been saved")
+    public void thenShowMessageDataRangeDayAbsentHasBeenSaved() {
+        assertThat(absent.getSuccessMessages(), Matchers.containsString("Your Range Absent has been submit successfully."));
     }
 }
