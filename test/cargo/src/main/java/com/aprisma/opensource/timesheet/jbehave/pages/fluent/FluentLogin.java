@@ -27,11 +27,7 @@ public class FluentLogin extends FluentPage implements Login {
         goToPath("login");
     }
 
-//    @Override
-//    public void go(String section) {
-//        go();
-//        link(xpath("@title = '" + section + "'")).click();
-//    }
+
 
     @Override
     public void loginUsingUserNameAndPassword(String userName, String password) {
@@ -42,7 +38,8 @@ public class FluentLogin extends FluentPage implements Login {
 
     @Override
     public void logout() {
-        link(xpath("@title = 'Logout'")).click();
+        goToPath("logout");
+        //link(xpath("@title = 'Logout'")).click();
     }
 
 }

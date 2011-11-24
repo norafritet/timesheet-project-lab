@@ -1,7 +1,7 @@
 package com.aprisma.opensource.timesheet.jbehave.pages;
 
 
-public interface Login {
+public interface Login extends Generic{
     
     void go();
 

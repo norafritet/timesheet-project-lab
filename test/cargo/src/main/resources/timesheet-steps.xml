@@ -5,7 +5,8 @@
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"
        default-lazy-init="true">
            
-  <bean id="driverProvider" class="org.jbehave.web.selenium.PropertyWebDriverProvider" scope="singleton" />
+  <bean id="driverProvider" class="org.jbehave.web.selenium.PropertyWebDriverProvider" />
+  
   <bean class="org.jbehave.web.selenium.PerStoryWebDriverSteps" >
     <constructor-arg ref="driverProvider" /> 
   </bean>

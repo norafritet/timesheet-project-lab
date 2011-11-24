@@ -1,5 +1,6 @@
 package com.aprisma.opensource.timesheet.jbehave.pages.fluent;
 
+import com.aprisma.opensource.timesheet.jbehave.pages.Generic;
 import com.thoughtworks.xstream.io.binary.Token.Value;
 import org.jbehave.web.selenium.WebDriverPage;
 import org.jbehave.web.selenium.WebDriverProvider;
@@ -9,8 +10,7 @@ import org.seleniumhq.selenium.fluent.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
-public class FluentPage extends WebDriverPage implements FluentWebDriver {
-    
+public class FluentPage extends WebDriverPage implements FluentWebDriver ,Generic{
     
     private String serverUrl="http://localhost:8080";
     
@@ -28,7 +28,15 @@ public class FluentPage extends WebDriverPage implements FluentWebDriver {
      
         get(serverUrl+"/"+warContext+"/"+path);
     }
-   
+    //@Override
+    public void goByTitle(String section) {
+       link(By.xpath("@title = '" + section + "'")).click();
+    } 
+    @Override
+    public String getSuccessMessages() {
+        return div(By.id("successMessages")).getText().trim();
+    }
+    
     public FluentPage(WebDriverProvider driverProvider) {
         super(driverProvider);
     }
@@ -388,4 +396,5 @@ public class FluentPage extends WebDriverPage implements FluentWebDriver {
     public FluentWebElements options(By by) {
         return fluentWebDriver().options(by);
     }
+
 }

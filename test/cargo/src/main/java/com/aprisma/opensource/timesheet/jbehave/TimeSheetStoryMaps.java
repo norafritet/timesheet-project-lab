@@ -41,7 +41,7 @@ public class TimeSheetStoryMaps extends JUnitStoryMaps {
 
     @Override
     protected List<String> storyPaths() {
-        return new StoryFinder().findPaths(codeLocationFromClass(this.getClass()), "**/stories/timesheet/*.story", "");
+        return new StoryFinder().findPaths(codeLocationFromClass(this.getClass()), "**/*.story", "");
 
     }
 
