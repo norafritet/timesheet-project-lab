@@ -42,6 +42,8 @@ public class AbsentOneDayForm extends BasePage {
 
     public String save() {
         
+        addMessage("absent_one_day.added");
+        
         return "mainMenu";
     }
 }

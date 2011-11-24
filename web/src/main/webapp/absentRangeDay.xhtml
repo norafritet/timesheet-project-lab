@@ -1,0 +1,64 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://java.sun.com/jstl/core" 
+      xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" 
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:t="http://myfaces.apache.org/tomahawk"
+      xmlns:v="http://shale.apache.org/validator">
+
+    <f:view>
+        <f:loadBundle var="text" basename="#{basePage.bundleName}"/>
+        <head>
+            <title>#{text['absent_range_day.title']}</title>
+            <meta name="menu" content="MainMenu"/>
+            <meta name="heading" content="#{text['absent_range_day.heading']}"/>
+        </head>
+
+        <h:form id="absentRangeDayForm" onsubmit="return validateAbsentRangeDayForm(this)">
+
+            <h:panelGrid columns="3">
+
+                <h:panelGroup styleClass="info"><h:outputText value="#{text['absent_range_day.message']}"/></h:panelGroup>
+                <h:outputText/><h:outputText/>
+
+                <h:outputLabel styleClass="desc" for="fromDate" value="#{text['absent_range_day.fromDate']} #{text['date.format']}"/>
+                <t:message for="fromDate" styleClass="fieldError"/>
+                <h:inputText value="#{absentRangeDayForm.fromDate}" id="fromDate" required="true" styleClass="text medium">
+                    <f:convertDateTime for="fromDate" pattern="#{text['date.format']}" type="date"  />
+                    <v:commonsValidator client="true" type="required" arg="#{text['absent_range_day.checkDate']}"/>
+                </h:inputText>
+
+                <h:outputLabel styleClass="desc" for="toDate" value="#{text['absent_range_day.toDate']} #{text['date.format']}"/>
+                <t:message for="toDate" styleClass="fieldError"/>
+                <h:inputText value="#{absentRangeDayForm.toDate}" id="toDate" required="true" styleClass="text medium">
+                    <f:convertDateTime for="toDate" pattern="#{text['date.format']}" type="date"  />
+                    <v:commonsValidator client="true" type="required" arg="#{text['absent_range_day.checkDate']}"/>
+                </h:inputText>
+                
+                <h:outputLabel styleClass="desc" for="absentType" value="#{text['absent_range_day.type']}"/>
+                <t:message for="absentType" styleClass="fieldError"/>
+                <h:selectOneMenu value="#{absentRangeDayForm.type}" id="absentType" required="true" styleClass="select">
+                    <f:selectItems value="#{absentRangeDayForm.types}"/>
+                    <v:commonsValidator client="true" type="required" arg="#{text['absent_range_day.type']}"/>
+                </h:selectOneMenu>
+
+                <h:outputLabel styleClass="desc" for="reason" value="#{text['absent_range_day.reason']}"/>
+                <t:message for="reason" styleClass="fieldError"/>
+                <h:inputText value="#{absentRangeDayForm.remark}" id="reason" required="true" styleClass="text medium">
+                    <v:commonsValidator client="true" type="required" arg="#{text['absent_range_day.reason']}"/>
+                </h:inputText>
+                
+                <h:panelGroup styleClass="buttonBar bottom">
+                    <h:commandButton value="#{text['button.save']}" action="#{absentRangeDayForm.save}" id="save" styleClass="button"/>
+                    <h:commandButton value="#{text['button.cancel']}" action="mainMenu" immediate="true"
+                                     id="cancel" styleClass="button" onclick="bCancel=true"/>
+                </h:panelGroup>
+            </h:panelGrid>
+        </h:form>
+
+        <v:validatorScript functionName="validateAbsentRangeDayForm"/>
+
+        <script type="text/javascript">
+            Form.focusFirstElement($('absentRangeDayForm'));
+            highlightFormElements();
+        </script>
+
+    </f:view>
+</html>

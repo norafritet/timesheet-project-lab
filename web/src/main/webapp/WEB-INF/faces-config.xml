@@ -77,7 +77,8 @@
             <from-outcome>success</from-outcome>
             <to-view-id>/showFile.xhtml</to-view-id>
         </navigation-case>
-    </navigation-rule><navigation-rule>
+    </navigation-rule>
+    <navigation-rule>
         <from-view-id>/signup.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>cancel</from-outcome>
@@ -121,14 +122,13 @@
         </navigation-case>
     </navigation-rule>
    <!-- End Added -->
-
-
-
+    
     <managed-bean>
         <managed-bean-name>basePage</managed-bean-name>
         <managed-bean-class>com.aprisma.opensource.timesheet.webapp.action.BasePage</managed-bean-class>
     
-        <managed-bean-scope>request</managed-bean-scope></managed-bean>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
 
     <managed-bean>
         <managed-bean-name>userList</managed-bean-name>
@@ -138,7 +138,8 @@
         <managed-property>
             <property-name>userManager</property-name>
             <value>#{userManager}</value>
-        </managed-property></managed-bean>
+        </managed-property>
+    </managed-bean>
 
     <managed-bean>
         <managed-bean-name>userForm</managed-bean-name>
@@ -168,7 +169,8 @@
         <managed-property>
             <property-name>templateName</property-name>
             <value>accountCreated.vm</value>
-        </managed-property></managed-bean>
+        </managed-property>
+    </managed-bean>
 
     <managed-bean>
         <managed-bean-name>signupForm</managed-bean-name>
@@ -194,7 +196,8 @@
         <managed-property>
             <property-name>templateName</property-name>
             <value>accountCreated.vm</value>
-        </managed-property></managed-bean>
+        </managed-property>
+    </managed-bean>
 
     <managed-bean>
         <managed-bean-name>passwordHint</managed-bean-name>
@@ -220,32 +223,44 @@
         <managed-property>
             <property-name>templateName</property-name>
             <value>accountCreated.vm</value>
-        </managed-property></managed-bean>
+        </managed-property>
+    </managed-bean>
 
     <managed-bean>
         <managed-bean-name>fileUpload</managed-bean-name>
         <managed-bean-class>com.aprisma.opensource.timesheet.webapp.action.FileUpload</managed-bean-class>
     
-        <managed-bean-scope>request</managed-bean-scope></managed-bean>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
 
     <managed-bean>
         <managed-bean-name>reload</managed-bean-name>
         <managed-bean-class>com.aprisma.opensource.timesheet.webapp.action.Reload</managed-bean-class>
     
-        <managed-bean-scope>request</managed-bean-scope></managed-bean>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
 
     <managed-bean>
         <managed-bean-name>activeUserList</managed-bean-name>
         <managed-bean-class>com.aprisma.opensource.timesheet.webapp.action.ActiveUserList</managed-bean-class>
     
-        <managed-bean-scope>request</managed-bean-scope></managed-bean>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
         
     <managed-bean>
         <description>Absent Ond Day</description>
         <managed-bean-name>absentOneDayForm</managed-bean-name>
         <managed-bean-class>com.aprisma.opensource.timesheet.webapp.action.AbsentOneDayForm</managed-bean-class>
     
-        <managed-bean-scope>request</managed-bean-scope></managed-bean>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+        <managed-bean>
+        <description>Absent Range Day</description>
+        <managed-bean-name>absentRangeDayForm</managed-bean-name>
+        <managed-bean-class>com.aprisma.opensource.timesheet.webapp.action.AbsentRangeDayForm</managed-bean-class>
+    
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
     <!-- Add additional beans here -->
 
     <render-kit>

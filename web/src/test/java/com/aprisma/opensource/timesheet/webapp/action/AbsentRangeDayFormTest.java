@@ -16,14 +16,14 @@ import static org.junit.Assert.*;
  *
  * @author devxpbox
  */
-public class AbsentOneDayFormTest {
-    private AbsentOneDayForm form ;
+public class AbsentRangeDayFormTest {
+    private AbsentRangeDayForm form ;
     
     private void context_save_InputAbsent(){
-        form = new AbsentOneDayForm();
+        form = new AbsentRangeDayForm();
         new NonStrictExpectations(form){
             {
-           form.addMessage("absent_one_day.added");
+           form.addMessage("absent_range_day.added");
             }
         };
     }
@@ -36,7 +36,7 @@ public class AbsentOneDayFormTest {
         
         new Verifications(){
             {
-            form.addMessage("absent_one_day.added");
+            form.addMessage("absent_range_day.added");
             }
         };
     }
