@@ -39,6 +39,15 @@ public class AttendanceForm extends BasePage implements Serializable {
         attendance.setCheckIn(new Time(checkIn.getTime()));
     }
 
+    public Date getCheckDate() {
+        return attendance.getCheckDate();
+    }
+
+    public void setCheckDate(Date checkDate) {
+        //this.checkIn = checkIn;
+        attendance.setCheckDate( new java.sql.Date(checkDate.getTime()));
+    }
+
     public GenericManager<Attendance, Long> getAttendanceManager() {
         return attendanceManager;
     }
@@ -64,9 +73,9 @@ public class AttendanceForm extends BasePage implements Serializable {
         //attendance.setId(new Long(0));
         //attendance.setCheckIn(new java.sql.Time(new java.util.Date().getTime()));
         //attendance.setCheckOut(new java.sql.Time(new java.util.Date().getTime()));
-        attendance.setCheckDate(new java.sql.Date(new java.util.Date().getTime()));
+        //attendance.setCheckDate(new java.sql.Date(new java.util.Date().getTime()));
         attendanceManager.save(attendance);
-        //addMessage("absent_one_day.added");
+        addMessage("attendance.added");
 
         return "mainMenu";
     }

@@ -18,6 +18,16 @@
                 <h:panelGroup styleClass="info"><h:outputText value="#{text['attendance.message']}"/></h:panelGroup>
                 <h:outputText/><h:outputText/>
 
+                <h:outputLabel styleClass="desc" for="checkDate" value="#{text['attendance.checkDate']} #{text['date.format']}"/>
+                                <t:message for="checkDate" styleClass="fieldError"/>
+                                <h:inputText value="" id="checkDate" required="true" styleClass="text medium">
+
+                                    <f:convertDateTime for="checkDate" pattern="#{text['date.format']}" type="date" />
+                                    <v:commonsValidator client="true" type="required" arg="#{text['attendance.checkInTime']}"/>
+                                </h:inputText>
+
+
+
                 <h:outputLabel styleClass="desc" for="checkIn" value="#{text['attendance.checkInTime']} #{text['time.format']}"/>
                 <t:message for="checkIn" styleClass="fieldError"/>
                 <h:inputText value="#{attendanceForm.checkIn}" id="checkIn" required="true" styleClass="text medium">
