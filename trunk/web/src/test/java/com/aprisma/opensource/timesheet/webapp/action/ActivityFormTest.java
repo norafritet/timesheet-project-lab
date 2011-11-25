@@ -4,16 +4,24 @@
  */
 package com.aprisma.opensource.timesheet.webapp.action;
 
-
-import com.aprisma.opensource.timesheet.model.Activity;
 import java.sql.Time;
-import java.sql.Date;
-import org.junit.After;
-import org.junit.AfterClass;
+import mockit.Delegate;
+import org.appfuse.service.GenericManager;
+import com.aprisma.opensource.timesheet.model.Activity;
+import javax.servlet.http.HttpServletRequest;
+import org.appfuse.service.UserManager;
+import mockit.Mocked;
 import org.junit.Before;
+import org.appfuse.model.User;
+import java.util.Date;
+import mockit.Verifications;
+import mockit.NonStrictExpectations;
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.rules.Verifier;
 import static org.junit.Assert.*;
+
 
 /**
  *
@@ -21,49 +29,156 @@ import static org.junit.Assert.*;
  */
 public class ActivityFormTest {
     
-    public ActivityFormTest() {
-    }
-
-    @BeforeClass
-    public static void setUpClass() throws Exception {
-    }
-
-    @AfterClass
-    public static void tearDownClass() throws Exception {
-    }
+    private ActivityForm form;
+    @Mocked
+    private UserManager userManager;
+    @Mocked
+    private GenericManager<Activity, Long> activityManager;
+    @Mocked
+    private HttpServletRequest httpRequest;
+    private String username;
+    private User user;
+    private Activity activity;
+    private Activity activityResult;
     
+    //Set Up Data for Method Save
     @Before
-    public void setUp() {
+    public void onSetUp() {
+        username = "admin";
+        form = new ActivityForm();
+        activity = form.getActivity();
+        form.setUserManager(userManager);
+        form.setActivityManager(activityManager);
+        user = new User(username);
     }
     
-    @After
-    public void tearDown() {
+    
+    private void context_save_InputActivity() {
+        new NonStrictExpectations(form) {
+            {
+                form.getRequest(); result = httpRequest;
+                httpRequest.getRemoteUser(); result = username;
+                userManager.getUserByUsername(username);result=user;
+                activityManager.save(activity);
+                result = new Delegate() {
+                    Activity save(Activity activity) {
+                        activityResult = new Activity();
+                        activityResult.setActivityCase(activity.getActivityCase());
+                        activityResult.setActivityDate(activity.getActivityDate());
+                        activityResult.setActivityStatus(activity.getActivityStatus());
+                        activityResult.setIcenterNo(activity.getIcenterNo());
+                        activityResult.setLocation(activity.getLocation());
+                        activityResult.setName(activity.getName());
+                        activityResult.setRemark(activity.getRemark());
+                        activityResult.setTimeFrom(activity.getTimeFrom());
+                        activityResult.setTimeTo(activity.getTimeTo());
+                        activityResult.setType(activity.getType());
+                        activityResult.setActivityUser(activity.getActivityUser());
+                        activityResult.setId((long)-3);
+                        
+                        return activityResult;
+                    }
+                };
+                form.addMessage("activity.added");
+           }
+        };
     }
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
-    // @Test
-    // public void hello() {}
     
-    /*@Test
-    public void save_InputActivity_ReturnsMainMenu() throws Exception{
-        ActivityForm form = new ActivityForm();
-        Activity activity = new Activity();
-        activity.setId("00000000");
-        
-        Date date = new Date(1);
-        form.setActivityDate(date);
-        
-        Time time = new Time(1);
-        form.setTimeFrom(time);
-        form.setTimeTo(time);
+    @Test
+    public void save_InputActivity_Call$addMessage() {
+        context_save_InputActivity();
 
-        form.setActivity(activity);
-        
-        assertEquals("mainMenu", form.save() );
+        form.save();
 
-    }*/
+        new Verifications() {
+            {
+                form.addMessage("activity.added");
+            }
+        };
+    }
+
+    @Test
+    public void save_InputActivity_Call$getUserByUsername() {
+        context_save_InputActivity();
+
+        form.save();
+
+        new Verifications() {
+
+            {
+                userManager.getUserByUsername(username);
+            }
+        };
+    }
+
     
+    @Test
+    public void save_InputActivity_UserFromUserManager() {
+        context_save_InputActivity();
+
+        form.save();
+
+        assertTrue(user==form.getActivity().getActivityUser());
+    }
+
+    
+    //Verify that system can get user using "httpRequest.getRemoteUser();"
+    @Test
+    public void save_InputActivity_Call$getRemoteUser() {
+        context_save_InputActivity();
+
+        form.save();
+
+        new Verifications() {
+
+            {
+                httpRequest.getRemoteUser();
+            }
+        };
+    }
+    
+    
+    //Verify that Activity Manager is called
+    @Test
+    public void save_InputActivity_Call$ActivityManager$save() {
+        context_save_InputActivity();
+
+        form.save();
+
+        new Verifications() {
+
+            {
+                activityManager.save(activity);
+            }
+        };
+    }
+    
+    //Test if User = null
+
+    @Test
+    public void save_InputActivity_UserNotNull() {
+
+        context_save_InputActivity();
+
+        form.save();
+        
+        Activity a = mockit.Deencapsulation.getField(form, "activity");
+        assertNotNull(a.getActivityUser());
+    }
+   
+    
+    
+    //Test Method Save
+    @Test
+    public void save_InputActivity_ReturnsMainMenu() {
+        context_save_InputActivity();
+
+        String result = form.save();
+
+        assertEquals("mainMenu", result);
+    }
+    
+  
     // test for convert date
     @Test 
     public void setActivityDate_Date_activity$activityDateNotSameAsInput(){
@@ -91,7 +206,6 @@ public class ActivityFormTest {
     //test for timeFrom
      @Test 
     public void setTimeFrom_Time_activity$activityTimeFromNotSameAsInput(){
-        ActivityForm form = new ActivityForm();
         
         Time time = new Time(1);
         
@@ -99,9 +213,9 @@ public class ActivityFormTest {
         
         assertEquals(time, form.getTimeFrom());
     }
+     
     @Test
     public void setTimeFrom_Time_activity$activityTimeFromIsNull(){
-        ActivityForm form = new ActivityForm();
 
         Time time = null;
 
@@ -109,12 +223,9 @@ public class ActivityFormTest {
 
         assertNull(form.getTimeFrom());
     }
-    
-    
     //test for timeTo
     @Test 
     public void setTimeTo_Time_activity$activityTimeToNotSameAsInput(){
-        ActivityForm form = new ActivityForm();
         
         Time time = new Time(1);
         
@@ -124,7 +235,6 @@ public class ActivityFormTest {
     }
     @Test
     public void setTimeTo_Time_activity$activityTimeToIsNull(){
-        ActivityForm form = new ActivityForm();
 
         Time time = null;
 

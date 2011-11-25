@@ -264,9 +264,7 @@
         <description>Absent Ond Day</description>
         <managed-bean-name>absentOneDayForm</managed-bean-name>
         <managed-bean-class>com.aprisma.opensource.timesheet.webapp.action.AbsentOneDayForm</managed-bean-class>
-        
         <managed-bean-scope>request</managed-bean-scope>
-        
         <managed-property>
             <property-name>userManager</property-name>
             <value>#{userManager}</value>
@@ -276,6 +274,7 @@
             <value>#{absentManager}</value>
         </managed-property>   
     </managed-bean>
+    
     <managed-bean>
         <description>Absent Range Day</description>
         <managed-bean-name>absentRangeDayForm</managed-bean-name>
@@ -314,9 +313,7 @@
         <description>Insert Activity</description>
         <managed-bean-name>activityForm</managed-bean-name>
         <managed-bean-class>com.aprisma.opensource.timesheet.webapp.action.ActivityForm</managed-bean-class>
-    
         <managed-bean-scope>request</managed-bean-scope>
-        
         <managed-property>
             <property-name>userManager</property-name>
             <value>#{userManager}</value>

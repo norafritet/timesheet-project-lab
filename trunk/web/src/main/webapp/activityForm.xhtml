@@ -44,19 +44,17 @@
         <v:commonsValidator client="true" type="required" arg="#{text['activity.timeTo']}"/>
     </h:inputText>
     
-    <h:outputLabel for="type" styleClass="desc" value="#{text['activity.type']}"/>
-    <t:message for="type" styleClass="fieldError"/>
-    
-    <h:selectOneMenu styleClass="tbflat" id="type" value="#{activityForm.activity.type}">
-        <f:selectItems value="#{activityForm.types}"/>
-        <v:commonsValidator client="true" type="required" arg="#{text['activity.type']}"/>
-    </h:selectOneMenu>
-    
     <h:outputLabel for="name" styleClass="desc" value="#{text['activity.name']}"/>
     <t:message for="name" styleClass="fieldError"/>
     <h:inputText value="#{activityForm.activity.name}" id="name" required="true" styleClass="text large">
         <v:commonsValidator client="true" type="required" arg="#{text['activity.name']}"/>
     </h:inputText>
+    
+    <h:outputLabel for="type" styleClass="desc" value="#{text['activity.type']}"/>
+    <t:message for="type" styleClass="fieldError"/>
+    <h:selectOneMenu styleClass="tbflat" id="type" value="#{activityForm.activity.type}">
+        <f:selectItems value="#{activityForm.types}"/>
+    </h:selectOneMenu>
     
     <h:outputLabel for="activityCase" styleClass="desc" value="#{text['activity.activityCase']}"/>
     <t:message for="activityCase" styleClass="fieldError"/>
@@ -82,10 +80,11 @@
     
     
     <h:panelGroup styleClass="buttonBar bottom">
-                    <h:commandButton value="#{text['button.save']}" action="#{activityForm.save}" id="save" styleClass="button"/>
-                    <h:commandButton value="#{text['button.cancel']}" action="mainMenu" immediate="true" id="cancel" styleClass="button" onclick="bCancel=true"/>
-                </h:panelGroup>
+        <h:commandButton value="#{text['button.save']}" action="#{activityForm.save}" id="save" styleClass="button"/>
+        <h:commandButton value="#{text['button.cancel']}" action="mainMenu" immediate="true" id="cancel" styleClass="button" onclick="bCancel=true"/>
+    </h:panelGroup>
     <h:outputText/><h:outputText/>
+    
 </h:panelGrid>
 </h:form>
 
