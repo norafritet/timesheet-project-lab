@@ -13,7 +13,7 @@ import org.appfuse.dao.GenericDao;
  *
  * @author user
  */
-public interface ActivityDao extends GenericDao<Activity, String> {
+public interface ActivityDao extends GenericDao<Activity, Long> {
     
    public List<Activity> findByActivityUser(String activityUser);
 }

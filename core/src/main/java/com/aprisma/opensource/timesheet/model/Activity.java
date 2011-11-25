@@ -9,6 +9,8 @@ import java.sql.Date;
 import java.sql.Time;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -24,9 +26,12 @@ import org.appfuse.model.User;
 @Table(name="T_ACTIVITY")
 public class Activity implements Serializable {
     
+    private static final long serialVersionUID = 1L;
+    
     @Id
     @Column(name="ID")
-    private String id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
     
 
     @ManyToOne
@@ -103,11 +108,11 @@ public class Activity implements Serializable {
         this.icenterNo = icenterNo;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -182,5 +187,10 @@ public class Activity implements Serializable {
         hash = 97 * hash + (this.activityUser != null ? this.activityUser.hashCode() : 0);
         hash = 97 * hash + (this.activityDate != null ? this.activityDate.hashCode() : 0);
         return hash;
+    }
+    
+    @Override
+    public String toString() {
+        return "com.aprisma.opensource.timesheet.model.Activity[ id=" + id + " ]";
     }
 }
