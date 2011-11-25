@@ -8,7 +8,7 @@ package com.aprisma.opensource.timesheet.jbehave.pages;
  *
  * @author devxpbox
  */
-public interface CheckRoll extends Generic{
+public interface Attendance extends Generic{
 
     public void clickMenuCheckRollMenu();
 
