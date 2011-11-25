@@ -34,13 +34,21 @@
     <bean id="attendanceDao" class="org.appfuse.dao.jpa.GenericDaoJpa">
         <constructor-arg value="com.aprisma.opensource.timesheet.model.Attendance"/>
     </bean>
+
+    <bean id="activityDao" class="org.appfuse.dao.jpa.GenericDaoJpa">
+        <constructor-arg value="com.aprisma.opensource.timesheet.model.Activity"/> 
+    </bean> 
+
     <!-- Add new Managers here -->
     <bean id="absentManager" class="org.appfuse.service.impl.GenericManagerImpl">
         <constructor-arg ref="absentDao"/>
     </bean>
+
+     <bean id="activityManager" class="org.appfuse.service.impl.GenericManagerImpl">     
+        <constructor-arg ref="activityDao"/> 
+    </bean>
+
     <bean id="attendanceManager" class="org.appfuse.service.impl.GenericManagerImpl">
         <constructor-arg ref="attendanceDao"/>
     </bean>
-
-
 </beans>
