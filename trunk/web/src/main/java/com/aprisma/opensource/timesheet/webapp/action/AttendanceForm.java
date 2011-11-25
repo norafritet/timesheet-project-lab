@@ -69,11 +69,7 @@ public class AttendanceForm extends BasePage implements Serializable {
         String username = getRequest().getRemoteUser();
         User user = userManager.getUserByUsername(username);
         attendance.setCheckUser(user);
-        System.out.println("--->" + user.getFirstName());
-        //attendance.setId(new Long(0));
-        //attendance.setCheckIn(new java.sql.Time(new java.util.Date().getTime()));
-        //attendance.setCheckOut(new java.sql.Time(new java.util.Date().getTime()));
-        //attendance.setCheckDate(new java.sql.Date(new java.util.Date().getTime()));
+
         attendanceManager.save(attendance);
         addMessage("attendance.added");
 
