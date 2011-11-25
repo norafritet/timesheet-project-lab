@@ -5,10 +5,10 @@
     </Displayers>
     <Menus>
         <Menu name="MainMenu" title="mainMenu.title" page="/mainMenu" roles="ROLE_ADMIN,ROLE_USER">
-            <Item name="CheckRoll" title="mainMenu.attendance" page="/attendance"/>
-            <Item name="Activity" title="mainMenu.insertActivity" page="/activityForm"/>
-            <Item name="AbsentOneDay" title="mainMenu.absentOneDay" page="/absentOneDay"/>
-            <Item name="AbsentRangeDay" title="mainMenu.absentRangeDay" page="/absentRangeDay"/>
+            <Item name="CheckRoll" title="mainMenu.attendance" page="/attendance.jsf"/>
+            <Item name="Activity" title="mainMenu.insertActivity" page="/activityForm.jsf"/>
+            <Item name="AbsentOneDay" title="mainMenu.absentOneDay" page="/absentOneDay.jsf"/>
+            <Item name="AbsentRangeDay" title="mainMenu.absentRangeDay" page="/absentRangeDay.jsf"/>
         </Menu>
         <Menu name="UserMenu" title="menu.user" description="User Menu" page="/editProfile" roles="ROLE_ADMIN,ROLE_USER"/>
         <Menu name="AdminMenu" title="menu.admin" description="Admin Menu" roles="ROLE_ADMIN" width="120" page="/admin/users">
