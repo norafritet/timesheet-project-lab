@@ -2,7 +2,7 @@ package com.aprisma.opensource.timesheet.jbehave.steps;
 
 import com.aprisma.opensource.timesheet.jbehave.pages.Absent;
 import com.aprisma.opensource.timesheet.jbehave.pages.Activity;
-import com.aprisma.opensource.timesheet.jbehave.pages.CheckRoll;
+import com.aprisma.opensource.timesheet.jbehave.pages.Attendance;
 import java.net.MalformedURLException;
 import com.aprisma.opensource.timesheet.jbehave.spring.Steps;
 import org.jbehave.core.annotations.Pending;
@@ -20,8 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class TimeSheetSteps {
 
     @Autowired
-    private CheckRoll checkRoll;
-    
+    private Attendance attendance;
     @Autowired
     private Activity activity;
     @Autowired
@@ -29,55 +28,60 @@ public class TimeSheetSteps {
 
     @When("click menu Check Roll menu")
     public void whenClickMenuCheckRollMenu() {
-        checkRoll.clickMenuCheckRollMenu();
+        attendance.clickMenuCheckRollMenu();
     }
 
     @Then("show Check Roll form")
     public void thenShowCheckRollForm() throws MalformedURLException {
-        URL url = new URL(checkRoll.getCurrentUrl());
-        assertThat(url.getPath(), Matchers.containsString("/checkRoll"));
+        //URL url = new URL(attendance.getCurrentUrl());
+        //assertThat(url.getPath(), Matchers.containsString("/checkRoll"));
     }
 
     @When("fill in data to Check Roll Date value $checkRollDate , Check In Time value $checkInTime , Check Out Time value $checkOutTime , click Save button")
     public void whenFillInDataToCheckRollDateValueCheckInTimeValueCheckOutTimeValueClickSaveButton(String checkRollDate, String checkInTime, String checkOutTime) {
-        checkRoll.fillData(checkRollDate, checkInTime, checkOutTime);
-        checkRoll.clickButtonSave();
+        attendance.fillData(checkRollDate, checkInTime, checkOutTime);
+        attendance.clickButtonSave();
     }
 
     @Then("show message data Check Roll has been saved")
-    @Pending
     public void thenShowMessageDataCheckRollHasBeenSaved() {
-        // PENDING
+        assertThat(attendance.getSuccessMessages(), Matchers.containsString("Attendance information has been added successfully."));
     }
 
     // activity step
     @When("click menu Activity menu")
     public void whenClickMenuActivityMenu() {
-        activity.clickMenuActivityMenu(); 
+        activity.clickMenuActivityMenu();
     }
 
     @Then("show Activity form")
-    @Pending
     public void thenShowActivityForm() {
         // PENDING
     }
 
     @Then("default activity date is today")
-    @Pending
     public void thenDefaultActivityDateIsToday() {
         // PENDING
     }
 
-    @When("fill in data to Activity Form Date value $activityDate , Time from value $timeFrom , Time to value $timeTo , click Save button")
-    @Pending
-    public void whenFillInDataToActivityFormDateValueTimeFromValueTimeToValueClickSaveButton(String $activityDate, String timeFrom, String timeTo) {
-        // PENDING
+    @When("fill in data to Activity Form Date value $activityDate , Time from value $timeFrom , Time to value $timeTo , Select $selectType , Activities Name $acctifityName, Case $cassNo , ICenter No $icenter , Location $location , Status $status , Remark is $remark .")
+    public void whenFillInDataToActivityForm(String activityDate, String timeFrom, String timeTo, String selectType, String acctifityName, String cassNo, String icenter, String location, String status, String remark) {
+        activity.fillInDataToActivityForm(activityDate, timeFrom, timeTo, selectType, acctifityName, cassNo, icenter, location, status, remark);
+    }
+
+    @When("fill in Mandatory data to Activity Form Date value $activityDate , Time from value $timeFrom , Time to value $timeTo , Activities Name $acctifityName .")
+    public void whenFillInDataToActivityForm(String activityDate, String timeFrom, String timeTo, String acctifityName) {
+        activity.fillInDataToActivityForm(activityDate, timeFrom, timeTo,acctifityName);
+    }
+    
+    @When("click Activity Save Button")
+    public void whenClickActivitySaveButton() {
+        activity.clickActivitySaveButton();
     }
 
     @Then("show message data Activity has been saved")
-    @Pending
     public void thenShowMessageDataActivityHasBeenSaved() {
-        // PENDING
+        assertThat(activity.getSuccessMessages(), Matchers.containsString("success"));
     }
 
     @When("click menu One Day Absent menu")
