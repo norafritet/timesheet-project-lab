@@ -307,6 +307,26 @@
         </managed-property>
     </managed-bean>
 
+    <managed-bean>
+        <description>Insert Activity</description>
+        <managed-bean-name>activityForm</managed-bean-name>
+        <managed-bean-class>com.aprisma.opensource.timesheet.webapp.action.ActivityForm</managed-bean-class>
+    
+        <managed-bean-scope>request</managed-bean-scope>
+        
+        <managed-property>
+            <property-name>userManager</property-name>
+            <value>#{userManager}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>activityManager</property-name>
+            <value>#{activityManager}</value>
+        </managed-property>
+    </managed-bean>
+
+
+    <managed-bean>
+
     <!-- Add additional beans here -->
 
     <render-kit>
