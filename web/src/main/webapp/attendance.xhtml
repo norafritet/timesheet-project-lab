@@ -19,12 +19,12 @@
                 <h:outputText/><h:outputText/>
 
                 <h:outputLabel styleClass="desc" for="checkDate" value="#{text['attendance.checkDate']} #{text['date.format']}"/>
-                                <t:message for="checkDate" styleClass="fieldError"/>
-                                <h:inputText value="" id="checkDate" required="true" styleClass="text medium">
+                <t:message for="checkDate" styleClass="fieldError"/>
+                <h:inputText value="#{attendanceForm.checkDate}" id="checkDate" required="true" styleClass="text medium">
 
-                                    <f:convertDateTime for="checkDate" pattern="#{text['date.format']}" type="date" />
-                                    <v:commonsValidator client="true" type="required" arg="#{text['attendance.checkInTime']}"/>
-                                </h:inputText>
+                    <f:convertDateTime for="checkDate" pattern="#{text['date.format']}" type="date" />
+                    <v:commonsValidator client="true" type="required" arg="#{text['attendance.checkInTime']}"/>
+                </h:inputText>
 
 
 
