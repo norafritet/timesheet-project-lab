@@ -151,7 +151,6 @@ public class AbsentOneDayFormTest {
         form.save();
 
         assertNotNull(form.getAbsent().getCheckUser());
-
     }
 
     @Test
@@ -161,7 +160,6 @@ public class AbsentOneDayFormTest {
         String result = form.save();
 
         assertEquals("mainMenu", result);
-
     }
 
     @Test
