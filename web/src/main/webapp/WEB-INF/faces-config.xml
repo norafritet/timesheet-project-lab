@@ -34,6 +34,7 @@
             <to-view-id>/ajax4jsf.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
+    
     <navigation-rule>
         <from-view-id>/mainMenu.xhtml</from-view-id>
         <navigation-case>
@@ -42,6 +43,7 @@
             <redirect/>
         </navigation-case>
     </navigation-rule>
+    
     <navigation-rule>
         <from-view-id>/*</from-view-id>
         <navigation-case>
@@ -50,6 +52,7 @@
             <redirect/>
         </navigation-case>
     </navigation-rule>
+    
     <navigation-rule>
         <from-view-id>/*</from-view-id>
         <navigation-case>
@@ -57,6 +60,7 @@
             <to-view-id>/userForm.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
+    
     <navigation-rule>
         <from-view-id>/userForm.xhtml</from-view-id>
         <navigation-case>
@@ -270,10 +274,9 @@
         <managed-property>
             <property-name>absentManager</property-name>
             <value>#{absentManager}</value>
-        </managed-property>
-        
+        </managed-property>   
     </managed-bean>
-        <managed-bean>
+    <managed-bean>
         <description>Absent Range Day</description>
         <managed-bean-name>absentRangeDayForm</managed-bean-name>
         <managed-bean-class>com.aprisma.opensource.timesheet.webapp.action.AbsentRangeDayForm</managed-bean-class>
@@ -323,9 +326,6 @@
             <value>#{activityManager}</value>
         </managed-property>
     </managed-bean>
-
-
-    <managed-bean>
 
     <!-- Add additional beans here -->
 
