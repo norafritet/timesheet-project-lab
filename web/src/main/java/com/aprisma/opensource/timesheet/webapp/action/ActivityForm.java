@@ -11,20 +11,15 @@ package com.aprisma.opensource.timesheet.webapp.action;
 
 
 import com.aprisma.opensource.timesheet.model.Activity;
-
-
-import java.io.Serializable;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.TimeZone;
 import org.appfuse.model.User;
 import org.appfuse.service.GenericManager;
-public class ActivityForm extends BasePage implements Serializable{
+
+public class ActivityForm extends BasePage{
 
     private GenericManager<Activity,Long> activityManager;
     private Activity activity = new Activity();
-    private String[] types = new String[]{"ANL","CDG","EXP","MTG","OTH","STD","TST"};
-    TimeZone timeZone = Calendar.getInstance().getTimeZone();
+    private String[] types = new String[]{"","ANL","CDG","EXP","MTG","OTH","STD","TST"};
     
    
     public void setActivityManager(GenericManager<Activity, Long> manager) {
@@ -46,9 +41,8 @@ public class ActivityForm extends BasePage implements Serializable{
     }
 
     public void setActivityDate(Date activityDate) {
-        if(activityDate != null){
+        if(activityDate != null)
             activity.setActivityDate(new java.sql.Date(activityDate.getTime()));
-        }
     }
     
     public Date getTimeFrom() 
@@ -67,10 +61,8 @@ public class ActivityForm extends BasePage implements Serializable{
     }
 
     public void setTimeTo(Date timeTo) {
-        if(timeTo != null){
-            System.out.println(timeTo+""+timeZone.getDisplayName()+""+timeZone.getID());
+        if(timeTo != null)
             activity.setTimeTo(new java.sql.Time(timeTo.getTime()));
-        }
     }
     
     public String[] getTypes() {
@@ -86,8 +78,7 @@ public class ActivityForm extends BasePage implements Serializable{
        String username = getRequest().getRemoteUser();
        User user = userManager.getUserByUsername(username);
        activity.setActivityUser(user);
-       activity = activityManager.save(activity);
-       
+       activity = activityManager.save(activity);      
        addMessage("activity.added");
 
        return "mainMenu";
