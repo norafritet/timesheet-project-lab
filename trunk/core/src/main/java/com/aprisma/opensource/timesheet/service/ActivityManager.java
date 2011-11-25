@@ -13,6 +13,6 @@ import java.util.List;
  *
  * @author user
  */
-public interface ActivityManager extends GenericManager<Activity, String> {
+public interface ActivityManager extends GenericManager<Activity, Long> {
     public List<Activity> findByActivityUser(String activityUser);
 }

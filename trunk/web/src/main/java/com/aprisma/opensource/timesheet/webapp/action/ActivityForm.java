@@ -14,49 +14,21 @@ import com.aprisma.opensource.timesheet.model.Activity;
 
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 import org.appfuse.model.User;
 import org.appfuse.service.GenericManager;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
-
-import org.springframework.security.authentication.AuthenticationTrustResolver;
-import org.springframework.security.authentication.AuthenticationTrustResolverImpl;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
-
-@Scope("request")
-@Component("activityForm")
 public class ActivityForm extends BasePage implements Serializable{
-    
-    private GenericManager<Activity,String> activityManager;    
-    private Activity activity = new Activity();
-    private User user = new User();
-    private String id;
-    private String[] types = new String[]{"ANL","CDG","EXP","MTG","OTH","STD","TST"};
-    //private String[] timeZone = TimeZone.getAvailableIDs();
-    
-    @Autowired
-    public void setActivityManager(@Qualifier("activityManager") GenericManager<Activity, String> manager) {
-        this.activityManager = manager;
-    }
 
-    //Id
-    public void setId(String id){
-        this.id = id;
-    }
+    private GenericManager<Activity,Long> activityManager;
+    private Activity activity = new Activity();
+    private String[] types = new String[]{"ANL","CDG","EXP","MTG","OTH","STD","TST"};
+    TimeZone timeZone = Calendar.getInstance().getTimeZone();
     
-    
-    //user
-    public User getUser(){
-        return user;
-    }
-    public void setUser(User user){
-        this.user = user;
+   
+    public void setActivityManager(GenericManager<Activity, Long> manager) {
+        this.activityManager = manager;
     }
     
     //activity
@@ -96,7 +68,7 @@ public class ActivityForm extends BasePage implements Serializable{
 
     public void setTimeTo(Date timeTo) {
         if(timeTo != null){
-            System.out.println(timeTo);
+            System.out.println(timeTo+""+timeZone.getDisplayName()+""+timeZone.getID());
             activity.setTimeTo(new java.sql.Time(timeTo.getTime()));
         }
     }
@@ -108,35 +80,17 @@ public class ActivityForm extends BasePage implements Serializable{
     public void setTypes(String[] types) {
         this.types = types;
     }
-    
-    public boolean isRememberMe() {
-        if (user != null && user.getId() == null) return false; // check for add()
-        
-        AuthenticationTrustResolver resolver = new AuthenticationTrustResolverImpl();
-        SecurityContext ctx = SecurityContextHolder.getContext();
-
-        if (ctx != null) {
-            Authentication auth = ctx.getAuthentication();
-            return resolver.isRememberMe(auth);
-        }
-        return false;
-    }
 
     public String save() {
-       boolean isNew = (activity.getId() == null);
        
-        activity.setId("1212");
-        activityManager.save(activity);
+       String username = getRequest().getRemoteUser();
+       User user = userManager.getUserByUsername(username);
+       activity.setActivityUser(user);
+       activity = activityManager.save(activity);
+       
+       addMessage("activity.added");
 
-        
-        String key = (isNew) ? "activity.added" : "activity.updated";
-        addMessage(key);
-
-        if (isNew) {
-            return "mainMenu";
-        } else {
-            return "mainMenu";
-        }
+       return "mainMenu";
     }
     
 }

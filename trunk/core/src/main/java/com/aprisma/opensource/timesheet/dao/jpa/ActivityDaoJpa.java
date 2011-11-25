@@ -19,7 +19,7 @@ import javax.persistence.Query;
  * @author user
  */
 @Repository("ActivityDao")
-public class ActivityDaoJpa extends GenericDaoJpa<Activity, String> implements ActivityDao {
+public class ActivityDaoJpa extends GenericDaoJpa<Activity, Long> implements ActivityDao {
 
     public ActivityDaoJpa() {
         super(Activity.class);

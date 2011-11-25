@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
  */
 
 @Service("activityManager")
-public class ActivityManagerImpl extends GenericManagerImpl<Activity,String> implements ActivityManager{
+public class ActivityManagerImpl extends GenericManagerImpl<Activity,Long> implements ActivityManager{
     ActivityDao activityDao;
     
     @Autowired
