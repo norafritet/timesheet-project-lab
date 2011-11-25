@@ -22,14 +22,14 @@
                 <t:message for="fromDate" styleClass="fieldError"/>
                 <h:inputText value="#{absentRangeDayForm.fromDate}" id="fromDate" required="true" styleClass="text medium">
                     <f:convertDateTime for="fromDate" pattern="#{text['date.format']}" type="date"  />
-                    <v:commonsValidator client="true" type="required" arg="#{text['absent_range_day.checkDate']}"/>
+                    <v:commonsValidator client="true" type="required" arg="#{text['absent_range_day.fromDate']}"/>
                 </h:inputText>
 
                 <h:outputLabel styleClass="desc" for="toDate" value="#{text['absent_range_day.toDate']} #{text['date.format']}"/>
                 <t:message for="toDate" styleClass="fieldError"/>
                 <h:inputText value="#{absentRangeDayForm.toDate}" id="toDate" required="true" styleClass="text medium">
                     <f:convertDateTime for="toDate" pattern="#{text['date.format']}" type="date"  />
-                    <v:commonsValidator client="true" type="required" arg="#{text['absent_range_day.checkDate']}"/>
+                    <v:commonsValidator client="true" type="required" arg="#{text['absent_range_day.toDate']}"/>
                 </h:inputText>
                 
                 <h:outputLabel styleClass="desc" for="absentType" value="#{text['absent_range_day.type']}"/>
