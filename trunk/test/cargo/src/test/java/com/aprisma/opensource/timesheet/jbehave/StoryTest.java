@@ -35,13 +35,18 @@ public class StoryTest {
     }
     @Test 
     @Ignore
-    public void testRun_CheckRoll() throws Throwable{
-        System.setProperty("storyFilter", "check_roll");
+    public void testRun_Attendance() throws Throwable{
+        System.setProperty("storyFilter", "attendance");
         timeSheetStories.run();
     }
     @Test 
     public void testRun_Absent() throws Throwable{
         System.setProperty("storyFilter", "absent");
+        timeSheetStories.run();
+    }
+    @Test 
+    public void testRun_InquiryActivity() throws Throwable{
+        System.setProperty("storyFilter", "inquiry_activity");
         timeSheetStories.run();
     }
 }

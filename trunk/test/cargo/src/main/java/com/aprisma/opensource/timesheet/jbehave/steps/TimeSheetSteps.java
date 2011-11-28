@@ -1,5 +1,6 @@
 package com.aprisma.opensource.timesheet.jbehave.steps;
 
+import com.aprisma.opensource.timesheet.jbehave.pages.InquiryActivity;
 import com.aprisma.opensource.timesheet.jbehave.pages.Absent;
 import com.aprisma.opensource.timesheet.jbehave.pages.Activity;
 import com.aprisma.opensource.timesheet.jbehave.pages.Attendance;
@@ -25,7 +26,9 @@ public class TimeSheetSteps {
     private Activity activity;
     @Autowired
     private Absent absent;
-
+    @Autowired
+    private InquiryActivity inquiryActivity;
+    
     @When("click menu Check Roll menu")
     public void whenClickMenuCheckRollMenu() {
         attendance.clickMenuCheckRollMenu();
@@ -71,9 +74,9 @@ public class TimeSheetSteps {
 
     @When("fill in Mandatory data to Activity Form Date value $activityDate , Time from value $timeFrom , Time to value $timeTo , Activities Name $acctifityName .")
     public void whenFillInDataToActivityForm(String activityDate, String timeFrom, String timeTo, String acctifityName) {
-        activity.fillInDataToActivityForm(activityDate, timeFrom, timeTo,acctifityName);
+        activity.fillInDataToActivityForm(activityDate, timeFrom, timeTo, acctifityName);
     }
-    
+
     @When("click Activity Save Button")
     public void whenClickActivitySaveButton() {
         activity.clickActivitySaveButton();
@@ -120,9 +123,50 @@ public class TimeSheetSteps {
         absent.fillInRangeAbsent(fromDate, toDate, type, reason);
         absent.clickRangeButtonSave();
     }
-
+    
     @Then("show message data Range Day Absent has been saved")
     public void thenShowMessageDataRangeDayAbsentHasBeenSaved() {
         assertThat(absent.getSuccessMessages(), Matchers.containsString("Your Range Absent has been submit successfully."));
+    }
+    @When("click menu Inquiry Activity")
+    public void whenClickMenuInquiryActivity() {
+        inquiryActivity.clickMenuInquiryActivity();
+    }
+    
+    @Then("show Inquiry Activity")
+    public void thenShowInquiryActivity() {
+        //PENDING
+    }
+    
+    @When("fill in inquiry form select Year $year , Month $month , Week $week .")
+    public void whenFillInInquiryFormSelect(String year, String month, String week) {
+        inquiryActivity.fillInquiryForm(year, month, week);
+    }
+    
+    @When("click inquiry button view")
+    public void whenClickInquiryButtonView() {
+        inquiryActivity.clickInquiryButtonView();
+    }
+    @When("click inquiry button download")
+    public void whenClickInquiryButtonDownload() {
+        inquiryActivity.clickInquiryButtonDownload();
+    }
+    
+    @Then("show list activity one week.")
+    @Pending
+    public void thenShowListActivityOneWeek() {
+        // PENDING
+    }
+
+    @Then("show list activity one month.")
+    @Pending
+    public void thenShowListActivityOneMonth() {
+        // PENDING
+    }
+
+    @Then("show list activity one year.")
+    @Pending
+    public void thenShowListActivityOneYear() {
+        // PENDING
     }
 }
