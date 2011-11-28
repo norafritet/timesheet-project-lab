@@ -9,6 +9,7 @@
             <Item name="Activity" title="mainMenu.insertActivity" page="/activityForm.jsf"/>
             <Item name="AbsentOneDay" title="mainMenu.absentOneDay" page="/absentOneDay.jsf"/>
             <Item name="AbsentRangeDay" title="mainMenu.absentRangeDay" page="/absentRangeDay.jsf"/>
+            <Item name="Inquiry" title="mainMenu.inquiry" page="/inquiry"/>
         </Menu>
         <Menu name="UserMenu" title="menu.user" description="User Menu" page="/editProfile" roles="ROLE_ADMIN,ROLE_USER"/>
         <Menu name="AdminMenu" title="menu.admin" description="Admin Menu" roles="ROLE_ADMIN" width="120" page="/admin/users">
