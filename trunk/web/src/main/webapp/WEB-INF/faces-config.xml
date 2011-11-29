@@ -125,6 +125,14 @@
             <redirect/>
         </navigation-case>
     </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/inquiry.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>cancel</from-outcome>
+            <to-view-id>/mainMenu.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
    <!-- End Added -->
    <!-- Added by Ardian -->
    <navigation-rule>
@@ -307,6 +315,19 @@
         <managed-property>
             <property-name>attendanceManager</property-name>
             <value>#{attendanceManager}</value>
+        </managed-property>
+    </managed-bean>
+
+    <managed-bean>
+        <description>Inquiry</description>
+        <managed-bean-name>inquiryForm</managed-bean-name>
+        <managed-bean-class>com.aprisma.opensource.timesheet.webapp.action.InquiryForm</managed-bean-class>
+
+        <managed-bean-scope>request</managed-bean-scope>
+
+        <managed-property>
+            <property-name>userManager</property-name>
+            <value>#{userManager}</value>
         </managed-property>
     </managed-bean>
 
