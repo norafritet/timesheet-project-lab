@@ -1,7 +1,9 @@
 package com.aprisma.opensource.timesheet.webapp.action;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.*;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * Created by IntelliJ IDEA.
@@ -110,8 +112,14 @@ public class InquiryForm extends  BasePage implements Serializable {
          System.out.println(" VIEW ");
      }
 
-
-
-
+    public void download() throws IOException {
+        HttpServletResponse response = getResponse();
+        response.reset();
+        response.addHeader("Content-Disposition", "attachment; filename=\"WR2_Jan11_Agus Muhammad Ramdan.xls\"");
+        response.setContentType("application/vnd.ms-excel");
+        response.getOutputStream().write(30);
+        response.flushBuffer();
+        getFacesContext().responseComplete();
+    }
 
 }

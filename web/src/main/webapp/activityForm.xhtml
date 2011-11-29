@@ -26,7 +26,7 @@
     <h:outputLabel for="activityDate" styleClass="desc" value="#{text['activity.activityDate']}"/>
     <t:message for="activityDate" styleClass="fieldError"/>
     <h:inputText value="#{activityForm.activityDate}" id="activityDate" styleClass="text large" required="true">
-        <f:convertDateTime for="activityDate" pattern="#{text['date.format']}" type="date"/>
+        <f:convertDateTime for="activityDate" pattern="#{text['date.format']}" type="date" />
         <v:commonsValidator client="true" type="required" arg="#{text['activity.activityDate']}"/>
     </h:inputText>
     

@@ -13,6 +13,7 @@ import org.compass.spring.LocalCompassBeanPostProcessor;
 public class CompassConfigurationPostProcessor implements LocalCompassBeanPostProcessor {
     Log log = LogFactory.getLog(CompassConfigurationPostProcessor.class);
 
+    @Override
     public void process(CompassConfiguration config) throws ConfigurationException {
         // Look at current class's package and add it if it's not the AppFuse default
         String classPackage = this.getClass().getPackage().getName();

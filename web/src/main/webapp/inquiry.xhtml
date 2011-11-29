@@ -42,15 +42,10 @@
                 <t:message for="year" styleClass="fieldError"/>
                 <t:htmlTag value="p"><h:outputLabel for="year" value="#{text['inquiry.year']}"/></t:htmlTag>
 
-
-
-
-
-
                 
                 <h:panelGroup styleClass="buttonBar bottom">
                     <h:commandButton value="#{text['button.view']}" action="#{inquiryForm.view}" id="view" styleClass="button"/>
-
+                    <h:commandButton value="#{text['button.download']}" action="#{inquiryForm.download}" id="download" styleClass="button"/>
                 </h:panelGroup>
             </h:panelGrid>
         </h:form>

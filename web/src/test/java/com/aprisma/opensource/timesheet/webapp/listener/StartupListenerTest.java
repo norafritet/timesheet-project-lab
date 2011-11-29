@@ -1,6 +1,7 @@
 package com.aprisma.opensource.timesheet.webapp.listener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import junit.framework.TestCase;
 import org.appfuse.Constants;
@@ -120,11 +121,13 @@ public class StartupListenerTest {
 
         listener.contextInitialized( new ServletContextEvent(servletContext) );
 
-        new Verifications() {
-            {
-                StartupListener.setupContext(servletContext); times = 1;
-            }
-        };
+        new Verifications() {{ StartupListener.setupContext(servletContext); times = 1;}};
+    }
+    
+    @Test
+    public void contextInitialized_cssthemeNotNull_PutToConfig(){
+        Map<String, Object> config = new HashMap();
+        
     }
 }
 /**
