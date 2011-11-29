@@ -27,6 +27,7 @@ public class ConstantsTei extends TagExtraInfo {
      * @param data the input data
      * @return VariableInfo array of variable information
      */
+    @Override
     public VariableInfo[] getVariableInfo(TagData data) {
         // loop through and expose all attributes
         List<VariableInfo> vars = new ArrayList<VariableInfo>();
@@ -61,7 +62,7 @@ public class ConstantsTei extends TagExtraInfo {
             }
         } catch (Exception cnf) {
             log.error(cnf.getMessage());
-            cnf.printStackTrace();
+            //cnf.printStackTrace();
         }
 
         return vars.toArray(new VariableInfo[] {});

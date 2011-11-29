@@ -37,6 +37,7 @@ public class StartupListener implements ServletContextListener {
      * {@inheritDoc}
      */
     @SuppressWarnings("unchecked")
+    @Override
     public void contextInitialized(ServletContextEvent event) {
         log.debug("Initializing context...");
 

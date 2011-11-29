@@ -4,6 +4,8 @@
  */
 package com.aprisma.opensource.timesheet.webapp.action;
 
+import mockit.Tested;
+import mockit.Injectable;
 import mockit.Delegate;
 import org.appfuse.service.GenericManager;
 import com.aprisma.opensource.timesheet.model.Absent;
@@ -27,7 +29,7 @@ import static org.junit.Assert.*;
  */
 public class AbsentOneDayFormTest {
 
-    private AbsentOneDayForm form;
+    @Tested private AbsentOneDayForm form;
     @Mocked
     private UserManager userManager;
     @Mocked
@@ -36,22 +38,22 @@ public class AbsentOneDayFormTest {
     private HttpServletRequest httpRequest;
     private String username;
     private User user;
-    private Absent absent;
+    private Absent absent = new Absent();
     private Absent absentResult;
 
     @Before
     public void onSetUp() {
         username = "user1";
-        form = new AbsentOneDayForm();
-        absent = form.getAbsent();
-        form.setUserManager(userManager);
-        form.setAbsentManager(absentManager);
+        //form = new AbsentOneDayForm();
+        //absent = form.getAbsent();
+        //form.setUserManager(userManager);
+        //form.setAbsentManager(absentManager);
         user = new User(username);
     }
 
     private void context_save_InputAbsent() {
-
-
+        form.setUserManager(userManager);
+        form.setAbsentManager(absentManager);
         new NonStrictExpectations(form) {
 
             {
@@ -60,8 +62,7 @@ public class AbsentOneDayFormTest {
                 userManager.getUserByUsername(username); result = user;
                 absentManager.save(absent);
                 result = new Delegate() {
-
-                    Absent save(Absent object) {
+                    Absent save(Absent absent) {
                         absentResult = new Absent();
                         absentResult.setRemark(absent.getRemark());
                         absentResult.setType(absent.getType());
@@ -81,9 +82,7 @@ public class AbsentOneDayFormTest {
         context_save_InputAbsent();
 
         form.save();
-
         new Verifications() {
-
             {
                 form.addMessage("absent_one_day.added");
             }
@@ -95,11 +94,7 @@ public class AbsentOneDayFormTest {
         context_save_InputAbsent();
 
         form.save();
-
-        assertNotNull(form.getAbsent().getCheckUser());
-
         new Verifications() {
-
             {
                 userManager.getUserByUsername(username);
             }
@@ -111,7 +106,6 @@ public class AbsentOneDayFormTest {
         context_save_InputAbsent();
 
         form.save();
-
         assertEquals(user, form.getAbsent().getCheckUser());
     }
 
@@ -120,9 +114,7 @@ public class AbsentOneDayFormTest {
         context_save_InputAbsent();
 
         form.save();
-
         new Verifications() {
-
             {
                 httpRequest.getRemoteUser();
             }
@@ -133,9 +125,7 @@ public class AbsentOneDayFormTest {
         context_save_InputAbsent();
 
         form.save();
-
         new Verifications() {
-
             {
                 absentManager.save(absent);
             }
@@ -149,7 +139,6 @@ public class AbsentOneDayFormTest {
         context_save_InputAbsent();
 
         form.save();
-
         assertNotNull(form.getAbsent().getCheckUser());
     }
 
@@ -158,18 +147,15 @@ public class AbsentOneDayFormTest {
         context_save_InputAbsent();
 
         String result = form.save();
-
         assertEquals("mainMenu", result);
     }
 
     @Test
     public void setCheckDate_Date_PropertyChange() {
         form = new AbsentOneDayForm();
-
         Date date = new Date(1);
 
         form.setCheckDate(date);
-
         assertEquals(date, form.getCheckDate());
     }
 
@@ -180,7 +166,6 @@ public class AbsentOneDayFormTest {
         Date date = null;
 
         form.setCheckDate(date);
-
         assertNull(form.getCheckDate());
     }
 
@@ -188,11 +173,9 @@ public class AbsentOneDayFormTest {
     public void setCheckDate_Null_PropertyChange() {
         form = new AbsentOneDayForm();
         form.getAbsent().setCheckDate(new java.sql.Date(1));
-
         Date date = null;
 
         form.setCheckDate(date);
-
         assertNull(form.getCheckDate());
     }
 }

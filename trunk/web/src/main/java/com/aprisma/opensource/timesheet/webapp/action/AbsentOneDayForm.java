@@ -25,9 +25,9 @@ public class AbsentOneDayForm extends BasePage {
         return absent;
     }
 
-    public void setAbsent(Absent absent) {
-        this.absent = absent;
-    }
+//    public void setAbsent(Absent absent) {
+//        this.absent = absent;
+//    }
 
     public Date getCheckDate() 
     {
@@ -45,9 +45,9 @@ public class AbsentOneDayForm extends BasePage {
         return types;
     }
 
-    public void setTypes(String[] types) {
-        this.types = types;
-    }
+//    public void setTypes(String[] types) {
+//        this.types = types;
+//    }
 
     public String save() {
         
