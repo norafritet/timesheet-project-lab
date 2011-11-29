@@ -19,6 +19,13 @@ public class InquiryForm extends  BasePage implements Serializable {
     private List months;
     private List weeks;
 
+    public InquiryForm()
+    {
+        this.week = "";
+        this.month = "";
+        this.year = "";
+    }
+
     public List getYears() {
 
         years = new ArrayList();
