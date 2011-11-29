@@ -1,5 +1,8 @@
 package com.aprisma.opensource.timesheet.webapp.util;
 
+import java.sql.Date;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -11,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
  * Convenience class for setting and retrieving cookies.
  */
 public final class RequestUtil {
+
     private static final Log log = LogFactory.getLog(RequestUtil.class);
 
     /**
@@ -28,7 +32,7 @@ public final class RequestUtil {
      * @param path the path to set it on
      */
     public static void setCookie(HttpServletResponse response, String name,
-                                 String value, String path) {
+            String value, String path) {
         if (log.isDebugEnabled()) {
             log.debug("Setting cookie '" + name + "' on path '" + path + "'");
         }
@@ -53,17 +57,17 @@ public final class RequestUtil {
         Cookie[] cookies = request.getCookies();
         Cookie returnCookie = null;
 
-        if (cookies == null) {
-            return returnCookie;
-        }
-
-        for (final Cookie thisCookie : cookies) {
-            if (thisCookie.getName().equals(name) && !"".equals(thisCookie.getValue())) {
-                returnCookie = thisCookie;
-                break;
+//        if (cookies == null) {
+//            return returnCookie;
+//        }
+        if (cookies != null) {
+            for (final Cookie thisCookie : cookies) {
+                if (thisCookie.getName().equals(name) && !"".equals(thisCookie.getValue())) {
+                    returnCookie = thisCookie;
+                    break;
+                }
             }
         }
-
         return returnCookie;
     }
 
@@ -75,7 +79,7 @@ public final class RequestUtil {
      * @param path the path on which the cookie was set (i.e. /appfuse)
      */
     public static void deleteCookie(HttpServletResponse response,
-                                    Cookie cookie, String path) {
+            Cookie cookie, String path) {
         if (cookie != null) {
             // Delete the cookie by setting its maximum age to zero
             cookie.setMaxAge(0);
@@ -92,8 +96,10 @@ public final class RequestUtil {
      * @return URL to application
      */
     public static String getAppURL(HttpServletRequest request) {
-        if (request == null) return "";
-        
+        if (request == null) {
+            return "";
+        }
+
         StringBuffer url = new StringBuffer();
         int port = request.getServerPort();
         if (port < 0) {
@@ -110,4 +116,58 @@ public final class RequestUtil {
         url.append(request.getContextPath());
         return url.toString();
     }
+    /**
+     * 
+     * @param year
+     * @param month 0..11 for all = -1
+     * @param week  1..6 fro all = -1
+     * @return 
+     */
+    public static Date[] getRangeDateFor(int year,int month,int week){
+        //Calendar c = Calendar.getInstance();
+        GregorianCalendar c = new GregorianCalendar();
+        c.setFirstDayOfWeek(Calendar.SUNDAY);
+        c.set(year,month,1,0,0,0);
+        Date firstDate ,eddDate;
+        if(month<0){
+            c.set(year,0,1,0,0,0);
+            firstDate =new Date(c.getTimeInMillis());
+            c.set(year,11,31,0,0,0);
+            eddDate =new Date(c.getTimeInMillis());
+            return new Date[]{firstDate,eddDate};
+        }else
+        if(week <1){
+            c.set(year,month,1,0,0,0);
+            firstDate =new Date(c.getTimeInMillis());
+            c.set(year,month,c.getActualMaximum(Calendar.DAY_OF_MONTH),0,0,0);
+            eddDate =new Date(c.getTimeInMillis());
+            return new Date[]{firstDate,eddDate};
+        }else{
+            if(week==1){
+                c.set(year,month,1,0,0,0);
+            }else{
+                c.clear();
+                c.set(Calendar.YEAR,year);
+                c.set(Calendar.MONTH,month);
+                c.set(Calendar.WEEK_OF_MONTH, week);
+                
+            }
+            firstDate =new Date(c.getTimeInMillis());
+            if((c.get(Calendar.DATE)+6 )>  c.getActualMaximum(Calendar.DATE)){
+                c.clear();
+                c.set(Calendar.YEAR,year);
+                c.set(Calendar.MONTH,month);
+                c.set(Calendar.DAY_OF_MONTH, c.getActualMaximum(Calendar.DATE));
+            } else{
+                c.clear();
+                c.set(Calendar.YEAR,year);
+                c.set(Calendar.MONTH,month);
+                c.set(Calendar.WEEK_OF_MONTH, week+1);
+                c.add(Calendar.DATE, -1);
+            }
+            eddDate =new Date(c.getTimeInMillis());
+            return new Date[]{firstDate,eddDate};
+        }
+        
+    } 
 }
