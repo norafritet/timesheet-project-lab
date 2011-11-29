@@ -69,7 +69,21 @@
                     <target>1.6</target>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>cobertura-maven-plugin</artifactId>
+                <version>2.5.1</version>
+            </plugin>
         </plugins>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>cobertura-maven-plugin</artifactId>
+                    <version>2.5.1</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
 
     <repositories>
@@ -183,7 +197,7 @@
                         </excludes>
                     </instrumentation>
                 </configuration>
-                <version>2.4</version>
+                <!--version>2.4</version-->
             </plugin>
             <plugin>
                 <artifactId>maven-javadoc-plugin</artifactId>
@@ -350,7 +364,9 @@
         <myfaces.version>2.0.4</myfaces.version>
         <myfaces.tomahawk.version>1.1.10</myfaces.tomahawk.version>
         <spring.version>3.0.5.RELEASE</spring.version>
-
+        <!-- TimeSheet dependency versions -->
+        <jasperreports.version>4.1.2</jasperreports.version>
+        
         <!-- Testing dependency versions -->
         <cargo.version>1.0.6</cargo.version>
         <jmockit.version>0.999.11</jmockit.version>
