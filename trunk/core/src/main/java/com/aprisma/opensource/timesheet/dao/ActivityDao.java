@@ -6,6 +6,7 @@ package com.aprisma.opensource.timesheet.dao;
 
 import com.aprisma.opensource.timesheet.model.Activity;
 
+import java.sql.Date;
 import java.util.List;
 import org.appfuse.dao.GenericDao;
 
@@ -15,5 +16,5 @@ import org.appfuse.dao.GenericDao;
  */
 public interface ActivityDao extends GenericDao<Activity, Long> {
     
-   public List<Activity> findByActivityUser(String activityUser);
+   public List<Activity> findByActivityWeek(Long userId, Date firstDate, Date endDate);
 }

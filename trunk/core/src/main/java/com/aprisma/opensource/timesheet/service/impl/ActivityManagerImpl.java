@@ -8,29 +8,25 @@ package com.aprisma.opensource.timesheet.service.impl;
 import com.aprisma.opensource.timesheet.dao.ActivityDao;
 import com.aprisma.opensource.timesheet.model.Activity;
 import com.aprisma.opensource.timesheet.service.ActivityManager;
+import java.sql.Date;
 import java.util.List;
-import org.appfuse.dao.GenericDao;
 import org.appfuse.service.impl.GenericManagerImpl;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 /**
  *
  * @author user
  */
 
-@Service("activityManager")
 public class ActivityManagerImpl extends GenericManagerImpl<Activity,Long> implements ActivityManager{
     ActivityDao activityDao;
     
-    @Autowired
      public ActivityManagerImpl(ActivityDao activityDao) {
         super(activityDao);
         this.activityDao = activityDao;
     }
-
+     
     @Override
-    public List<Activity> findByActivityUser(String activityUser) {
-        return activityDao.findByActivityUser(activityUser);
+    public List<Activity> findByActivityWeek(Long userId, Date firstDate, Date endDate) {
+        return activityDao.findByActivityWeek(userId, firstDate, endDate);
     }
 
 }
