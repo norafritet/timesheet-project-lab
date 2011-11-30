@@ -19,22 +19,6 @@
                 <h:outputText/><h:outputText/>
 
 
-
-                <h:selectOneMenu value="#{inquiryForm.week}" id="week" required="true" styleClass="select">
-                    <f:selectItems value="#{inquiryForm.weeks}"/>
-                    <v:commonsValidator client="true" type="required" arg="#{text['inquiry.week']}"/>
-                </h:selectOneMenu>
-                <t:message for="week" styleClass="fieldError"/>
-                <t:htmlTag value="p"><h:outputLabel for="week" value="#{text['inquiry.week']}"/></t:htmlTag>
-
-                <h:selectOneMenu value="#{inquiryForm.month}" id="month" required="true" styleClass="select">
-                    <f:selectItems value="#{inquiryForm.months}"/>
-                    <v:commonsValidator client="true" type="required" arg="#{text['inquiry.month']}"/>
-                </h:selectOneMenu>
-                <t:message for="month" styleClass="fieldError"/>
-                <t:htmlTag value="p"><h:outputLabel for="month" value="#{text['inquiry.month']}"/></t:htmlTag>
-
-
                 <h:selectOneMenu value="#{inquiryForm.year}" id="year" required="true" styleClass="select">
                     <f:selectItems value="#{inquiryForm.years}"/>
                     <v:commonsValidator client="true" type="required" arg="#{text['inquiry.year']}"/>
@@ -42,7 +26,22 @@
                 <t:message for="year" styleClass="fieldError"/>
                 <t:htmlTag value="p"><h:outputLabel for="year" value="#{text['inquiry.year']}"/></t:htmlTag>
 
-                
+
+                <h:selectOneMenu value="#{inquiryForm.month}" onchange="submit()" id="month" required="true" styleClass="select">
+                    <f:selectItems value="#{inquiryForm.months}"/>
+
+                </h:selectOneMenu>
+                <t:message for="month" styleClass="fieldError"/>
+                <t:htmlTag value="p"><h:outputLabel for="month" value="#{text['inquiry.month']}"/></t:htmlTag>
+
+
+                <h:selectOneMenu value="#{inquiryForm.week}" id="week" required="true" styleClass="select">
+                    <f:selectItems value="#{inquiryForm.weeks}"/>
+
+                </h:selectOneMenu>
+                <t:message for="week" styleClass="fieldError"/>
+                <t:htmlTag value="p"><h:outputLabel for="week" value="#{text['inquiry.week']}"/></t:htmlTag>
+
                 <h:panelGroup styleClass="buttonBar bottom">
                     <h:commandButton value="#{text['button.view']}" action="#{inquiryForm.view}" id="view" styleClass="button"/>
 
@@ -81,17 +80,15 @@
             </ui:include>
 
         </h:form>
-        
-
 
         <!--
         <v:validatorScript functionName="validateAbsentOneDayForm"/>
 
         <script type="text/javascript">
-            Form.focusFirstElement($('inquiryForm'));
+            Form.focusFirstElement($('absentOneDayForm'));
             highlightFormElements();
         </script>
-        
+        //-->
 
     </f:view>
 </html>
