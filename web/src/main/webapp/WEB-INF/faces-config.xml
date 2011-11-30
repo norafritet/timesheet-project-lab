@@ -329,12 +329,17 @@
             <property-name>userManager</property-name>
             <value>#{userManager}</value>
         </managed-property>
+        <managed-property>
+            <property-name>inquiryManager</property-name>
+            <value>#{inquiryManager}</value>
+        </managed-property>
     </managed-bean>
 
     <managed-bean>
         <description>Insert Activity</description>
         <managed-bean-name>activityForm</managed-bean-name>
-        <managed-bean-class>com.aprisma.opensource.timesheet.webapp.action.ActivityForm</managed-bean-class>        <managed-bean-scope>request</managed-bean-scope>
+        <managed-bean-class>com.aprisma.opensource.timesheet.webapp.action.ActivityForm</managed-bean-class>        
+        <managed-bean-scope>request</managed-bean-scope>
         <managed-property>
             <property-name>userManager</property-name>
             <value>#{userManager}</value>
