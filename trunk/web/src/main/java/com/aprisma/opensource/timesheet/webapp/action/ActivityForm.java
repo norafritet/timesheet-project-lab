@@ -18,6 +18,7 @@ import org.appfuse.service.GenericManager;
 public class ActivityForm extends BasePage{
 
     private GenericManager<Activity,Long> activityManager;
+    
     private Activity activity = new Activity();
     private String[] types = new String[]{"","ANL","CDG","EXP","MTG","OTH","STD","TST"};
     
