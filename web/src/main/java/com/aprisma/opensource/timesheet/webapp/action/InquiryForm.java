@@ -33,10 +33,10 @@ import net.sf.jasperreports.engine.util.JRLoader;
  * Date: 12/15/11
  * Time: 10:13 AM
  */
+public class InquiryForm extends  BasePage implements Serializable {
 
-
-public class InquiryForm extends BasePage implements Serializable {
-
+    // Declaration
+    private final static String strAll = "All";
     private String year;
     private String month;
     private String week;
@@ -50,8 +50,9 @@ public class InquiryForm extends BasePage implements Serializable {
     
     public InquiryForm()
     {
+        // Initialization
         this.week = "";
-        this.month = "";
+        this.month = strAll;
         this.year = "";
     }
     
@@ -72,14 +73,17 @@ public class InquiryForm extends BasePage implements Serializable {
 
     public List getYears() {
 
+        // Initialization
         years = new ArrayList();
         Calendar now = Calendar.getInstance();
 
-
+        // Add Years to List
         for ( int i = now.get( Calendar.YEAR ),j=0 ; j < 5 ; ++j,--i  )
         {
             years.add( i );
         }
+
+        // Return
         return years;
     }
 
@@ -90,17 +94,19 @@ public class InquiryForm extends BasePage implements Serializable {
 
     public List getMonths() {
 
+        // Initialization
         months = new ArrayList();
-        //Calendar now = Calendar.getInstance();
+        months.add( strAll );
 
-
+        // Add months to List
         for ( int i = 1 ; i < 13; ++i  )
         {
             months.add( i );
         }
 
-        months.add( "All" );
+        // Return
         return months;
+
     }
 
     public void setMonths(List months) {
@@ -109,15 +115,18 @@ public class InquiryForm extends BasePage implements Serializable {
 
     public List getWeeks() {
 
-         weeks = new ArrayList();
-        //Calendar now = Calendar.getInstance();
+        // Initialize
+        weeks = new ArrayList();
+        weeks.add( strAll );
 
-        for ( int i = 1 ; i < 6; ++i  )
-        {
-            weeks.add( i );
-        }
+        // Add Num Of Week to List
+        if ( !getMonth().equals( strAll ) )
 
-        weeks.add( "All" );
+            for ( int i = 1; i <= getNumOfWeekOfMonth(); ++i )
+
+                weeks.add( new Integer(i).toString() );
+        // End Add
+
         return weeks;
     }
 
@@ -147,7 +156,6 @@ public class InquiryForm extends BasePage implements Serializable {
 
     public void setWeek(String week) {
         this.week = week;
-        
     }
 
      public List view()
@@ -197,5 +205,29 @@ public class InquiryForm extends BasePage implements Serializable {
 	exporter.exportReport();
         response.flushBuffer();
         getFacesContext().responseComplete();
+    }
+    
+    private int getNumOfWeekOfMonth()
+    {
+
+        // Initialize
+        Calendar cal = Calendar.getInstance();
+        int year = Integer.parseInt( getYear() );
+        int month = Integer.parseInt( getMonth() ) - Calendar.FEBRUARY ;
+
+        // Set First Day
+        cal.set( year, month, 1 );
+
+        // Set Last Day
+        cal.set( year, month, cal.getActualMaximum(Calendar.DAY_OF_MONTH) );
+
+        // Get Number of Week
+        int numOfWeek = cal.get( Calendar.WEEK_OF_MONTH );
+        System.out.println("Date " + year + "-" + month + "-" + cal.getActualMaximum(Calendar.DAY_OF_MONTH));
+        System.out.println("num Of Week--> " + numOfWeek + "(" + Calendar.JANUARY);
+
+        // Return
+        return numOfWeek;
+
     }
 }
