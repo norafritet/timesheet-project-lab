@@ -15,7 +15,16 @@
     <name>TimeSheet Application - Core</name>
     
     <build>
- 
+    <plugins>
+                    <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <argLine>
+                        -javaagent:"${settings.localRepository}"/com/googlecode/jmockit/jmockit/0.999.11/jmockit-0.999.11.jar
+                    </argLine>
+                </configuration>
+            </plugin>
+            </plugins>
     </build>
     <dependencies>
         <dependency>
