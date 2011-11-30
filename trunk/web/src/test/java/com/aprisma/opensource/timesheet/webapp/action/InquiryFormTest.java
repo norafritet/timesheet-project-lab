@@ -1,19 +1,36 @@
 package com.aprisma.opensource.timesheet.webapp.action;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import net.sf.jasperreports.engine.JRException;
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
+import mockit.Delegate;
+import mockit.Mock;
 import mockit.Mocked;
 import mockit.NonStrictExpectations;
 import mockit.Tested;
 import mockit.Verifications;
+import net.sf.jasperreports.engine.JRDataSource;
+import net.sf.jasperreports.engine.JREmptyDataSource;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.fill.JRFiller;
+import net.sf.jasperreports.engine.util.JRLoader;
 
 /**
  * Created by IntelliJ IDEA.
@@ -26,9 +43,10 @@ public class InquiryFormTest {
     @Tested private InquiryForm inquiryForm;
 
     @Mocked private HttpServletResponse response;
-    @Mocked private ServletOutputStream servletOutputStream;
+    ByteArrayOutputStream bos = new ByteArrayOutputStream();
+    private ServletOutputStream servletOutputStream;
     @Mocked private FacesContext facesContext ;
-    
+
     @Test
     public void getSpecificYears() throws Exception
     {
@@ -67,24 +85,44 @@ public class InquiryFormTest {
 
     }
      */
-
-    private void context_download_SecondWeekOfJanuaryEleven() throws IOException{
+    @Test
+    public void getResourceInputStream_InquiryActivityJasper_notNull(){
+        
+        InputStream inputStream = JRLoader.getResourceInputStream("InquiryActivity.jasper");
+        Assert.assertNotNull(inputStream);
+    }
+    
+    private void context_download_SecondWeekOfJanuaryEleven() throws Exception{
         inquiryForm.setYear("2011");
         inquiryForm.setMonth("0");
         inquiryForm.setWeek("2");
-            new NonStrictExpectations(inquiryForm){
+        
+        bos = new ByteArrayOutputStream();
+        servletOutputStream = new ServletOutputStream(){
+
+            @Override
+            public void write(int b) throws IOException {
+                bos.write(b);
+            }
+        };
+        //final InputStream inputStreamJasperReport = JRLoader.getResourceInputStream("InquiryActivity.jasper");
+        
+//        final Map parameter= new HashMap();
+//        final JRDataSource datasource = new JREmptyDataSource(1);
+//        final JasperPrint jasperPrint = new JasperPrint();
+        new NonStrictExpectations(inquiryForm){
             {
                 inquiryForm.getResponse(); result =response;
                 response.addHeader("Content-Disposition", "attachment; filename=\"WR2_Jan11_Agus Muhammad Ramdan.xls\"");
                 response.getOutputStream(); result = servletOutputStream;
-                servletOutputStream.write(anyInt);
                 inquiryForm.getFacesContext(); result = facesContext;
                 facesContext.responseComplete();
             }
         };
     }
+    
     @Test 
-    public void download_SecondWeekOfJanuaryEleven_SendDataFileNameOfAttacment() throws IOException{
+    public void download_SecondWeekOfJanuaryEleven_SendDataFileNameOfAttacment() throws Exception{
         
         context_download_SecondWeekOfJanuaryEleven();
 
@@ -93,7 +131,7 @@ public class InquiryFormTest {
     }
     
     @Test 
-    public void download_SecondWeekOfJanuaryEleven_Send$flushBuffer( ) throws IOException{
+    public void download_SecondWeekOfJanuaryEleven_Send$flushBuffer( ) throws Exception{
 
         context_download_SecondWeekOfJanuaryEleven();
 
@@ -101,8 +139,9 @@ public class InquiryFormTest {
         new Verifications(){{response.flushBuffer();times =1; }};
 
     }
- @Test 
-    public void download_SecondWeekOfJanuaryEleven_SenddataContentType$setContentType( ) throws IOException{
+    
+    @Test 
+    public void download_SecondWeekOfJanuaryEleven_SenddataContentType$setContentType( ) throws Exception{
 
         context_download_SecondWeekOfJanuaryEleven();
 
@@ -110,30 +149,32 @@ public class InquiryFormTest {
         new Verifications(){{response.setContentType("application/vnd.ms-excel");times =1; }};
     }
  
- @Test 
- public void download_SecondWeekOfJanuaryEleven_Call$reset() throws IOException{
+    @Test 
+    public void download_SecondWeekOfJanuaryEleven_Call$reset() throws Exception{
 
         context_download_SecondWeekOfJanuaryEleven();
 
         inquiryForm.download();
         new Verifications(){{response.reset();times =1; }};
     }
-  @Test 
- public void download_SecondWeekOfJanuaryEleven_Call$write() throws IOException{
-        
+    
+  
+    @Test 
+    public void download_SecondWeekOfJanuaryEleven_Call$write() throws Exception{
 
         context_download_SecondWeekOfJanuaryEleven();
 
         inquiryForm.download();
-        new Verifications(){{servletOutputStream.write(anyInt); minTimes=1; }};
+        Assert.assertTrue(bos.size()>0);
     }
-  @Test
-  public void download_SecondWeekOfJanuaryEleven_Call$responseComplete() throws IOException{
+    
+    @Test
+    public void download_SecondWeekOfJanuaryEleven_Call$responseComplete() throws Exception{
 
         context_download_SecondWeekOfJanuaryEleven();
 
         inquiryForm.download();
         new Verifications(){{facesContext.responseComplete(); times=1; }};
     }
-   
+    
 }

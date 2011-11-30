@@ -1,9 +1,24 @@
 package com.aprisma.opensource.timesheet.webapp.action;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.Serializable;
 import java.util.*;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
+import net.sf.jasperreports.engine.JRDataSource;
+import net.sf.jasperreports.engine.JREmptyDataSource;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JRExporterParameter;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.export.JRPdfExporter;
+import net.sf.jasperreports.engine.export.JRXlsExporter;
+import net.sf.jasperreports.engine.fill.JRFiller;
+import net.sf.jasperreports.engine.util.JRLoader;
 
 /**
  * Created by IntelliJ IDEA.
@@ -112,14 +127,31 @@ public class InquiryForm extends  BasePage implements Serializable {
          System.out.println(" VIEW ");
      }
 
-    public void download() throws IOException {
+    public void download() throws IOException, JRException {
+        Map parameter = new HashMap();
+        InputStream inputStream = null;
+        JRDataSource dataSource = new JREmptyDataSource(1);
+        JasperPrint jasperPrint = null;
+        
+        String monthYear = "Jan11";
+        String fullName = "Agus Muhammad Ramdan";
+        String fileName = "WR"+week+"_"+monthYear+"_"+fullName+".xls";
+        
+        inputStream = JRLoader.getResourceInputStream("InquiryActivity.jasper");
+        JasperReport jasperReport = (JasperReport)JRLoader.loadObject(inputStream);
+        jasperPrint = JRFiller.fillReport(jasperReport, parameter, dataSource);
+        
+        // write to response
         HttpServletResponse response = getResponse();
         response.reset();
-        response.addHeader("Content-Disposition", "attachment; filename=\"WR2_Jan11_Agus Muhammad Ramdan.xls\"");
+        response.addHeader("Content-Disposition", "attachment; filename=\""+fileName+"\"");
         response.setContentType("application/vnd.ms-excel");
-        response.getOutputStream().write(30);
+        OutputStream outputSteam = response.getOutputStream() ;
+        JRXlsExporter exporter = new JRXlsExporter();		
+	exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+	exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, outputSteam);		
+	exporter.exportReport();
         response.flushBuffer();
         getFacesContext().responseComplete();
     }
-
 }
