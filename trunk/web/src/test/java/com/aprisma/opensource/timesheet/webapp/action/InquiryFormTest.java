@@ -56,17 +56,18 @@ public class InquiryFormTest {
 
     }
 
-    /*
+
     @Test
     public void getAvailableWeekBasedOnMonth() throws Exception
     {
 
         InquiryForm iform = new InquiryForm();
-       iform.setMonth("11");
+       iform.setMonth("02");
         iform.setYear("2011");
          iform.getWeeks()  ;
 
 
+        /*
          SimpleDateFormat sdf;
          Calendar cal;
          Date date;
@@ -78,13 +79,13 @@ public class InquiryFormTest {
          cal.setTime(date);
 
          week = cal.get( Calendar.WEEK_OF_MONTH );
-
+         */
         //iform.getWeeksOfMonth();
 
 
 
     }
-     */
+
     @Test
     public void getResourceInputStream_InquiryActivityJasper_notNull(){
         
