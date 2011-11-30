@@ -45,19 +45,53 @@
                 
                 <h:panelGroup styleClass="buttonBar bottom">
                     <h:commandButton value="#{text['button.view']}" action="#{inquiryForm.view}" id="view" styleClass="button"/>
+
                     <h:commandButton value="#{text['button.download']}" action="#{inquiryForm.download}" id="download" styleClass="button"/>
+
                 </h:panelGroup>
+                
             </h:panelGrid>
+            <t:dataTable id="inquiry" var="inquiry" style="margin-top: 10px"
+                         value="#{inquiryForm.activity}" rows="25" sortColumn="#{inquiryForm.sortColumn}"
+                sortAscending="#{inquiryForm.ascending}" styleClass="scrollerTable table"
+                headerClass="standardTable_Header" rowClasses="standardTable_Row1,standardTable_Row2"
+                columnClasses="standardTable_Column,standardTable_Column,standardTable_Column,standardTable_Column,standardTable_ColumnCentered">
+
+                <t:column>
+                    <f:facet name="header">
+                        <t:commandSortHeader columnName="Name" arrow="true">
+                            <h:outputText value="#{text['activity.name']}" />
+                        </t:commandSortHeader>
+                    </f:facet>
+                    <h:outputText value="#{activity.name}" escape="true"/>
+                </t:column>
+
+                <t:column>
+                    <f:facet name="header">
+                        <t:commandSortHeader columnName="Case" arrow="true">
+                            <h:outputText value="#{text['activity.activityCase']}" />
+                        </t:commandSortHeader>
+                    </f:facet>
+                    <h:outputText value="#{activity.activityCase}" escape="true"/>
+                </t:column>
+
+            </t:dataTable>
+            <ui:include src="/common/tableFooter.xhtml">
+                <ui:param name="tableName" value="inquiry"/>
+            </ui:include>
+
         </h:form>
+        
+
 
         <!--
         <v:validatorScript functionName="validateAbsentOneDayForm"/>
 
         <script type="text/javascript">
-            Form.focusFirstElement($('absentOneDayForm'));
+            Form.focusFirstElement($('inquiryForm'));
             highlightFormElements();
         </script>
-        //-->
+        
 
     </f:view>
 </html>
