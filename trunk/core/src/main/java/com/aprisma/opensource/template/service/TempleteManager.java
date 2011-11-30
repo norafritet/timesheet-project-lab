@@ -4,13 +4,14 @@
  */
 package com.aprisma.opensource.template.service;
 
-import com.aprisma.opensource.timesheet.model.Activity;
+ 
+import com.aprisma.opensource.template.model.Templete;
 import org.appfuse.service.GenericManager;
 
 /**
  *
  * @author devxpbox
  */
-public interface TempleteManager extends GenericManager<Activity,String>{
+public interface TempleteManager extends GenericManager<Templete,String>{
     
 }

@@ -2,8 +2,13 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.aprisma.opensource.timesheet.dao.hibernate;
+package com.aprisma.opensource.timesheet.service.impl;
 
+import com.aprisma.opensource.timesheet.dao.ActivityDao;
+import net.sf.jasperreports.engine.JRDataSource;
+import java.sql.Date;
+import mockit.Injectable;
+import mockit.Tested;
 import org.junit.Ignore;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -16,9 +21,11 @@ import static org.junit.Assert.*;
  *
  * @author devxpbox
  */
-public class TempleteDaoHibernateTest {
+public class ActivityManagerImplTest {
+    @Tested private ActivityManagerImpl activityManager;
+    @Injectable private ActivityDao activityDao;
     
-    public TempleteDaoHibernateTest() {
+    public ActivityManagerImplTest() {
     }
 
     @BeforeClass
@@ -36,7 +43,12 @@ public class TempleteDaoHibernateTest {
     @After
     public void tearDown() {
     }
-    
+
+    @Test
+    public void getJRDataSourceActivity_AnyInput_ReturnNotNull() throws Exception {
+        JRDataSource result = activityManager.getJRDataSourceActivity((long)1, new Date(1), new Date(1));
+        assertNotNull(result);
+    }
     // TODO add test methods here.
     //
     // Pola dari : The Art of Unit Tesing pathen
