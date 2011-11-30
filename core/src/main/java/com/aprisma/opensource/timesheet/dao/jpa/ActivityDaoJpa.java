@@ -10,6 +10,7 @@ import com.aprisma.opensource.timesheet.model.Activity;
 
 
 import java.sql.Date;
+import javax.persistence.EntityManager;
 import org.appfuse.dao.jpa.GenericDaoJpa;
 import org.springframework.stereotype.Repository;
 
@@ -24,6 +25,10 @@ public class ActivityDaoJpa extends GenericDaoJpa<Activity, Long> implements Act
 
     public ActivityDaoJpa() {
         super(Activity.class);
+    }
+
+    public ActivityDaoJpa(EntityManager entityManager) {
+        super(Activity.class, entityManager);
     }
     
     @Override
