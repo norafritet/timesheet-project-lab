@@ -4,8 +4,8 @@
  */
 package com.aprisma.opensource.template.dao.jpa;
 
-import com.aprisma.opensource.timesheet.dao.TempleteDao;
-import com.aprisma.opensource.timesheet.model.Activity;
+import com.aprisma.opensource.template.dao.TempleteDao;
+import com.aprisma.opensource.template.model.Templete;
 
 import javax.persistence.EntityManager;
 import org.appfuse.dao.jpa.GenericDaoJpa;
@@ -15,15 +15,15 @@ import org.springframework.stereotype.Repository;
  *
  * @author devxpbox
  */
-@Repository("templeteDao")
-public class TempleteDaoJpa extends GenericDaoJpa<Activity,String> implements TempleteDao {
+//@Repository("templeteDao")
+public class TempleteDaoJpa extends GenericDaoJpa<Templete,String> implements TempleteDao {
     
     public TempleteDaoJpa() {
-        super(Activity.class);
+        super(Templete.class);
     }
 
     public TempleteDaoJpa(EntityManager entityManager) {
-        super(Activity.class, entityManager);
+        super(Templete.class, entityManager);
     }
 
 }
