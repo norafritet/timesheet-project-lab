@@ -330,8 +330,8 @@
             <value>#{userManager}</value>
         </managed-property>
         <managed-property>
-            <property-name>inquiryManager</property-name>
-            <value>#{inquiryManager}</value>
+            <property-name>activityManager</property-name>
+            <value>#{activityManager}</value>
         </managed-property>
     </managed-bean>
 
