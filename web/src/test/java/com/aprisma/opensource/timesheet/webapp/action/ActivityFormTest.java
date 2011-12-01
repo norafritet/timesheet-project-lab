@@ -4,6 +4,7 @@
  */
 package com.aprisma.opensource.timesheet.webapp.action;
 
+import com.aprisma.opensource.timesheet.service.ActivityManager;
 import java.sql.Time;
 import mockit.Delegate;
 import org.appfuse.service.GenericManager;
@@ -33,7 +34,7 @@ public class ActivityFormTest {
     @Mocked
     private UserManager userManager;
     @Mocked
-    private GenericManager<Activity, Long> activityManager;
+    private ActivityManager activityManager;
     @Mocked
     private HttpServletRequest httpRequest;
     private String username;

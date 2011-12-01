@@ -31,20 +31,15 @@ public class ActivityDaoJpa extends GenericDaoJpa<Activity, Long> implements Act
         super(Activity.class, entityManager);
     }
     
-    @Override
+    //@Override
     public List<Activity> findByActivityWeek(Long userId, Date firstDate, Date endDate) {
-        System.out.println("find by");
-        //Query q = getEntityManager().createQuery("select a from Activity a where a.activityUser=? AND a.activityDate >= ? AND a.activityDate <= ?");
-        Query q = null;
-        try
-        {
-            q = getEntityManager().createQuery("select a from Activity a");
-        //q.setParameter(1, userId);
-        //q.setParameter(2, firstDate);
-        //q.setParameter(3, endDate);
-        }
-        catch ( Exception e) { System.out.println("ERROR EQUERY");}
-            return q.getResultList();
+        Query q = getEntityManager().createQuery("select a from Activity a where a.activityUser.id=? AND a.activityDate >= ? AND a.activityDate <= ?");
+        
+        q.setParameter(1, userId);
+        q.setParameter(2, firstDate);
+        q.setParameter(3, endDate);
+       
+        return q.getResultList();
     }
     
 }

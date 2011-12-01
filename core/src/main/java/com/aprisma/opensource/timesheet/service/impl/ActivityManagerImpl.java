@@ -45,19 +45,10 @@ public class ActivityManagerImpl extends GenericManagerImpl<Activity, Long> impl
         super.dao = this.activityDao = activityDao;
     }
 
-    @Override
+    //@Override
     public List<Activity> findByActivityWeek(Long userId, Date firstDate, Date endDate) {
-        try {
-            System.out.println("testing = " + userId + " " + firstDate + " " + endDate);
-
-            List a = activityDao.findByActivityWeek(userId, firstDate, endDate);
-        } catch (Exception e) {
-            System.out.println("error = " + e);
-        }
-        List b = null;
-        return b;
+		return activityDao.findByActivityWeek(userId, firstDate, endDate);
     }
-
     private Map<String, ?> convertActivityToMap(Activity activity) {
 
         Map<String, Object> mapReport = new HashMap();

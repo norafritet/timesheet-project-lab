@@ -11,19 +11,20 @@ package com.aprisma.opensource.timesheet.webapp.action;
 
 
 import com.aprisma.opensource.timesheet.model.Activity;
+import com.aprisma.opensource.timesheet.service.ActivityManager;
 import java.util.Date;
 import org.appfuse.model.User;
 import org.appfuse.service.GenericManager;
 
 public class ActivityForm extends BasePage{
 
-    private GenericManager<Activity,Long> activityManager;
+    private ActivityManager activityManager;
     
     private Activity activity = new Activity();
     private String[] types = new String[]{"","ANL","CDG","EXP","MTG","OTH","STD","TST"};
     
    
-    public void setActivityManager(GenericManager<Activity, Long> manager) {
+    public void setActivityManager(ActivityManager manager) {
         this.activityManager = manager;
     }
     

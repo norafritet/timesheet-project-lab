@@ -11,7 +11,7 @@
             <meta name="heading" content="#{text['inquiry.heading']}"/>
         </head>
 
-        <h:form id="inquiryForm">
+        <h:form id="inquiryForm" onsubmit="return validateInquiryForm(this)">
 
             <h:panelGrid columns="3">
 
@@ -48,47 +48,128 @@
                     <h:commandButton value="#{text['button.download']}" action="#{inquiryForm.download}" id="download" styleClass="button"/>
 
                 </h:panelGroup>
-                
             </h:panelGrid>
-            <t:dataTable id="inquiry" var="inquiry" style="margin-top: 10px"
-                         value="#{inquiryForm.activity}" rows="25" sortColumn="#{inquiryForm.sortColumn}"
-                sortAscending="#{inquiryForm.ascending}" styleClass="scrollerTable table"
-                headerClass="standardTable_Header" rowClasses="standardTable_Row1,standardTable_Row2"
-                columnClasses="standardTable_Column,standardTable_Column,standardTable_Column,standardTable_Column,standardTable_ColumnCentered">
+            
+       
+                <t:dataTable id="inquiry" var="activity" style="margin-top: 10px"
+                             value="#{inquiryForm.activitys}" rows="25" sortColumn="#{inquiryForm.sortColumn}"
+                        sortAscending="#{inquiryForm.ascending}" styleClass="scrollerTable table"
+                        headerClass="standardTable_Header" rowClasses="standardTable_Row1,standardTable_Row2"
+                        columnClasses="standardTable_Column,standardTable_Column,standardTable_Column,standardTable_Column,standardTable_ColumnCentered">
 
-                <t:column>
-                    <f:facet name="header">
-                        <t:commandSortHeader columnName="Name" arrow="true">
-                            <h:outputText value="#{text['activity.name']}" />
-                        </t:commandSortHeader>
-                    </f:facet>
-                    <h:outputText value="#{activity.name}" escape="true"/>
-                </t:column>
+                    <t:column>
+                        <f:facet name="header">
+                            <t:commandSortHeader columnName="id" arrow="true">
+                                <h:outputText value="#{text['activity.id']}" />
+                            </t:commandSortHeader>
+                        </f:facet>
+                        <h:outputText value="#{activity.id}" escape="true"/>
+                    </t:column>
 
-                <t:column>
-                    <f:facet name="header">
-                        <t:commandSortHeader columnName="Case" arrow="true">
-                            <h:outputText value="#{text['activity.activityCase']}" />
-                        </t:commandSortHeader>
-                    </f:facet>
-                    <h:outputText value="#{activity.activityCase}" escape="true"/>
-                </t:column>
-
-            </t:dataTable>
+                    <t:column>
+                        <f:facet name="header">
+                            <t:commandSortHeader columnName="Date" arrow="true">
+                                <h:outputText value="#{text['activity.activityDate']}" />
+                            </t:commandSortHeader>
+                        </f:facet>
+                        <h:outputText value="#{activity.activityDate}" escape="true"/>
+                    </t:column>
+                    
+                    <t:column>
+                        <f:facet name="header">
+                            <t:commandSortHeader columnName="TimeFrom" arrow="true">
+                                <h:outputText value="#{text['activity.timeFrom']}" />
+                            </t:commandSortHeader>
+                        </f:facet>
+                        <h:outputText value="#{activity.timeFrom.hours}:#{activity.timeFrom.minutes}" escape="true"/>
+                    </t:column>
+                    
+                    <t:column>
+                        <f:facet name="header">
+                            <t:commandSortHeader columnName="TimeFrom" arrow="true">
+                                <h:outputText value="#{text['activity.timeTo']}" />
+                            </t:commandSortHeader>
+                        </f:facet>
+                        <h:outputText value="#{activity.timeTo.hours}:#{activity.timeTo.minutes}" escape="true"/>
+                    </t:column>
+                    
+                    <t:column>
+                        <f:facet name="header">
+                            <t:commandSortHeader columnName="TimeFrom" arrow="true">
+                                <h:outputText value="#{text['activity.type']}" />
+                            </t:commandSortHeader>
+                        </f:facet>
+                        <h:outputText value="#{activity.type}" escape="true"/>
+                    </t:column>
+                    
+                    <t:column>    
+                        <f:facet name="header">
+                            <t:commandSortHeader columnName="Name" arrow="true">
+                                <h:outputText value="#{text['activity.name']}" />
+                            </t:commandSortHeader>
+                        </f:facet>
+                        <h:outputText value="#{activity.name}" escape="true"/>
+                    </t:column>
+                    
+                    <t:column>    
+                        <f:facet name="header">
+                            <t:commandSortHeader columnName="Name" arrow="true">
+                                <h:outputText value="#{text['activity.activityCase']}" />
+                            </t:commandSortHeader>
+                        </f:facet>
+                        <h:outputText value="#{activity.activityCase}" escape="true"/>
+                    </t:column>
+                    
+                    <t:column>    
+                        <f:facet name="header">
+                            <t:commandSortHeader columnName="Name" arrow="true">
+                                <h:outputText value="#{text['activity.icenterNo']}" />
+                            </t:commandSortHeader>
+                        </f:facet>
+                        <h:outputText value="#{activity.icenterNo}" escape="true"/>
+                    </t:column>
+                    
+                    <t:column>    
+                        <f:facet name="header">
+                            <t:commandSortHeader columnName="Name" arrow="true">
+                                <h:outputText value="#{text['activity.activityStatus']}" />
+                            </t:commandSortHeader>
+                        </f:facet>
+                        <h:outputText value="#{activity.activityStatus}" escape="true"/>
+                    </t:column>
+                    
+                    <t:column>    
+                        <f:facet name="header">
+                            <t:commandSortHeader columnName="Name" arrow="true">
+                                <h:outputText value="#{text['activity.location']}" />
+                            </t:commandSortHeader>
+                        </f:facet>
+                        <h:outputText value="#{activity.location}" escape="true"/>
+                    </t:column>
+                    
+                    <t:column>    
+                        <f:facet name="header">
+                            <t:commandSortHeader columnName="Name" arrow="true">
+                                <h:outputText value="#{text['activity.remark']}" />
+                            </t:commandSortHeader>
+                        </f:facet>
+                        <h:outputText value="#{activity.remark}" escape="true"/>
+                    </t:column>
+                    
+                </t:dataTable>
+            
             <ui:include src="/common/tableFooter.xhtml">
                 <ui:param name="tableName" value="inquiry"/>
             </ui:include>
-
+           
         </h:form>
 
-        <!--
-        <v:validatorScript functionName="validateAbsentOneDayForm"/>
+                <v:validatorScript functionName=" validateInquiryForm"/>
 
-        <script type="text/javascript">
-            Form.focusFirstElement($('absentOneDayForm'));
-            highlightFormElements();
-        </script>
-        //-->
+                <script type="text/javascript">
+                    Form.focusFirstElement($('inquiryForm'));
+                    highlightFormElements();
+                </script>
 
     </f:view>
 </html>
