@@ -186,7 +186,7 @@ public class InquiryForm extends  BasePage implements Serializable {
          User user = userManager.getUserByUsername(username);
          //activity.setActivityUser(user);
          
-         Date[] rangeDate = RequestUtil.getRangeDateFor(Integer.parseInt(getYear()), Integer.parseInt(getMonth()), Integer.parseInt(getWeek()));
+         Date[] rangeDate = RequestUtil.getRangeDateFor(Integer.parseInt(getYear()), Integer.parseInt(getMonth())-1, Integer.parseInt(getWeek()));
 
          List result = sort(inquiryManager.findByActivityWeek(user.getId(),rangeDate[0],rangeDate[1]));
          
