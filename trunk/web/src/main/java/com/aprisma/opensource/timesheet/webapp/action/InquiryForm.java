@@ -29,7 +29,6 @@ import net.sf.jasperreports.engine.util.JRLoader;
  * Date: 12/15/11
  * Time: 10:13 AM
  */
-public class InquiryForm extends  BasePage implements Serializable {
 
 public class InquiryForm extends BasePage{
 
