@@ -53,6 +53,7 @@ public class InquiryForm extends  BasePage implements Serializable {
     private Activity activity = new Activity();
     private ActivityManager inquiryManager;
     private ActivityManager activityManager;
+    private List<Activity> activitys;
     
     public InquiryForm()
     {
@@ -60,6 +61,14 @@ public class InquiryForm extends  BasePage implements Serializable {
         this.week = "";
         this.month = strAll;
         this.year = "";
+    }
+    
+    public List<Activity> getActivitys() {
+        return activitys;
+    }
+
+    public void setActivitys(List<Activity> activitys) {
+        this.activitys = activitys;
     }
     
     public void setInquiryManager(ActivityManager manager) {
