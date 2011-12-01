@@ -49,12 +49,12 @@ public class ActivityManagerImpl extends GenericManagerImpl<Activity, Long> impl
     public List<Activity> findByActivityWeek(Long userId, Date firstDate, Date endDate) {
 		return activityDao.findByActivityWeek(userId, firstDate, endDate);
     }
-    private Map<String, ?> convertActivityToMap(Activity activity) {
+    static Map<String, ?> convertActivityToMap(Activity activity) {
 
         Map<String, Object> mapReport = new HashMap();
         mapReport.put("date_activity", activity.getActivityDate());
-        mapReport.put("time_from", activity.getActivityDate());
-        mapReport.put("time_to", activity.getActivityDate());
+        mapReport.put("time_from", activity.getTimeFrom());
+        mapReport.put("time_to", activity.getTimeTo());
         mapReport.put("code", activity.getType());
         mapReport.put("activities", activity.getName());
         mapReport.put("case", activity.getActivityCase());
