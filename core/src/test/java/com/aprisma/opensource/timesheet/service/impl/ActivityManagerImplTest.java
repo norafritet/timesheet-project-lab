@@ -4,6 +4,8 @@
  */
 package com.aprisma.opensource.timesheet.service.impl;
 
+import mockit.Delegate;
+import org.jmock.Expectations;
 import java.util.HashMap;
 import java.util.Map;
 import java.sql.Time;
@@ -35,19 +37,96 @@ import static org.junit.Assert.*;
  */
 public class ActivityManagerImplTest {
     private ActivityManagerImpl activityManagerImpl;
-    
-    @Mocked private ActivityDao activityDao;
 
+    
+    private Activity act;
+    
+    @Mocked 
+    private ActivityDao activityDao;
+    private List<Activity> listActivity = new ArrayList();
+    
+    private Date fromDate = Date.valueOf("2011-10-10");
+    private Date toDate = Date.valueOf("2011-10-15");
+    
     @Before
     public void setUp() {
         activityManagerImpl = new ActivityManagerImpl();
         activityManagerImpl.setActivityDao(activityDao);
     }
     
+    private void context_findByActivityWeek_setActivityWeek() {
+                final User user = new User();
+          
+                Date date = Date.valueOf("2011-10-12");
+                Time from = Time.valueOf("08:30:00");
+                Time to   = Time.valueOf("18:30:00");
+                listActivity.add(act = new Activity());
+                act.setActivityUser(user);
+                act.setActivityDate(date);
+                act.setTimeFrom(from);
+                act.setTimeTo(to);
+                act.setType(" ");
+                act.setName(" ");
+                act.setActivityCase(" ");
+                act.setIcenterNo(" ");
+                act.setActivityStatus(" ");
+                act.setLocation(" ");
+                act.setRemark(" ");
+
+                date = Date.valueOf("2011-10-14");
+                from = Time.valueOf("08:30:00");
+                to   = Time.valueOf("18:30:00");
+                listActivity.add(act = new Activity());
+                act.setActivityUser(user);
+                act.setActivityDate(date);
+                act.setTimeFrom(from);
+                act.setTimeTo(to);
+                act.setType(" ");
+                act.setName(" ");
+                act.setActivityCase(" ");
+                act.setIcenterNo(" ");
+                act.setActivityStatus(" ");
+                act.setLocation(" ");
+                act.setRemark(" ");
+
+                date = Date.valueOf("2011-10-11");
+                from = Time.valueOf("08:30:00");
+                to   = Time.valueOf("18:30:00");
+                listActivity.add(act = new Activity());
+                act.setActivityUser(user);
+                act.setActivityDate(date);
+                act.setTimeFrom(from);
+                act.setTimeTo(to);
+                act.setType(" ");
+                act.setName(" ");
+                act.setActivityCase(" ");
+                act.setIcenterNo(" ");
+                act.setActivityStatus(" ");
+                act.setLocation(" ");
+                act.setRemark(" ");
+        new NonStrictExpectations() {
+            {
+                activityDao.findByActivityWeek((long)1, fromDate, toDate);
+                result = listActivity;
+           }
+        };
+    }
+    
     @After
     public void tearDown() {
     }
 
+    @Test
+    public void findByActivityWeek_anyInput_ReturnIsSame(){
+        context_findByActivityWeek_setActivityWeek();
+        
+        List<Activity> a = activityManagerImpl.findByActivityWeek((long)1, fromDate, toDate);
+        System.out.println("a = "+a);
+        System.out.println("result = "+listActivity);
+        assertSame(listActivity , a);
+        
+    }
+    
     @Test
     public void getJRDataSourceActivity_AnyInput_ReturnNotNull() throws Exception {
         JRDataSource result = activityManagerImpl.getJRDataSourceActivity((long)1, new Date(1), new Date(1));
