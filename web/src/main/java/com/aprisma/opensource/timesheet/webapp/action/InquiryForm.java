@@ -39,7 +39,7 @@ public class InquiryForm extends BasePage{
     private String week;
 
     private List years;
-    private List months;
+    private static List months = Arrays.asList( strAll, "1" , "2" , "3" , "4" , "5", "6" , "7" , "8" , "9" , "10" , "11" , "12" );
     private List weeks;
 
     private Activity activity = new Activity();
@@ -100,6 +100,7 @@ public class InquiryForm extends BasePage{
 
     public List getMonths() {
 
+        /*
         // Initialization
         months = new ArrayList();
         months.add( strAll );
@@ -111,6 +112,7 @@ public class InquiryForm extends BasePage{
         }
 
         // Return
+        */
         return months;
 
     }
