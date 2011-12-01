@@ -58,9 +58,11 @@ public class InquiryForm extends  BasePage implements Serializable {
     public InquiryForm()
     {
         // Initialization
+        activitys = new ArrayList<Activity>();
         this.week = "";
         this.month = strAll;
         this.year = "";
+        
     }
     
     public List<Activity> getActivitys() {
@@ -178,25 +180,18 @@ public class InquiryForm extends  BasePage implements Serializable {
         this.week = week;
     }
 
-     public List view()
+     public String view()
      {
-         
          String username = getRequest().getRemoteUser();
-         
          User user = userManager.getUserByUsername(username);
-         //activity.setActivityUser(user);
-         
          Date[] rangeDate = RequestUtil.getRangeDateFor(Integer.parseInt(getYear()), Integer.parseInt(getMonth())-1, Integer.parseInt(getWeek()));
 
-         List result = sort(inquiryManager.findByActivityWeek(user.getId(),rangeDate[0],rangeDate[1]));
-         
-         System.out.println("Success");
-         return result;
-         
-         /*Date fd = Date.valueOf("2011-10-10");
-         Date ed = Date.valueOf("2011-10-15");
-         return sort(inquiryManager.findByActivityWeek(new Long(-1),fd,ed));*/
-         //System.out.println(" VIEW ");
+         List<Activity> act = activityManager.findByActivityWeek(user.getId(),rangeDate[0],rangeDate[1]);
+         for(int i=0;i<act.size();i++){
+             activity = act.get(i);
+             activitys.add(activity);
+         }
+         return null;
      }
 
     public void download() throws IOException, JRException {
