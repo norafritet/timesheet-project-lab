@@ -1,7 +1,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://java.sun.com/jstl/core" 
       xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" 
       xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:t="http://myfaces.apache.org/tomahawk"
-      xmlns:v="http://shale.apache.org/validator">
+      xmlns:v="http://shale.apache.org/validator"
+      xmlns:a4j="https://ajax4jsf.dev.java.net/ajax">
 
     <f:view>
         <f:loadBundle var="text" basename="#{basePage.bundleName}"/>
@@ -30,7 +31,7 @@
                 <h:selectOneMenu value="#{inquiryForm.month}" onchange="submit()" id="month" required="true" styleClass="select">
                     <f:selectItems value="#{inquiryForm.months}"/>
 
-                </h:selectOneMenu>
+                 </h:selectOneMenu>
                 <t:message for="month" styleClass="fieldError"/>
                 <t:htmlTag value="p"><h:outputLabel for="month" value="#{text['inquiry.month']}"/></t:htmlTag>
 
@@ -44,7 +45,7 @@
 
                 <h:panelGroup styleClass="buttonBar bottom">
                     <h:commandButton value="#{text['button.view']}" action="#{inquiryForm.view}" id="view" styleClass="button"/>
-
+                    
                     <h:commandButton value="#{text['button.download']}" action="#{inquiryForm.download}" id="download" styleClass="button"/>
 
                 </h:panelGroup>
