@@ -4,12 +4,11 @@
       xmlns:v="http://shale.apache.org/validator">
 
 <f:view>
-<f:loadBundle var="text" basename="#{activityForm.bundleName}"/>
+<f:loadBundle var="text" basename="#{basePage.bundleName}"/>
 <head>
     <title>#{text['activity.title']}</title>
     <meta name="heading" content="#{text['activity.heading']}"/>
 </head>
-<body id="activity">
 
 <div class="separator"></div>
 
@@ -94,6 +93,5 @@
       Form.focusFirstElement($('activityForm'));
      highlightFormElements();
 </script>
-</body>
 </f:view>
 </html>

@@ -6,13 +6,9 @@ import com.aprisma.opensource.timesheet.webapp.util.RequestUtil;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.Serializable;
 import java.util.*;
 import org.appfuse.model.User;
 import java.sql.Date;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JREmptyDataSource;
@@ -35,6 +31,8 @@ import net.sf.jasperreports.engine.util.JRLoader;
  */
 public class InquiryForm extends  BasePage implements Serializable {
 
+public class InquiryForm extends BasePage{
+
     // Declaration
     private final static String strAll = "All";
     private String year;
@@ -46,21 +44,30 @@ public class InquiryForm extends  BasePage implements Serializable {
     private List weeks;
 
     private Activity activity = new Activity();
-    private ActivityManager inquiryManager;
     
+    private ActivityManager activityManager;
+    
+    private List<Activity> activitys;
+
     public InquiryForm()
     {
+        activitys = new ArrayList<Activity>();
         // Initialization
         this.week = "";
         this.month = strAll;
         this.year = "";
     }
-    
-    public void setInquiryManager(ActivityManager manager) {
-        this.inquiryManager = manager;
+    public List<Activity> getActivitys() {
+        return activitys;
+    }
+
+    public void setActivitys(List<Activity> activitys) {
+        this.activitys = activitys;
     }
     
-    
+    public void setActivityManager(ActivityManager manager) {
+        this.activityManager = manager;
+    }
     
     //activity
     public Activity getActivity() {
@@ -157,27 +164,21 @@ public class InquiryForm extends  BasePage implements Serializable {
     public void setWeek(String week) {
         this.week = week;
     }
+   
+    public String view()
+    {
+        
+        String username = getRequest().getRemoteUser();
+        User user = userManager.getUserByUsername(username);
+        Date[] rangeDate = RequestUtil.getRangeDateFor(Integer.parseInt(getYear()), Integer.parseInt(getMonth()), Integer.parseInt(getWeek()));
 
-     public List view()
-     {
-         
-         String username = getRequest().getRemoteUser();
-         
-         User user = userManager.getUserByUsername(username);
-         //activity.setActivityUser(user);
-         
-         Date[] rangeDate = RequestUtil.getRangeDateFor(Integer.parseInt(getYear()), Integer.parseInt(getMonth()), Integer.parseInt(getWeek()));
-
-         List result = sort(inquiryManager.findByActivityWeek(user.getId(),rangeDate[0],rangeDate[1]));
-         
-         System.out.println("Success");
-         return result;
-         
-         /*Date fd = Date.valueOf("2011-10-10");
-         Date ed = Date.valueOf("2011-10-15");
-         return sort(inquiryManager.findByActivityWeek(new Long(-1),fd,ed));*/
-         //System.out.println(" VIEW ");
-     }
+        List<Activity> act = activityManager.findByActivityWeek(user.getId(),rangeDate[0],rangeDate[1]);
+        for(int i=0;i<act.size();i++){
+            activity = act.get(i);
+            activitys.add(activity);
+        }
+        return null;
+    }
 
     public void download() throws IOException, JRException {
         Map parameter = new HashMap();

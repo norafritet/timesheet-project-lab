@@ -52,7 +52,9 @@ public class InquiryFormTest {
     {
 
        InquiryForm iform = new InquiryForm();
-       //Assert.assertEquals( "ss", iform.getYears() );
+       
+       //iform.view();
+       //Assert.assertNotNull(iform.view());
 
     }
 
