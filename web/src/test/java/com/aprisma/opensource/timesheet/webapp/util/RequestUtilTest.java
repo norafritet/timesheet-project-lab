@@ -235,7 +235,6 @@ public class RequestUtilTest {
     @Test
     public void getAppURL_RequestNotNull_ReturnSomeHttpsURL(@Mocked final HttpServletRequest request) {
         new NonStrictExpectations() {
-
             {
                 request.getServerPort();
                 result = 443;
