@@ -54,7 +54,8 @@ public class InquiryForm extends  BasePage implements Serializable {
     private ActivityManager inquiryManager;
     private ActivityManager activityManager;
     private List<Activity> activitys;
-    
+    private final InquiryForm abc = new InquiryForm();
+
     public InquiryForm()
     {
         // Initialization
@@ -140,13 +141,15 @@ public class InquiryForm extends  BasePage implements Serializable {
         // Initialize
         weeks = new ArrayList();
         weeks.add( strAll );
-        
+
+        //abc.setMonth("3");
+        //
         // Add Num Of Week to List
-        if ( !getMonth().equals( strAll ) )
-
-            for ( int i = 1; i <= getNumOfWeekOfMonth(); ++i )
-
+        if ( !getMonth().equals( strAll ) )  {
+            int a = this.getNumOfWeekOfMonth();
+            for ( int i = 1; i <= a; ++i )
                 weeks.add( new Integer(i).toString() );
+        }
         // End Add
 
         return weeks;
@@ -288,7 +291,7 @@ public class InquiryForm extends  BasePage implements Serializable {
         getFacesContext().responseComplete();
     }
             
-    private int getNumOfWeekOfMonth()
+    public int getNumOfWeekOfMonth()
     {
         // Initialize
         Calendar cal = Calendar.getInstance();
