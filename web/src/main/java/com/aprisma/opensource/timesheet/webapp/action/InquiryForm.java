@@ -179,9 +179,14 @@ public class InquiryForm extends  BasePage implements Serializable {
      {
          String username = getRequest().getRemoteUser();
          User user = userManager.getUserByUsername(username);
-         Date[] rangeDate = RequestUtil.getRangeDateFor(Integer.parseInt(getYear()), Integer.parseInt(getMonth())-1, Integer.parseInt(getWeek()));
-
+         Date[] rangeDate = null;
+         
+         int month2 = getMonth().equals( "All" ) ? -1 : Integer.parseInt(getMonth());
+         int week2 = getWeek().equals( "All" ) ? 0 : Integer.parseInt(getWeek());
+         
+         rangeDate  = RequestUtil.getRangeDateFor(Integer.parseInt(getYear()), month2, week2 );
          List<Activity> act = activityManager.findByActivityWeek(user.getId(),rangeDate[0],rangeDate[1]);
+         
          for(int i=0;i<act.size();i++){
              activity = act.get(i);
              activitys.add(activity);
