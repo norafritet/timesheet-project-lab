@@ -58,8 +58,7 @@ public class InquiryFormTest {
     private Long userId=(long)13;
     private JRDataSource dataSource ;
     @Mocked private JasperPrint jasperPrint;
-            
-    
+ 
 //    @Test
 //    public void getSpecificYears() throws Exception
 //    {
@@ -119,8 +118,9 @@ public class InquiryFormTest {
 
        inquiryForm.getWeeks();
        new Verifications(){{inquiryForm.getNumOfWeekOfMonth(); maxTimes=1;}};
-   }
-     @Test
+   } 
+   
+   @Test
    public void getWeeks_MonthHaveFourWeek_ReturnFiveString() throws Exception
    {
       inquiryForm.setYear("2011");
@@ -133,6 +133,7 @@ public class InquiryFormTest {
        Assert.assertEquals(expected,result);
 
    }
+   
    @Test
    public void getWeeks_MonthHaveFiveWeek_ReturnSixString() throws Exception
    {
@@ -143,7 +144,8 @@ public class InquiryFormTest {
 
       List result= inquiryForm.getWeeks();
       Assert.assertEquals(expected,result);
-   }
+   } 
+   
    @Test
    public void getWeeks_MonthHaveSixWeek_ReturnSevenString() throws Exception
    {
@@ -156,7 +158,7 @@ public class InquiryFormTest {
       Assert.assertEquals(expected,result);
    }
        
-    @Test
+   @Test
    public void getWeeks_MonthALL_ReturnAllString() throws Exception
    {
       inquiryForm.setYear("2011");
@@ -168,7 +170,7 @@ public class InquiryFormTest {
       Assert.assertEquals(expected,result);
    }
     
-    @Test
+   @Test
    public void getNumOfWeekOfMonth_MonthHaveFourWeek_ReturnFour() throws Exception
    {
       inquiryForm.setYear("2009");
@@ -177,6 +179,7 @@ public class InquiryFormTest {
       int result= inquiryForm.getNumOfWeekOfMonth();
       Assert.assertEquals(4,result);
    } 
+   
    @Test
    public void getNumOfWeekOfMonth_MonthHaveFiveWeek_ReturnFive() throws Exception
    {
@@ -186,6 +189,7 @@ public class InquiryFormTest {
       int result= inquiryForm.getNumOfWeekOfMonth();
       Assert.assertEquals(5,result);
    } 
+   
    @Test
    public void getNumOfWeekOfMonth_MonthHaveSixWeek_ReturnSix() throws Exception
    {
@@ -223,6 +227,7 @@ public class InquiryFormTest {
 //
 //
 //    }
+   
     @Test
     public void convertYearMonthWeek_MonthNotAllWeekIsAll_intWeekIsNegativeOne(){
         inquiryForm.setYear("2011");
@@ -272,6 +277,7 @@ public class InquiryFormTest {
         inquiryForm.convertYearMonthWeek();
         Assert.assertEquals(0, Deencapsulation.getField(inquiryForm, "intMonth"));
     }
+    
     private void context_getCurrentUser_Invoke() {
         inquiryForm.setUserManager(userManager);
         username = "ramdan";
@@ -363,6 +369,7 @@ public class InquiryFormTest {
         new Verifications (){{JRFiller.fillReport(jasperReport, parameters, dataSource); times=1;     }};
       
     }
+    
     @Test 
     public void exportExcelToStream_Invoke_Call$exportReport(final OutputStream outputSteam) throws JRException{
         new NonStrictExpectations(inquiryForm){
@@ -376,6 +383,7 @@ public class InquiryFormTest {
         inquiryForm.exportExcelToStream(jasperPrint, outputSteam);
         new Verifications(){{ jrxe.exportReport(); times=1;  }};
     }
+    
     @Test 
     public void exportExcelToStream_Invoke_Call$setParameterJasperPrint(final OutputStream outputSteam) throws JRException{
         new NonStrictExpectations(inquiryForm){
@@ -388,7 +396,8 @@ public class InquiryFormTest {
 
         inquiryForm.exportExcelToStream(jasperPrint, outputSteam);
         new Verifications(){{jrxe.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);times=1; }};
-    }
+    } 
+    
     @Test 
     public void exportExcelToStream_Invoke_Call$setParameterOutputStream(final OutputStream outputSteam) throws JRException{
         new NonStrictExpectations(inquiryForm){
@@ -401,8 +410,7 @@ public class InquiryFormTest {
 
         inquiryForm.exportExcelToStream(jasperPrint, outputSteam);
         new Verifications(){{ jrxe.setParameter(JRExporterParameter.OUTPUT_STREAM, outputSteam);times=1;  }};
-    }
-    
+    } 
 
     private void context_writeExportedExcelToResponse_SecondWeekOfJanuaryEleven() throws Exception{
         inquiryForm.setYear("2011");
@@ -410,7 +418,7 @@ public class InquiryFormTest {
         inquiryForm.setWeek("2");
         
         inquiryForm.setUserManager(userManager);
-        inquiryForm.setInquiryManager(activityManager);
+        inquiryForm.setActivityManager(activityManager);
         
         username = "ramdan";
         fullname = "Agus Muhammad Ramdan";
@@ -426,8 +434,7 @@ public class InquiryFormTest {
                 facesContext.responseComplete();
             }
         };
-    }    
-    
+    }
     
     @Test 
     public void writeExportedExcelToResponse_SecondWeekOfJanuaryEleven_SendDataFileNameOfAttacment() throws Exception{
@@ -455,7 +462,6 @@ public class InquiryFormTest {
         inquiryForm.writeExportedExcelToResponse(filename,jasperPrint);
         new Verifications(){{response.setContentType("application/vnd.ms-excel");times =1; }};
     }
-    
       
     @Test 
     public void writeExportedExcelToResponse_SecondWeekOfJanuaryEleven_Call$reset() throws Exception{
@@ -465,6 +471,7 @@ public class InquiryFormTest {
         inquiryForm.writeExportedExcelToResponse(filename,jasperPrint);
         new Verifications(){{response.reset();times =1; }};
     }
+    
     @Test 
     public void writeExportedExcelToResponse_SecondWeekOfJanuaryEleven_Call$exportReport() throws Exception{
 
@@ -482,7 +489,6 @@ public class InquiryFormTest {
         inquiryForm.writeExportedExcelToResponse(filename,jasperPrint);
         new Verifications(){{facesContext.responseComplete(); times=1; }};
     }
-    //
     /**
      * 
      */
@@ -499,7 +505,7 @@ public class InquiryFormTest {
         inquiryForm.setWeek("2");
         
         inquiryForm.setUserManager(userManager);
-        inquiryForm.setInquiryManager(activityManager);
+        inquiryForm.setActivityManager(activityManager);
         dataSource = new JREmptyDataSource(1);
         username = "ramdan";
         fullname = "Agus Muhammad Ramdan";
@@ -628,7 +634,7 @@ public class InquiryFormTest {
         inquiryForm.setMonth("2");
         inquiryForm.setWeek("2");
         inquiryForm.setUserManager(userManager);
-        inquiryForm.setInquiryManager(activityManager);
+        inquiryForm.setActivityManager(activityManager);
         //final JRDataSource dataSource = new JREmptyDataSource(1);
         dataSource = new JREmptyDataSource(1);
         //username = "ramdan";
@@ -661,9 +667,8 @@ public class InquiryFormTest {
         inquiryForm.setYear("2011");
         inquiryForm.setMonth("2");
         inquiryForm.setWeek("All");
-        
         inquiryForm.setUserManager(userManager);
-        inquiryForm.setInquiryManager(activityManager);
+        inquiryForm.setActivityManager(activityManager);
         //final JRDataSource dataSource = new JREmptyDataSource(1);
         dataSource = new JREmptyDataSource(1);
         //username = "ramdan";
@@ -697,7 +702,6 @@ public class InquiryFormTest {
         inquiryForm.setYear("2011");
         inquiryForm.setMonth("All");
         inquiryForm.setWeek("1");
-
         inquiryForm.setUserManager(userManager);
         inquiryForm.setInquiryManager(activityManager);
         dataSource = new JREmptyDataSource(1);
