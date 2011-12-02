@@ -19,7 +19,7 @@
                 <h:outputText/><h:outputText/>
 
 
-                <h:selectOneMenu value="#{inquiryForm.year}" id="year" required="true" styleClass="select">
+                <h:selectOneMenu value="#{inquiryForm.year}" onchange="submit()" id="year" required="true" styleClass="select">
                     <f:selectItems value="#{inquiryForm.years}"/>
                     <v:commonsValidator client="true" type="required" arg="#{text['inquiry.year']}"/>
                 </h:selectOneMenu>
