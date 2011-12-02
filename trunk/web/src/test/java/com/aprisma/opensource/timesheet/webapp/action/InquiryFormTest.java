@@ -33,6 +33,7 @@ import net.sf.jasperreports.engine.fill.JRFiller;
 import net.sf.jasperreports.engine.util.JRLoader;
 import org.appfuse.model.User;
 import org.appfuse.service.UserManager;
+import org.junit.Ignore;
 
 /**
  * Created by IntelliJ IDEA.
@@ -112,13 +113,7 @@ public class InquiryFormTest {
    @Test
    public void getWeeks_NotAllMonth_Call$getNumOfWeekOfMonthOnce(final InquiryForm yourform) throws Exception
    {
-      new NonStrictExpectations(inquiryForm)
-      {
-          {
-
-              inquiryForm.getNumOfWeekOfMonth(); result=4 ;
-          }
-      };
+      new NonStrictExpectations(inquiryForm){{inquiryForm.getNumOfWeekOfMonth(); result=4 ;}};
        inquiryForm.setYear("2011");
        inquiryForm.setMonth("1");
 
@@ -130,13 +125,7 @@ public class InquiryFormTest {
    {
       inquiryForm.setYear("2011");
       inquiryForm.setMonth("1");
-      new NonStrictExpectations(inquiryForm)
-      {
-          {
-
-              inquiryForm.getNumOfWeekOfMonth(); result=4 ;
-          }
-      };
+      new NonStrictExpectations(inquiryForm){{inquiryForm.getNumOfWeekOfMonth(); result=4 ;}};
 
        List<String> expected = Arrays.asList("All","1","2","3","4");
 
@@ -342,15 +331,38 @@ public class InquiryFormTest {
         Assert.assertEquals("WR2_Jan11_Agus Muhammad Ramdan.xls",result);  
     }
     
+    /**
+     * TODO MOVE TO SPRING INTEGRATION TEST
+     * NEED SOME 
+     * @throws JRException 
+     */
     @Test
+    @Ignore 
     public void generateJasperReportInquiryActivity_Invoke_ReturnNotNull() throws JRException{
+         
         Map parameters= new HashMap();
         dataSource = new JREmptyDataSource(1);
         
         JasperPrint result = inquiryForm.generateJasperReportInquiryActivity(parameters, dataSource);
         Assert.assertNotNull(result);
     }
-    
+    @Test
+    public void generateJasperReportInquiryActivity_Invoke_Call$JRFiller$fillReport(
+            final InputStream inputStream,
+            final JasperReport jasperReport,
+            final JRDataSource dataSource ) throws JRException{
+         
+        final Map parameters= new HashMap();
+        new NonStrictExpectations(JRLoader.class,JRFiller.class){{
+            JRLoader.getResourceInputStream("InquiryActivity.jasper"); result= inputStream;
+            JRLoader.loadObject(inputStream); result = jasperReport;
+            JRFiller.fillReport(jasperReport, parameters, dataSource);
+        }};
+        
+        inquiryForm.generateJasperReportInquiryActivity(parameters, dataSource);
+        new Verifications (){{JRFiller.fillReport(jasperReport, parameters, dataSource); times=1;     }};
+      
+    }
     @Test 
     public void exportExcelToStream_Invoke_Call$exportReport(final OutputStream outputSteam) throws JRException{
         new NonStrictExpectations(inquiryForm){
@@ -502,7 +514,7 @@ public class InquiryFormTest {
                 user.getId();result=userId;
                 activityManager.getJRDataSourceActivity(userId, withInstanceLike(new java.sql.Date(1)), withInstanceLike(new java.sql.Date(1))); result=dataSource;
                 
-                
+                inquiryForm.generateJasperReportInquiryActivity(withInstanceLike(new HashMap()), dataSource);
                 inquiryForm.getResponse(); result =response;
                 response.addHeader("Content-Disposition", "attachment; filename=\"WR2_Jan11_Agus Muhammad Ramdan.xls\"");
                 response.getOutputStream(); result = servletOutputStream; 
@@ -628,7 +640,7 @@ public class InquiryFormTest {
                 user.getFullName(); result=fullname;
                 inquiryForm.getResponse(); result =response;
                 activityManager.getJRDataSourceActivity(anyLong, withInstanceOf(java.sql.Date.class), withInstanceOf(java.sql.Date.class)); result=dataSource;
-                
+                inquiryForm.generateJasperReportInquiryActivity(withInstanceLike(new HashMap()), dataSource); result = jasperPrint;
                 
                 response.addHeader("Content-Disposition", "attachment; filename=\"WR2_Feb11_Agus Muhammad Ramdan.xls\"");
                 response.getOutputStream(); result = servletOutputStream;
@@ -662,7 +674,7 @@ public class InquiryFormTest {
                 inquiryForm.getCurrentUser();result= user; 
                 user.getFullName(); result=fullname;
                 activityManager.getJRDataSourceActivity(anyLong, withInstanceOf(java.sql.Date.class), withInstanceOf(java.sql.Date.class)); result=dataSource;
-                
+                inquiryForm.generateJasperReportInquiryActivity(withInstanceLike(new HashMap()), dataSource); result = jasperPrint;
                 
                 inquiryForm.getResponse(); result =response;
                 response.addHeader("Content-Disposition", "attachment; filename=\"WRAll_Feb11_Agus Muhammad Ramdan.xls\"");
@@ -697,7 +709,7 @@ public class InquiryFormTest {
                 inquiryForm.getCurrentUser();result= user; 
                 user.getFullName(); result=fullname;
                 activityManager.getJRDataSourceActivity(anyLong, withInstanceOf(java.sql.Date.class), withInstanceOf(java.sql.Date.class)); result=dataSource;
-                
+                inquiryForm.generateJasperReportInquiryActivity(withInstanceLike(new HashMap()), dataSource); result = jasperPrint;
                 
                 inquiryForm.getResponse(); result =response;
                 response.addHeader("Content-Disposition", "attachment; filename=\"WRAll_All11_Agus Muhammad Ramdan.xls\"");
