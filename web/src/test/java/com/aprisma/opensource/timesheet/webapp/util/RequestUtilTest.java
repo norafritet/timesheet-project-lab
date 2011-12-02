@@ -356,4 +356,25 @@ public class RequestUtilTest {
         Date[] result = RequestUtil.getRangeDateFor(2012,0,5);
         assertArrayEquals(new int[]{29,31},new int[]{result[0].getDate(),result[1].getDate()});
     }
+      
+    @Test
+    public void getRageDateFor_LastWeekOfMonth_ReturnRangeEndDay2(){
+        
+        Date[] result = RequestUtil.getRangeDateFor(2009,1,4);
+        assertArrayEquals(new int[]{22,28},new int[]{result[0].getDate(),result[1].getDate()});
+    } 
+    
+    @Test
+    public void getRageDateFor_WeekOutOffRange_ReturnRangeEndWeek(){
+        
+        Date[] result = RequestUtil.getRangeDateFor(2012,0,6);
+        assertArrayEquals(new int[]{29,31},new int[]{result[0].getDate(),result[1].getDate()});
+    }
+    
+    @Test
+    public void getRageDateFor_WeekOutOffRange_ReturnRangeEndWeek2(){
+        
+        Date[] result = RequestUtil.getRangeDateFor(2009,1,5);
+        assertArrayEquals(new int[]{22,28},new int[]{result[0].getDate(),result[1].getDate()});
+    }    
 }

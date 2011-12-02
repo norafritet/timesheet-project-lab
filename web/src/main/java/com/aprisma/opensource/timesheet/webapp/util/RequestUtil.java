@@ -143,15 +143,22 @@ public final class RequestUtil {
             eddDate =new Date(c.getTimeInMillis());
             return new Date[]{firstDate,eddDate};
         }else{
-            if(week==1){
-                c.set(year,month,1,0,0,0);
-            }else{
+            
+             if(week == 1){
+                 c.set(year,month,1,0,0,0);
+             }else{
+                if(week > 4){
+                    int maxWeek = c.getActualMaximum(Calendar.WEEK_OF_MONTH);
+                    if(maxWeek < week){
+                        week = maxWeek;
+                    }
+                }
                 c.clear();
                 c.set(Calendar.YEAR,year);
                 c.set(Calendar.MONTH,month);
                 c.set(Calendar.WEEK_OF_MONTH, week);
-                
-            }
+             
+        }
             firstDate =new Date(c.getTimeInMillis());
             if((c.get(Calendar.DATE)+6 )>  c.getActualMaximum(Calendar.DATE)){
                 c.clear();
