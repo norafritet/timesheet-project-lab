@@ -221,9 +221,17 @@ public class InquiryForm extends  BasePage implements Serializable {
             intMonth = Integer.parseInt(month)-1;
             try {
                 intWeek = Integer.parseInt(week);
+                if(intWeek > 4){
+                    int maxWeek = this.getNumOfWeekOfMonth();
+                    if(maxWeek<intWeek){
+                        intWeek = maxWeek;
+                        week = String.valueOf(intWeek);
+                    }
+                }        
             }catch (NumberFormatException e){
                 intWeek = -1;
             }
+            
         }catch (NumberFormatException e){
             intMonth = -1;
             intWeek = -1;
@@ -271,22 +279,24 @@ public class InquiryForm extends  BasePage implements Serializable {
     {
         // Initialize
         Calendar cal = Calendar.getInstance();
-        int year = Integer.parseInt( getYear() );
-        int month = Integer.parseInt( getMonth() ) - Calendar.FEBRUARY ;
-
+//        int year = Integer.parseInt( this.year );
+//        int month = Integer.parseInt( this.month ) - 1
+        
         // Set First Day
-        cal.set( year, month, 1 );
-
+        cal.set( Integer.parseInt( this.year ), 
+                Integer.parseInt( this.month ) - 1, 
+                1 );
+        return cal.getActualMaximum( Calendar.WEEK_OF_MONTH );
         // Set Last Day
-        cal.set( year, month, cal.getActualMaximum(Calendar.DAY_OF_MONTH) );
+        //cal.set( year, month, cal.getActualMaximum(Calendar.DAY_OF_MONTH) );
 
         // Get Number of Week
-        int numOfWeek = cal.get( Calendar.WEEK_OF_MONTH );
-        System.out.println("Date " + year + "-" + month + "-" + cal.getActualMaximum(Calendar.DAY_OF_MONTH));
-        System.out.println("num Of Week--> " + numOfWeek + "(" + Calendar.JANUARY);
+        //int numOfWeek = cal.get( Calendar.WEEK_OF_MONTH );
+//        System.out.println("Date " + year + "-" + month + "-" + cal.getActualMaximum(Calendar.DAY_OF_MONTH));
+//        System.out.println("num Of Week--> " + numOfWeek + "(" + Calendar.JANUARY);
 
         // Return
-        return numOfWeek;
+        //return numOfWeek;
     }
  
 }
