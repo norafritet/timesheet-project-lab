@@ -44,19 +44,19 @@ public class InquiryFormTest {
     
     @Tested private InquiryForm inquiryForm;
     @Capturing JRXlsExporter jrxe;
-    //@Mocked private InquiryForm inForm;
     private String username;
     private String fullname;
+    private String filename;
     @Mocked private HttpServletRequest request;
     @Mocked private HttpServletResponse response;
     @Mocked private User user;
-    ByteArrayOutputStream bos = new ByteArrayOutputStream();
-    private ServletOutputStream servletOutputStream;
+    @Mocked private ServletOutputStream servletOutputStream;
     @Mocked private FacesContext facesContext ;
     @Mocked private UserManager userManager;
     @Mocked private ActivityManager activityManager;
     private Long userId=(long)13;
     private JRDataSource dataSource ;
+    @Mocked private JasperPrint jasperPrint;
             
     
 //    @Test
@@ -179,6 +179,33 @@ public class InquiryFormTest {
       Assert.assertEquals(expected,result);
    }
     
+    @Test
+   public void getNumOfWeekOfMonth_MonthHaveFourWeek_ReturnFour() throws Exception
+   {
+      inquiryForm.setYear("2009");
+      inquiryForm.setMonth("2");
+
+      int result= inquiryForm.getNumOfWeekOfMonth();
+      Assert.assertEquals(4,result);
+   } 
+   @Test
+   public void getNumOfWeekOfMonth_MonthHaveFiveWeek_ReturnFive() throws Exception
+   {
+      inquiryForm.setYear("2011");
+      inquiryForm.setMonth("12");
+
+      int result= inquiryForm.getNumOfWeekOfMonth();
+      Assert.assertEquals(5,result);
+   } 
+   @Test
+   public void getNumOfWeekOfMonth_MonthHaveSixWeek_ReturnSix() throws Exception
+   {
+      inquiryForm.setYear("2011");
+      inquiryForm.setMonth("10");
+
+      int result= inquiryForm.getNumOfWeekOfMonth();
+      Assert.assertEquals(6,result);
+   }    
 //    @Test
 //    public void getAvailableWeekBasedOnMonth() throws Exception
 //    {
@@ -325,7 +352,7 @@ public class InquiryFormTest {
     }
     
     @Test 
-    public void exportExcelToStream_Invoke_Call$exportReport(final JasperPrint jasperPrint,final OutputStream outputSteam) throws JRException{
+    public void exportExcelToStream_Invoke_Call$exportReport(final OutputStream outputSteam) throws JRException{
         new NonStrictExpectations(inquiryForm){
             {
                 jrxe.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
@@ -338,7 +365,7 @@ public class InquiryFormTest {
         new Verifications(){{ jrxe.exportReport(); times=1;  }};
     }
     @Test 
-    public void exportExcelToStream_Invoke_Call$setParameterJasperPrint(final JasperPrint jasperPrint,final OutputStream outputSteam) throws JRException{
+    public void exportExcelToStream_Invoke_Call$setParameterJasperPrint(final OutputStream outputSteam) throws JRException{
         new NonStrictExpectations(inquiryForm){
             {
                 jrxe.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
@@ -351,7 +378,7 @@ public class InquiryFormTest {
         new Verifications(){{jrxe.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);times=1; }};
     }
     @Test 
-    public void exportExcelToStream_Invoke_Call$setParameterOutputStream(final JasperPrint jasperPrint,final OutputStream outputSteam) throws JRException{
+    public void exportExcelToStream_Invoke_Call$setParameterOutputStream(final OutputStream outputSteam) throws JRException{
         new NonStrictExpectations(inquiryForm){
             {
                 jrxe.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
@@ -363,6 +390,87 @@ public class InquiryFormTest {
         inquiryForm.exportExcelToStream(jasperPrint, outputSteam);
         new Verifications(){{ jrxe.setParameter(JRExporterParameter.OUTPUT_STREAM, outputSteam);times=1;  }};
     }
+    
+
+    private void context_writeExportedExcelToResponse_SecondWeekOfJanuaryEleven() throws Exception{
+        inquiryForm.setYear("2011");
+        inquiryForm.setMonth("1");
+        inquiryForm.setWeek("2");
+        
+        inquiryForm.setUserManager(userManager);
+        inquiryForm.setInquiryManager(activityManager);
+        
+        username = "ramdan";
+        fullname = "Agus Muhammad Ramdan";
+        filename = "WR2_Jan11_Agus Muhammad Ramdan.xls";
+        new NonStrictExpectations(inquiryForm){
+            {
+                inquiryForm.getResponse(); result =response;
+                response.addHeader("Content-Disposition", "attachment; filename=\"WR2_Jan11_Agus Muhammad Ramdan.xls\"");
+                response.getOutputStream(); result = servletOutputStream; 
+                jrxe.setParameter(JRExporterParameter.OUTPUT_STREAM, servletOutputStream);
+                jrxe.exportReport();
+                inquiryForm.getFacesContext(); result = facesContext;
+                facesContext.responseComplete();
+            }
+        };
+    }    
+    
+    
+    @Test 
+    public void writeExportedExcelToResponse_SecondWeekOfJanuaryEleven_SendDataFileNameOfAttacment() throws Exception{
+        
+        context_writeExportedExcelToResponse_SecondWeekOfJanuaryEleven();
+
+        inquiryForm.writeExportedExcelToResponse(filename,jasperPrint);
+        new Verifications(){{response.addHeader("Content-Disposition", "attachment; filename=\"WR2_Jan11_Agus Muhammad Ramdan.xls\"");times =1; }};
+    } 
+    
+    @Test 
+    public void writeExportedExcelToResponse_SecondWeekOfJanuaryEleven_Send$flushBuffer() throws Exception{
+
+        context_writeExportedExcelToResponse_SecondWeekOfJanuaryEleven();
+
+        inquiryForm.writeExportedExcelToResponse(filename,jasperPrint);
+        new Verifications(){{response.flushBuffer();times =1; }};
+    }   
+    
+    @Test 
+    public void writeExportedExcelToResponse_SecondWeekOfJanuaryEleven_SenddataContentType$setContentType() throws Exception{
+
+        context_writeExportedExcelToResponse_SecondWeekOfJanuaryEleven();
+
+        inquiryForm.writeExportedExcelToResponse(filename,jasperPrint);
+        new Verifications(){{response.setContentType("application/vnd.ms-excel");times =1; }};
+    }
+    
+      
+    @Test 
+    public void writeExportedExcelToResponse_SecondWeekOfJanuaryEleven_Call$reset() throws Exception{
+
+        context_writeExportedExcelToResponse_SecondWeekOfJanuaryEleven();
+
+        inquiryForm.writeExportedExcelToResponse(filename,jasperPrint);
+        new Verifications(){{response.reset();times =1; }};
+    }
+    @Test 
+    public void writeExportedExcelToResponse_SecondWeekOfJanuaryEleven_Call$exportReport() throws Exception{
+
+        context_writeExportedExcelToResponse_SecondWeekOfJanuaryEleven();
+
+        inquiryForm.writeExportedExcelToResponse(filename,jasperPrint);
+        new Verifications(){{jrxe.exportReport(); times=1; }};
+    }
+   
+    @Test
+    public void writeExportedExcelToResponse_SecondWeekOfJanuaryEleven_Call$responseComplete() throws Exception{
+
+        context_writeExportedExcelToResponse_SecondWeekOfJanuaryEleven();
+
+        inquiryForm.writeExportedExcelToResponse(filename,jasperPrint);
+        new Verifications(){{facesContext.responseComplete(); times=1; }};
+    }
+    //
     /**
      * 
      */
@@ -377,15 +485,6 @@ public class InquiryFormTest {
         inquiryForm.setYear("2011");
         inquiryForm.setMonth("1");
         inquiryForm.setWeek("2");
-        
-        bos = new ByteArrayOutputStream();
-        servletOutputStream = new ServletOutputStream(){
-
-            @Override
-            public void write(int b) throws IOException {
-                bos.write(b);
-            }
-        };
         
         inquiryForm.setUserManager(userManager);
         inquiryForm.setInquiryManager(activityManager);
@@ -402,6 +501,8 @@ public class InquiryFormTest {
                 user.getFullName(); result=fullname;
                 user.getId();result=userId;
                 activityManager.getJRDataSourceActivity(userId, withInstanceLike(new java.sql.Date(1)), withInstanceLike(new java.sql.Date(1))); result=dataSource;
+                
+                
                 inquiryForm.getResponse(); result =response;
                 response.addHeader("Content-Disposition", "attachment; filename=\"WR2_Jan11_Agus Muhammad Ramdan.xls\"");
                 response.getOutputStream(); result = servletOutputStream; 
@@ -413,6 +514,10 @@ public class InquiryFormTest {
         };
     }
     
+    /**
+     * @see #writeExportedExcelToResponse_SecondWeekOfJanuaryEleven_SendDataFileNameOfAttacment()
+     * @throws Exception 
+     */
     @Test 
     public void download_SecondWeekOfJanuaryEleven_SendDataFileNameOfAttacment() throws Exception{
         
@@ -422,6 +527,10 @@ public class InquiryFormTest {
         new Verifications(){{response.addHeader("Content-Disposition", "attachment; filename=\"WR2_Jan11_Agus Muhammad Ramdan.xls\"");times =1; }};
     }
     
+    /**
+     * @see #writeExportedExcelToResponse_SecondWeekOfJanuaryEleven_Send$flushBuffer
+     * @throws Exception 
+     */
     @Test 
     public void download_SecondWeekOfJanuaryEleven_Send$flushBuffer( ) throws Exception{
 
@@ -429,18 +538,25 @@ public class InquiryFormTest {
 
         inquiryForm.download();
         new Verifications(){{response.flushBuffer();times =1; }};
-
     }
     
+    /**
+     * @see #writeExportedExcelToResponse_SecondWeekOfJanuaryEleven_SenddataContentType$setContentType()
+     * @throws Exception 
+     */
     @Test 
-    public void download_SecondWeekOfJanuaryEleven_SenddataContentType$setContentType( ) throws Exception{
+    public void download_SecondWeekOfJanuaryEleven_SenddataContentType$setContentType() throws Exception{
 
         context_download_SecondWeekOfJanuaryEleven();
 
         inquiryForm.download();
         new Verifications(){{response.setContentType("application/vnd.ms-excel");times =1; }};
     }
- 
+  
+    /**
+     * @see #writeExportedExcelToResponse_SecondWeekOfJanuaryEleven_Call$reset()
+     * @throws Exception 
+     */
     @Test 
     public void download_SecondWeekOfJanuaryEleven_Call$reset() throws Exception{
 
@@ -449,7 +565,11 @@ public class InquiryFormTest {
         inquiryForm.download();
         new Verifications(){{response.reset();times =1; }};
     }
-    
+    /**
+     * @see #exportExcelToStream_Invoke_Call$exportReport(java.io.OutputStream) 
+     * 
+     * @throws Exception 
+     */
     @Test 
     public void download_SecondWeekOfJanuaryEleven_Call$exportReport() throws Exception{
 
@@ -458,6 +578,7 @@ public class InquiryFormTest {
         inquiryForm.download();
         new Verifications(){{jrxe.exportReport(); times=1; }};
     }
+// isolated from export        
 //    @Test 
 //    public void download_SecondWeekOfJanuaryEleven_Call$write() throws Exception{
 //
@@ -466,7 +587,10 @@ public class InquiryFormTest {
 //        inquiryForm.download();
 //        Assert.assertTrue(bos.size()>0);
 //    }
-    
+    /**
+     * @see #writeExportedExcelToResponse_SecondWeekOfJanuaryEleven_Call$responseComplete() 
+     * @throws Exception 
+     */
     @Test
     public void download_SecondWeekOfJanuaryEleven_Call$responseComplete() throws Exception{
 
@@ -491,31 +615,21 @@ public class InquiryFormTest {
         inquiryForm.setYear("2011");
         inquiryForm.setMonth("2");
         inquiryForm.setWeek("2");
-        
-//        bos = new ByteArrayOutputStream();
-//        servletOutputStream = new ServletOutputStream(){
-//
-//            @Override
-//            public void write(int b) throws IOException {
-//                bos.write(b);
-//            }
-//        };
-        
         inquiryForm.setUserManager(userManager);
         inquiryForm.setInquiryManager(activityManager);
         //final JRDataSource dataSource = new JREmptyDataSource(1);
         dataSource = new JREmptyDataSource(1);
-        username = "ramdan";
+        //username = "ramdan";
         fullname = "Agus Muhammad Ramdan";
         new NonStrictExpectations(inquiryForm){
-            ServletOutputStream servletOutputStream;
+            //ServletOutputStream servletOutputStream;
             {
-                inquiryForm.getRequest(); result= request;
-                request.getRemoteUser(); result=username;
-                userManager.getUserByUsername(username); result= user;
+                inquiryForm.getCurrentUser();result= user; 
                 user.getFullName(); result=fullname;
                 inquiryForm.getResponse(); result =response;
                 activityManager.getJRDataSourceActivity(anyLong, withInstanceOf(java.sql.Date.class), withInstanceOf(java.sql.Date.class)); result=dataSource;
+                
+                
                 response.addHeader("Content-Disposition", "attachment; filename=\"WR2_Feb11_Agus Muhammad Ramdan.xls\"");
                 response.getOutputStream(); result = servletOutputStream;
                 jrxe.setParameter(JRExporterParameter.OUTPUT_STREAM, servletOutputStream);
@@ -538,17 +652,18 @@ public class InquiryFormTest {
         
         inquiryForm.setUserManager(userManager);
         inquiryForm.setInquiryManager(activityManager);
-        final JRDataSource dataSource = new JREmptyDataSource(1);
-        username = "ramdan";
+        //final JRDataSource dataSource = new JREmptyDataSource(1);
+        dataSource = new JREmptyDataSource(1);
+        //username = "ramdan";
         fullname = "Agus Muhammad Ramdan";
         new NonStrictExpectations(inquiryForm){
             ServletOutputStream servletOutputStream;
             {
-                inquiryForm.getRequest(); result= request;
-                request.getRemoteUser(); result=username;
-                userManager.getUserByUsername(username); result= user;
+                inquiryForm.getCurrentUser();result= user; 
                 user.getFullName(); result=fullname;
                 activityManager.getJRDataSourceActivity(anyLong, withInstanceOf(java.sql.Date.class), withInstanceOf(java.sql.Date.class)); result=dataSource;
+                
+                
                 inquiryForm.getResponse(); result =response;
                 response.addHeader("Content-Disposition", "attachment; filename=\"WRAll_Feb11_Agus Muhammad Ramdan.xls\"");
                 response.getOutputStream(); result = servletOutputStream;
@@ -570,22 +685,20 @@ public class InquiryFormTest {
         inquiryForm.setYear("2011");
         inquiryForm.setMonth("All");
         inquiryForm.setWeek("1");
-        
-        
+
         inquiryForm.setUserManager(userManager);
         inquiryForm.setInquiryManager(activityManager);
-        //final JRDataSource dataSource = new JREmptyDataSource(1);
         dataSource = new JREmptyDataSource(1);
-        username = "ramdan";
+        //username = "ramdan";
         fullname = "Agus Muhammad Ramdan";
         new NonStrictExpectations(inquiryForm){
-            ServletOutputStream servletOutputStream;
+            //ServletOutputStream servletOutputStream;
             {
-                inquiryForm.getRequest(); result= request;
-                request.getRemoteUser(); result=username;
-                userManager.getUserByUsername(username); result= user;
+                inquiryForm.getCurrentUser();result= user; 
                 user.getFullName(); result=fullname;
                 activityManager.getJRDataSourceActivity(anyLong, withInstanceOf(java.sql.Date.class), withInstanceOf(java.sql.Date.class)); result=dataSource;
+                
+                
                 inquiryForm.getResponse(); result =response;
                 response.addHeader("Content-Disposition", "attachment; filename=\"WRAll_All11_Agus Muhammad Ramdan.xls\"");
                 response.getOutputStream(); result = servletOutputStream; 
@@ -610,34 +723,22 @@ public class InquiryFormTest {
     }
     
     @Test 
-    public void download_SecondWeekOfJanuaryEleven_ContaintInPrametersWhenCallJRFiller$fillReport(
-        final @Mocked JasperReport jasperReport ) throws Exception{
+    public void download_SecondWeekOfJanuaryEleven_ContaintInPrametersWhenCallJRFiller$fillReport() throws Exception{
         final Map captureContentParameter = new HashMap();
 
         inquiryForm.setYear("2011");
         inquiryForm.setMonth("1");
         inquiryForm.setWeek("2");
         
-//        bos = new ByteArrayOutputStream();
-//        servletOutputStream = new ServletOutputStream(){
-//
-//            @Override
-//            public void write(int b) throws IOException {
-//                bos.write(b);
-//            }
-//        };
-        
         inquiryForm.setUserManager(userManager);
         inquiryForm.setInquiryManager(activityManager);
         dataSource = new JREmptyDataSource(1);
-        username = "ramdan";
+        //username = "ramdan";
         fullname = "Agus Muhammad Ramdan";
         new NonStrictExpectations(inquiryForm,JRFiller.class){
             JasperPrint jasperPrint;
             {
-                inquiryForm.getRequest(); result= request;
-                request.getRemoteUser(); result=username;
-                userManager.getUserByUsername(username); result= user;
+                inquiryForm.getCurrentUser(); result= user;
                 user.getFullName(); result=fullname;
                 user.getId();result=userId;
                 activityManager.getJRDataSourceActivity(userId, withInstanceLike(new java.sql.Date(1)), withInstanceLike(new java.sql.Date(1))); result=dataSource;
