@@ -42,6 +42,11 @@ public class InquiryForm extends  BasePage implements Serializable {
 
     // Declaration
     private final static String strAll = "All";
+    
+    private int intMonth ;
+    private int intWeek ;
+    private int intYear ;
+        
     private String year;
     private String month;
     private String week;
@@ -51,7 +56,7 @@ public class InquiryForm extends  BasePage implements Serializable {
     private List weeks ;
 
     private Activity activity = new Activity();
-    private ActivityManager inquiryManager;
+    //private ActivityManager inquiryManager;
     private ActivityManager activityManager;
     private List<Activity> activitys;
 
@@ -74,13 +79,13 @@ public class InquiryForm extends  BasePage implements Serializable {
     }
     
     public void setInquiryManager(ActivityManager manager) {
-        this.inquiryManager = manager;
+        //this.inquiryManager = manager;
         activityManager=manager;
     }
 
     public void setActivityManager(ActivityManager activityManager) {
         this.activityManager = activityManager;
-        this.inquiryManager = activityManager;
+        //this.inquiryManager = activityManager;
     }
 
     //activity
@@ -185,22 +190,27 @@ public class InquiryForm extends  BasePage implements Serializable {
      }
 
     public void download() throws IOException, JRException {
-        Map parameter = new HashMap();
-        //InputStream inputStream = null;
-        JRDataSource dataSource = null;
-        JasperPrint jasperPrint = null;
-        //String monthYear= null;
+        
         String fullName = null;
         String fileName = null;
-        int intMonth ;
-        int intWeek  ;
-        int intYear ;
-        String username = getRequest().getRemoteUser();
-        User user = userManager.getUserByUsername(username);
+        
+        User user = getCurrentUser();
         fullName = user.getFullName();
         Long userId = user.getId();
         
-        try {
+        convertYearMonthWeek();
+        Date[] rangeDate = RequestUtil.getRangeDateFor(intYear, intMonth, intWeek);
+        
+        fileName =  generateFileNameOfAttacment(intMonth<0,intWeek<1,rangeDate[0], fullName);
+        Map parameter = new HashMap();
+        parameter.put("USER_FULLNAME",fullName);
+        JRDataSource dataSource = activityManager.getJRDataSourceActivity(userId, rangeDate[0], rangeDate[1]);
+        JasperPrint jasperPrint =generateJasperReportInquiryActivity(parameter,dataSource);
+        writeExportedExcelToResponse(fileName, jasperPrint);
+    }
+    
+    protected void convertYearMonthWeek(){
+         try {
             intMonth = Integer.parseInt(month)-1;
             try {
                 intWeek = Integer.parseInt(week);
@@ -212,40 +222,10 @@ public class InquiryForm extends  BasePage implements Serializable {
             intWeek = -1;
         }
         intYear = Integer.parseInt(year);
-        
-        Date[] rangeDate = RequestUtil.getRangeDateFor(intYear, intMonth, intWeek);
-        fileName =  generateFileNameOfAttacment(intMonth<0,intWeek<1,rangeDate[0], fullName);
-//        boolean isAllMonth =intMonth<0;
-//        Date startDate = rangeDate[0];
-//        
-//        if(isAllMonth){
-//            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMMyy");
-//            monthYear = simpleDateFormat.format(startDate);
-//        }else{
-//            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yy");
-//            monthYear = "All"+simpleDateFormat.format(startDate);
-//        }
-//        fileName = "WR"+(intWeek>-1? intWeek:"All")+"_"+monthYear+"_"+fullName+".xls";
-        parameter.put("USER_FULLNAME",fullName);
-        dataSource = activityManager.getJRDataSourceActivity(userId, rangeDate[0], rangeDate[1]);
-        jasperPrint =generateJasperReportInquiryActivity(parameter,dataSource);
-//        inputStream = JRLoader.getResourceInputStream("InquiryActivity.jasper");
-//        JasperReport jasperReport = (JasperReport)JRLoader.loadObject(inputStream);
-//        jasperPrint = JRFiller.fillReport(jasperReport, parameter, dataSource);
-        
-        writeExportedExcelToResponse(fileName, jasperPrint);
-        // write to response
-//        HttpServletResponse response = getResponse();
-//        response.reset();
-//        response.addHeader("Content-Disposition", "attachment; filename=\""+fileName+"\"");
-//        response.setContentType("application/vnd.ms-excel");
-//        OutputStream outputSteam = response.getOutputStream() ;
-//        JRXlsExporter exporter = new JRXlsExporter();		
-//	exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
-//	exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, outputSteam);		
-//	exporter.exportReport();
-//        response.flushBuffer();
-//        getFacesContext().responseComplete();
+    }
+    protected User getCurrentUser(){
+        String username = getRequest().getRemoteUser();
+        return userManager.getUserByUsername(username);
     }
     protected String generateFileNameOfAttacment(boolean isAllMonth,boolean isAllWeek,Date startDate,String fullName){
         String monthYear;
@@ -263,17 +243,19 @@ public class InquiryForm extends  BasePage implements Serializable {
         JasperReport jasperReport = (JasperReport)JRLoader.loadObject(inputStream);
         return  JRFiller.fillReport(jasperReport, parameters, dataSource);
     }
-    
+    protected void exportExcelToStream(JasperPrint jasperPrint,OutputStream outputSteam) throws JRException{
+        JRXlsExporter exporter = new JRXlsExporter();		
+	exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+	exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, outputSteam);		
+	exporter.exportReport();
+    }
     protected void writeExportedExcelToResponse(String fileName, JasperPrint jasperPrint) throws IOException, JRException{
         HttpServletResponse response = getResponse();
         response.reset();
         response.addHeader("Content-Disposition", "attachment; filename=\""+fileName+"\"");
         response.setContentType("application/vnd.ms-excel");
         OutputStream outputSteam = response.getOutputStream() ;
-        JRXlsExporter exporter = new JRXlsExporter();		
-	exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
-	exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, outputSteam);		
-	exporter.exportReport();
+        exportExcelToStream( jasperPrint, outputSteam);
         response.flushBuffer();
         getFacesContext().responseComplete();
     }
