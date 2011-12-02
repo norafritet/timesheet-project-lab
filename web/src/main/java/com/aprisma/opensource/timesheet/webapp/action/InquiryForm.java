@@ -54,7 +54,6 @@ public class InquiryForm extends  BasePage implements Serializable {
     private ActivityManager inquiryManager;
     private ActivityManager activityManager;
     private List<Activity> activitys;
-    private final InquiryForm abc = new InquiryForm();
 
     public InquiryForm()
     {
@@ -135,29 +134,17 @@ public class InquiryForm extends  BasePage implements Serializable {
 //    public void setMonths(List months) {
 //        this.months = months;
 //    }
-
+    private static final List FOUR_WEEKS =Arrays.asList("All","1","2","3","4");
+    private static final List FIVE_WEEKS =Arrays.asList("All","1","2","3","4","5");
+    private static final List SIX_WEEKS =Arrays.asList("All","1","2","3","4","5","6");
+    private static final List[] WEEKS = {Arrays.asList("All" ),FOUR_WEEKS,FIVE_WEEKS,SIX_WEEKS};
     public List getWeeks() {
-
-        // Initialize
-        weeks = new ArrayList();
-        weeks.add( strAll );
-
-        //abc.setMonth("3");
-        //
-        // Add Num Of Week to List
-        if ( !getMonth().equals( strAll ) )  {
-            int a = this.getNumOfWeekOfMonth();
-            for ( int i = 1; i <= a; ++i )
-                weeks.add( new Integer(i).toString() );
-        }
-        // End Add
-
-        return weeks;
+        return weeks = WEEKS[!month.equals( strAll ) ? this.getNumOfWeekOfMonth()-3 : 0];
     }
 
-    public void setWeeks(List weeks) {
-        this.weeks = weeks;
-    }
+//    public void setWeeks(List weeks) {
+//        this.weeks = weeks;
+//    }
 
     public String getYear() {
         return year;

@@ -75,39 +75,37 @@ public class InquiryFormTest {
 
 
 
-    @Test
-     // Declare the mocks you need through mock fields or parameters.
-    public void runOnceGetNumOfWeekOfMonth() throws Exception
-    {
-
-
-        context_getWeeks();
-
-
-
-        /*
-      // Record the desired results for method invocations, if any are needed.
-        new NonStrictExpectations() {
-         // An internal (encapsulated) dependency can be mocked as well:
-         AnotherDependency anotherMock;
-
-         {
-            anotherMock.doSomething("test"); result = 123;
-         }
-      };
-
-      // Exercise the code under test.
-      new ServiceAbc(mock).doOperation("some data");
-       */
-      // Verify expected invocations, if any.
-      inquiryForm.getWeeks();
-      new Verifications()
-      {
-          {
-            inForm.getNumOfWeekOfMonth(); times = 0;
-          }
-      };
-   }
+//    @Test
+//     // Declare the mocks you need through mock fields or parameters.
+//    public void runOnceGetNumOfWeekOfMonth() throws Exception
+//    {
+//
+//
+//        context_getWeeks();
+//
+//        /*
+//      // Record the desired results for method invocations, if any are needed.
+//        new NonStrictExpectations() {
+//         // An internal (encapsulated) dependency can be mocked as well:
+//         AnotherDependency anotherMock;
+//
+//         {
+//            anotherMock.doSomething("test"); result = 123;
+//         }
+//      };
+//
+//      // Exercise the code under test.
+//      new ServiceAbc(mock).doOperation("some data");
+//       */
+//      // Verify expected invocations, if any.
+//      inquiryForm.getWeeks();
+//      new Verifications()
+//      {
+//          {
+//            inForm.getNumOfWeekOfMonth(); times = 0;
+//          }
+//      };
+//   }
 
    @Test
    public void getWeeks_NotAllMonth_Call$getNumOfWeekOfMonthOnce(final InquiryForm yourform) throws Exception
@@ -123,12 +121,13 @@ public class InquiryFormTest {
        inquiryForm.setMonth("1");
 
        inquiryForm.getWeeks();
-
        new Verifications(){{inquiryForm.getNumOfWeekOfMonth(); maxTimes=1;}};
    }
      @Test
-   public void getWeeks_MonthHaveFourWeek_ReturnFiveString(final InquiryForm yourform) throws Exception
+   public void getWeeks_MonthHaveFourWeek_ReturnFiveString() throws Exception
    {
+      inquiryForm.setYear("2011");
+      inquiryForm.setMonth("1");
       new NonStrictExpectations(inquiryForm)
       {
           {
@@ -136,43 +135,79 @@ public class InquiryFormTest {
               inquiryForm.getNumOfWeekOfMonth(); result=4 ;
           }
       };
-       inquiryForm.setYear("2011");
-       inquiryForm.setMonth("1");
+
        List<String> expected = Arrays.asList("All","1","2","3","4");
 
        List result= inquiryForm.getWeeks();
        Assert.assertEquals(expected,result);
 
    }
+      @Test
+   public void getWeeks_MonthHaveFiveWeek_ReturnSixString() throws Exception
+   {
+      inquiryForm.setYear("2011");
+      inquiryForm.setMonth("1");
+      new NonStrictExpectations(inquiryForm){{inquiryForm.getNumOfWeekOfMonth(); result=5 ;}};
+      List<String> expected = Arrays.asList("All","1","2","3","4","5");
+
+      List result= inquiryForm.getWeeks();
+      Assert.assertEquals(expected,result);
+   }
+       @Test
+   public void getWeeks_MonthHaveSixWeek_ReturnSevenString() throws Exception
+   {
+      inquiryForm.setYear("2011");
+      inquiryForm.setMonth("1");
+      new NonStrictExpectations(inquiryForm){{inquiryForm.getNumOfWeekOfMonth(); result=6 ;}};
+      List<String> expected = Arrays.asList("All","1","2","3","4","5","6");
+
+      List result= inquiryForm.getWeeks();
+      Assert.assertEquals(expected,result);
+   }
+       
     @Test
-    public void getAvailableWeekBasedOnMonth() throws Exception
-    {
+   public void getWeeks_MonthALL_ReturnAllString() throws Exception
+   {
+      inquiryForm.setYear("2011");
+      inquiryForm.setMonth("All");
+      //new NonStrictExpectations(inquiryForm){{inquiryForm.getNumOfWeekOfMonth(); result=6 ;}};
+      List<String> expected = Arrays.asList("All");
 
-        InquiryForm iform = new InquiryForm();
-       iform.setMonth("02");
-        iform.setYear("2011");
-         iform.getWeeks()  ;
-
-
-        /*
-         SimpleDateFormat sdf;
-         Calendar cal;
-         Date date;
-         int week;
-         String sample = "12/25/1979";
-         sdf = new SimpleDateFormat("MM/dd/yyyy");
-         date = sdf.parse(sample);
-         cal = Calendar.getInstance();
-         cal.setTime(date);
-
-         week = cal.get( Calendar.WEEK_OF_MONTH );
-         */
-        //iform.getWeeksOfMonth();
-
-
-
-    }
-
+      List result= inquiryForm.getWeeks();
+      Assert.assertEquals(expected,result);
+   }
+    
+//    @Test
+//    public void getAvailableWeekBasedOnMonth() throws Exception
+//    {
+//
+//        InquiryForm iform = new InquiryForm();
+//       iform.setMonth("02");
+//        iform.setYear("2011");
+//         iform.getWeeks()  ;
+//
+//
+//        /*
+//         SimpleDateFormat sdf;
+//         Calendar cal;
+//         Date date;
+//         int week;
+//         String sample = "12/25/1979";
+//         sdf = new SimpleDateFormat("MM/dd/yyyy");
+//         date = sdf.parse(sample);
+//         cal = Calendar.getInstance();
+//         cal.setTime(date);
+//
+//         week = cal.get( Calendar.WEEK_OF_MONTH );
+//         */
+//        //iform.getWeeksOfMonth();
+//
+//
+//
+//    }
+/**
+     * 
+     */
     @Test
     public void getResourceInputStream_InquiryActivityJasper_notNull(){
         
