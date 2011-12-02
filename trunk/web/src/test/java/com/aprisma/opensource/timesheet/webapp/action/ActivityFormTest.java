@@ -147,7 +147,6 @@ public class ActivityFormTest {
         form.save();
 
         new Verifications() {
-
             {
                 activityManager.save(activity);
             }
