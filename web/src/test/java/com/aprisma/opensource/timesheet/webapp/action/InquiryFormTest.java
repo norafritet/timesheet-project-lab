@@ -5,25 +5,21 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+
+//import com.sun.java.browser.plugin2.liveconnect.v1.Result;
+import mockit.*;
 import net.sf.jasperreports.engine.JRException;
+import org.hibernate.jdbc.Expectation;
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import mockit.Delegate;
-import mockit.Mock;
-import mockit.Mocked;
-import mockit.NonStrictExpectations;
-import mockit.Tested;
-import mockit.Verifications;
+
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JasperCompileManager;
@@ -45,7 +41,7 @@ import org.appfuse.service.UserManager;
 public class InquiryFormTest {
     
     @Tested private InquiryForm inquiryForm;
-    
+    @Mocked private InquiryForm inForm;
     private String username;
     private String fullname;
     @Mocked private HttpServletRequest request;
@@ -71,6 +67,83 @@ public class InquiryFormTest {
     }
 
 
+     private void context_getWeeks() throws Exception{
+        inquiryForm.setYear("2011");
+        inquiryForm.setMonth("1");
+        inquiryForm.setWeek("2");
+     }
+
+
+
+    @Test
+     // Declare the mocks you need through mock fields or parameters.
+    public void runOnceGetNumOfWeekOfMonth() throws Exception
+    {
+
+
+        context_getWeeks();
+
+
+
+        /*
+      // Record the desired results for method invocations, if any are needed.
+        new NonStrictExpectations() {
+         // An internal (encapsulated) dependency can be mocked as well:
+         AnotherDependency anotherMock;
+
+         {
+            anotherMock.doSomething("test"); result = 123;
+         }
+      };
+
+      // Exercise the code under test.
+      new ServiceAbc(mock).doOperation("some data");
+       */
+      // Verify expected invocations, if any.
+      inquiryForm.getWeeks();
+      new Verifications()
+      {
+          {
+            inForm.getNumOfWeekOfMonth(); times = 0;
+          }
+      };
+   }
+
+   @Test
+   public void getWeeks_NotAllMonth_Call$getNumOfWeekOfMonthOnce(final InquiryForm yourform) throws Exception
+   {
+      new NonStrictExpectations(inquiryForm)
+      {
+          {
+
+              inquiryForm.getNumOfWeekOfMonth(); result=4 ;
+          }
+      };
+       inquiryForm.setYear("2011");
+       inquiryForm.setMonth("1");
+
+       inquiryForm.getWeeks();
+
+       new Verifications(){{inquiryForm.getNumOfWeekOfMonth(); maxTimes=1;}};
+   }
+     @Test
+   public void getWeeks_MonthHaveFourWeek_ReturnFiveString(final InquiryForm yourform) throws Exception
+   {
+      new NonStrictExpectations(inquiryForm)
+      {
+          {
+
+              inquiryForm.getNumOfWeekOfMonth(); result=4 ;
+          }
+      };
+       inquiryForm.setYear("2011");
+       inquiryForm.setMonth("1");
+       List<String> expected = Arrays.asList("All","1","2","3","4");
+
+       List result= inquiryForm.getWeeks();
+       Assert.assertEquals(expected,result);
+
+   }
     @Test
     public void getAvailableWeekBasedOnMonth() throws Exception
     {
