@@ -144,7 +144,8 @@ public class InquiryForm extends  BasePage implements Serializable {
     private static final List SIX_WEEKS =Arrays.asList("All","1","2","3","4","5","6");
     private static final List[] WEEKS = {Arrays.asList("All" ),FOUR_WEEKS,FIVE_WEEKS,SIX_WEEKS};
     public List getWeeks() {
-        return weeks = WEEKS[!month.equals( strAll ) ? this.getNumOfWeekOfMonth()-3 : 0];
+        //return weeks = WEEKS[!month.equals( strAll ) ? this.getNumOfWeekOfMonth()-3 : 0];
+        return SIX_WEEKS;
     }
 
 //    public void setWeeks(List weeks) {
