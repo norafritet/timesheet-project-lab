@@ -4,6 +4,7 @@
  */
 package com.aprisma.opensource.timesheet.service.impl;
 
+import org.jmock.Mockery;
 import mockit.Delegate;
 import org.jmock.Expectations;
 import java.util.HashMap;
@@ -38,7 +39,7 @@ import static org.junit.Assert.*;
 public class ActivityManagerImplTest {
     private ActivityManagerImpl activityManagerImpl;
 
-    
+    private Mockery context = new Mockery();
     private Activity act;
     
     @Mocked 
@@ -116,15 +117,14 @@ public class ActivityManagerImplTest {
     public void tearDown() {
     }
 
+    //to test 
     @Test
     public void findByActivityWeek_anyInput_ReturnIsSame(){
         context_findByActivityWeek_setActivityWeek();
         
-        List<Activity> a = activityManagerImpl.findByActivityWeek((long)1, fromDate, toDate);
-        System.out.println("a = "+a);
-        System.out.println("result = "+listActivity);
-        assertSame(listActivity , a);
-        
+        List<Activity> result = activityManagerImpl.findByActivityWeek((long)1, fromDate, toDate);
+
+        assertEquals(listActivity , result);
     }
     
     @Test
