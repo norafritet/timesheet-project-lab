@@ -278,6 +278,27 @@ public class InquiryFormTest {
         Assert.assertEquals(0, Deencapsulation.getField(inquiryForm, "intMonth"));
     }
     
+    @Test
+    public void convertYearMonthWeek_WeekOutOfRange_setWeekUsingMaxWeek(){
+        inquiryForm.setYear("2009");
+        inquiryForm.setMonth("2");
+        inquiryForm.setWeek("5");
+        
+        inquiryForm.convertYearMonthWeek();
+        Assert.assertEquals("4", inquiryForm.getWeek());
+        
+    }
+    
+    @Test
+    public void convertYearMonthWeek_WeekOutOfRange_setWeekUsingMaxWeek2(){
+        inquiryForm.setYear("2009");
+        inquiryForm.setMonth("2");
+        inquiryForm.setWeek("5");
+        
+        inquiryForm.convertYearMonthWeek();
+        Assert.assertEquals(4, Deencapsulation.getField(inquiryForm, "intWeek"));
+        
+    }
     private void context_getCurrentUser_Invoke() {
         inquiryForm.setUserManager(userManager);
         username = "ramdan";
